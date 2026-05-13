@@ -24,3 +24,20 @@ runcpp() {
       time "$exe"
     fi
 };
+
+pyenv() {
+  source .venv/bin/activate
+  which python
+}
+
+runcode() {
+    mkdir -p ./bin || return
+    gcc "$1" -o "./bin/${1%.c}" || return
+    time "./bin/${1%.c}"
+}
+
+runcpp() {
+    mkdir -p ./bin || return
+    g++ "$1" -o "./bin/${1%.cpp}" || return
+    time "./bin/${1%.cpp}"
+}

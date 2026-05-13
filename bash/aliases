@@ -52,3 +52,10 @@ alias g='git'
 alias gcm='git commit -m'
 alias gcam='git commit -a -m'
 alias gcad='git commit -a --amend'
+
+# other 
+alias ls='eza -lha --group-directories-last --icons=auto'
+
+alias tab='kitty @ launch --type=tab --cwd=current'
+
+alias obspreview='wl-mirror --backend screencopy-shm OBS'
