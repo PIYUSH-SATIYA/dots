@@ -1,0 +1,87 @@
+@import url("/home/pbs/.cache/wal/colors-waybar.css");
+
+
+* {
+    font-family: "JetBrainsMono Nerd Font";
+	box-shadow: none;
+}
+
+/* window { */
+  /* opacity: 0.6; */
+/* } */
+window {
+    background-color: rgba(0, 0, 0, 0.05);
+}
+button {
+	color: @foreground;
+    font-size:23px;
+
+    margin: 120px 0px;
+
+    background-repeat: no-repeat;
+	background-position: center;
+	background-size: 20%;
+
+background-color: alpha(@color1, 0.35);
+    border: none;
+    border-radius: 0px;
+    transition: 0.15s ease-in-out all;
+}
+
+
+button:focus {
+    background-size: 25%;
+    background-color: @color3;
+}
+
+button:hover {
+    background-size: 35%;
+    background-color: @color3;
+    margin: 75px 0px;
+    border-radius: 50px;
+}
+
+/* 
+----------------------------------------------------- 
+Buttons
+----------------------------------------------------- 
+*/
+
+#lock {
+    border-radius: 50px 0px 0px 50px;
+}
+#lock:hover {
+    border-radius: 50px;
+}
+
+#reboot {
+    border-radius: 0px 50px 50px 0px;
+}
+
+#reboot:hover {
+  border-radius: 50px
+}
+
+#lock {
+    background-image: image(url("/usr/share/wlogout/icons/lock.png"));
+}
+
+#logout {
+    background-image: image(url("/usr/share/wlogout/icons/logout.png"));
+}
+
+#suspend {
+    background-image: image(url("/usr/share/wlogout/icons/suspend.png"));
+}
+
+#reboot {
+    background-image: image(url("/usr/share/wlogout/icons/reboot.png"));
+}
+
+#shutdown {
+    background-image: image(url("/usr/share/wlogout/icons/shutdown.png"));
+}
+
+#hibernate {
+    background-image: image(url("/usr/share/wlogout/icons/hibernate.png"));
+}

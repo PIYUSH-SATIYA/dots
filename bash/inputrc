@@ -1,0 +1,10 @@
+set completion-ignore-case on
+set show-all-if-ambiguous on
+
+TAB: complete
+
+"\e[A": history-search-backward
+"\e[B": history-search-forward
+
+set colored-stats on
+set visible-stats on

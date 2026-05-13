@@ -1,0 +1,23 @@
+chromium/
+google-chrome/
+BraveSoftware/
+Code/
+Code - OSS/
+Cursor/
+
+opencode/node_modules/
+opencode/dist/
+
+*.log
+*.tmp
+cache/
+Cache/
+GPUCache/
+
+pulse/
+discord/
+spotify/
+
+opencode/node_modules/
+opencode/package.json
+opencode/package-lock.json

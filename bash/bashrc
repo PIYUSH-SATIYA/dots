@@ -1,0 +1,9 @@
+source ~/.config/bash/env
+source ~/.config/bash/shell
+source ~/.config/bash/aliases
+
+[[ -f ~/.config/bash/functions ]] &&
+  source ~/.config/bash/functions
+
+source ~/.config/bash/init
+source ~/.config/bash/functions

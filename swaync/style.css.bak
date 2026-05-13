@@ -1,0 +1,286 @@
+@import url("file:///home/pbs/.cache/wal/colors-waybar.css");
+
+/* =========================================================
+   SWAYNC - PYWAL TRANSLUCENT RICE
+   ========================================================= */
+
+* {
+    font-family: "JetBrainsMono Nerd Font";
+    font-size: 13px;
+    font-weight: 500;
+    transition: all 120ms ease;
+}
+
+/* =========================================================
+   GLOBAL
+   ========================================================= */
+
+.floating-notifications,
+.blank-window {
+    background: transparent;
+}
+
+/* =========================================================
+   CONTROL CENTER
+   ========================================================= */
+
+.control-center {
+    background: alpha(@background, 0.68);
+    border: 1px solid alpha(@color6, 0.45);
+    border-radius: 12px;
+    margin: 6px;
+    padding: 8px;
+    box-shadow: 0 0 20px alpha(black, 0.35);
+}
+
+.control-center-list {
+    background: transparent;
+}
+
+.control-center-list-placeholder {
+    opacity: 0.5;
+    color: @foreground;
+}
+
+.control-center {
+    padding-bottom: 2px;
+}
+
+.control-center scrollbar {
+    opacity: 0;
+    min-width: 0px;
+    min-height: 0px;
+}
+
+/* =========================================================
+   NOTIFICATIONS
+   ========================================================= */
+
+.notification-row {
+    outline: none;
+    margin: 6px;
+    padding: 0;
+}
+
+.notification-row:hover,
+.notification-row:focus {
+    background: transparent;
+}
+
+.notification {
+    background: transparent;
+}
+
+.notification-content {
+    background: alpha(@color0, 0.58);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 10px;
+    padding: 9px;
+}
+
+.notification-default-action {
+    background: transparent;
+    border-radius: 12px;
+}
+
+.notification-default-action:hover,
+.notification-action:hover {
+    background: alpha(@color5, 0.16);
+}
+
+.notification-action {
+    background: alpha(@color8, 0.25);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 10px;
+    margin-top: 8px;
+    color: @foreground;
+}
+
+/* =========================================================
+   TEXT
+   ========================================================= */
+
+.summary {
+    color: @foreground;
+    font-size: 15px;
+    font-weight: 700;
+    margin-bottom: 4px;
+}
+
+.body {
+    color: alpha(@foreground, 0.82);
+    font-size: 13px;
+}
+
+.time {
+    color: alpha(@foreground, 0.55);
+    font-size: 11px;
+    margin-right: 6px;
+}
+
+/* =========================================================
+   CLOSE BUTTON
+   ========================================================= */
+
+.close-button {
+    background: alpha(@color1, 0.9);
+    color: @foreground;
+    border-radius: 999px;
+    margin-top: 6px;
+    margin-right: 6px;
+    min-width: 22px;
+    min-height: 22px;
+}
+
+.close-button:hover {
+    background: @color1;
+    color: @background;
+}
+
+/* =========================================================
+   TITLE WIDGET
+   ========================================================= */
+
+.widget-title {
+    background: alpha(@color0, 0.32);
+    border-radius: 9px;
+    padding: 7px 10px;
+    margin: 6px;
+    color: @foreground;
+}
+
+.widget-title label {
+    font-size: 1.3rem;
+    font-weight: 700;
+}
+
+.widget-title > button {
+    background: alpha(@color5, 0.18);
+    color: @foreground;
+    border-radius: 10px;
+    padding: 6px 10px;
+    border: none;
+    box-shadow: none;
+}
+
+.widget-title > button:hover {
+    background: alpha(@color5, 0.35);
+    color: @foreground;
+}
+
+/* =========================================================
+   DND
+   ========================================================= */
+
+.widget-dnd {
+    background: alpha(@color0, 0.32);
+    border-radius: 9px;
+    padding: 7px 10px;
+    margin: 6px;
+    color: @foreground;
+}
+
+.widget-dnd > switch {
+    background: alpha(@color8, 0.4);
+    border-radius: 999px;
+}
+
+.widget-dnd > switch:checked {
+    background: @color5;
+}
+
+.widget-dnd > switch slider {
+    background: @foreground;
+    border-radius: 999px;
+}
+
+/* =========================================================
+   MPRIS
+   ========================================================= */
+
+.widget-mpris {
+    background: alpha(@color0, 0.32);
+    border-radius: 10px;
+    margin: 6px;
+    padding: 7px;
+    color: @foreground;
+}
+
+.widget-mpris-player {
+    padding: 6px;
+}
+
+.widget-mpris-title {
+    font-size: 1.1rem;
+    font-weight: 700;
+}
+
+.widget-mpris-subtitle {
+    font-size: 0.95rem;
+    color: alpha(@foreground, 0.72);
+}
+
+.widget-mpris button {
+    background: alpha(@color5, 0.15);
+    border-radius: 10px;
+    color: @foreground;
+}
+
+.widget-mpris button:hover {
+    background: alpha(@color5, 0.30);
+}
+
+/* =========================================================
+   BUTTON GRID
+   ========================================================= */
+
+.widget-buttons-grid {
+    background: alpha(@color0, 0.32);
+    border-radius: 10px;
+    padding: 7px;
+    margin: 6px;
+}
+
+.widget-buttons-grid > flowbox > flowboxchild > button {
+    background: alpha(@color8, 0.20);
+    border-radius: 12px;
+    min-width: 42px;
+    min-height: 42px;
+    color: @foreground;
+    margin: 4px;
+}
+
+.widget-buttons-grid > flowbox > flowboxchild > button:hover {
+    background: alpha(@color5, 0.30);
+    color: @foreground;
+}
+
+/* =========================================================
+   LABELS
+   ========================================================= */
+
+.widget-label {
+    margin: 6px;
+}
+
+.widget-label > label {
+    color: @foreground;
+    font-size: 1rem;
+}
+
+/* =========================================================
+   TOPBAR / MENUBAR
+   ========================================================= */
+
+.widget-menubar > box > .menu-button-bar > button,
+.topbar-buttons > button {
+    background: transparent;
+    border: none;
+    color: @foreground;
+}
+
+.widget-menubar > box > .menu-button-bar > button:hover,
+.topbar-buttons > button:hover {
+    background: alpha(@color5, 0.18);
+    border-radius: 8px;
+}

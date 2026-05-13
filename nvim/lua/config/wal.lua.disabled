@@ -1,0 +1,231 @@
+local M = {}
+
+function M.load()
+  local path = vim.fn.expand("~/.cache/wal/colors.json")
+  local file = io.open(path, "r")
+  if not file then
+    return
+  end
+  local content = file:read("*a")
+  file:close()
+
+  local ok, data = pcall(vim.fn.json_decode, content)
+  if not ok or not data.colors then
+    return
+  end
+
+  local c = data.colors
+  local sp = data.special or {}
+  local fg = sp.foreground or c.color15
+  local bg = sp.background or c.color0
+
+  -- Base
+  vim.api.nvim_set_hl(0, "Normal", { fg = fg, bg = bg })
+  vim.api.nvim_set_hl(0, "NormalFloat", { fg = fg, bg = c.color0 })
+  vim.api.nvim_set_hl(0, "NormalNC", { fg = c.color7, bg = bg })
+
+  -- Syntax (legacy groups — base layer)
+  vim.api.nvim_set_hl(0, "Identifier", { fg = fg })
+  vim.api.nvim_set_hl(0, "Function", { fg = c.color4, bold = true })
+  vim.api.nvim_set_hl(0, "Keyword", { fg = c.color5, bold = true })
+  vim.api.nvim_set_hl(0, "Statement", { fg = c.color5 })
+  vim.api.nvim_set_hl(0, "Conditional", { fg = c.color5, bold = true })
+  vim.api.nvim_set_hl(0, "Repeat", { fg = c.color5, bold = true })
+  vim.api.nvim_set_hl(0, "String", { fg = c.color2 })
+  vim.api.nvim_set_hl(0, "Number", { fg = c.color1 })
+  vim.api.nvim_set_hl(0, "Float", { fg = c.color1 })
+  vim.api.nvim_set_hl(0, "Boolean", { fg = c.color1, bold = true })
+  vim.api.nvim_set_hl(0, "Type", { fg = c.color3 })
+  vim.api.nvim_set_hl(0, "StorageClass", { fg = c.color3 })
+  vim.api.nvim_set_hl(0, "Structure", { fg = c.color3 })
+  vim.api.nvim_set_hl(0, "Constant", { fg = c.color6 })
+  vim.api.nvim_set_hl(0, "Special", { fg = c.color6 })
+  vim.api.nvim_set_hl(0, "PreProc", { fg = c.color13 })
+  vim.api.nvim_set_hl(0, "Include", { fg = c.color13 })
+  vim.api.nvim_set_hl(0, "Define", { fg = c.color13 })
+  vim.api.nvim_set_hl(0, "Macro", { fg = c.color13 })
+  vim.api.nvim_set_hl(0, "Operator", { fg = c.color9 })
+  vim.api.nvim_set_hl(0, "Delimiter", { fg = c.color7 })
+  vim.api.nvim_set_hl(0, "Comment", { fg = c.color8, italic = true })
+  vim.api.nvim_set_hl(0, "Todo", { fg = bg, bg = c.color3, bold = true })
+  vim.api.nvim_set_hl(0, "Error", { fg = c.color1, bold = true })
+
+  -- Treesitter @-groups (these are what actually color your code)
+  vim.api.nvim_set_hl(0, "@variable", { fg = fg })
+  vim.api.nvim_set_hl(0, "@variable.builtin", { fg = c.color6, italic = true })
+  vim.api.nvim_set_hl(0, "@variable.parameter", { fg = fg })
+  vim.api.nvim_set_hl(0, "@variable.member", { fg = c.color4 })
+  vim.api.nvim_set_hl(0, "@constant", { fg = c.color6 })
+  vim.api.nvim_set_hl(0, "@constant.builtin", { fg = c.color6, bold = true })
+  vim.api.nvim_set_hl(0, "@string", { fg = c.color2 })
+  vim.api.nvim_set_hl(0, "@string.escape", { fg = c.color6 })
+  vim.api.nvim_set_hl(0, "@number", { fg = c.color1 })
+  vim.api.nvim_set_hl(0, "@boolean", { fg = c.color1, bold = true })
+  vim.api.nvim_set_hl(0, "@float", { fg = c.color1 })
+  vim.api.nvim_set_hl(0, "@function", { fg = c.color4, bold = true })
+  vim.api.nvim_set_hl(0, "@function.builtin", { fg = c.color4, italic = true })
+  vim.api.nvim_set_hl(0, "@function.call", { fg = c.color4 })
+  vim.api.nvim_set_hl(0, "@function.method", { fg = c.color4 })
+  vim.api.nvim_set_hl(0, "@function.method.call", { fg = c.color4 })
+  vim.api.nvim_set_hl(0, "@constructor", { fg = c.color3 })
+  vim.api.nvim_set_hl(0, "@keyword", { fg = c.color5, bold = true })
+  vim.api.nvim_set_hl(0, "@keyword.return", { fg = c.color5, bold = true })
+  vim.api.nvim_set_hl(0, "@keyword.function", { fg = c.color5, bold = true })
+  vim.api.nvim_set_hl(0, "@keyword.operator", { fg = c.color5 })
+  vim.api.nvim_set_hl(0, "@keyword.import", { fg = c.color13 })
+  vim.api.nvim_set_hl(0, "@keyword.conditional", { fg = c.color5, bold = true })
+  vim.api.nvim_set_hl(0, "@keyword.repeat", { fg = c.color5, bold = true })
+  vim.api.nvim_set_hl(0, "@type", { fg = c.color3 })
+  vim.api.nvim_set_hl(0, "@type.builtin", { fg = c.color3, italic = true })
+  vim.api.nvim_set_hl(0, "@type.definition", { fg = c.color3, bold = true })
+  vim.api.nvim_set_hl(0, "@attribute", { fg = c.color11 })
+  vim.api.nvim_set_hl(0, "@operator", { fg = c.color9 })
+  vim.api.nvim_set_hl(0, "@punctuation.bracket", { fg = c.color7 })
+  vim.api.nvim_set_hl(0, "@punctuation.delimiter", { fg = c.color7 })
+  vim.api.nvim_set_hl(0, "@punctuation.special", { fg = c.color9 })
+  vim.api.nvim_set_hl(0, "@comment", { fg = c.color8, italic = true })
+  vim.api.nvim_set_hl(0, "@comment.todo", { fg = bg, bg = c.color3, bold = true })
+  vim.api.nvim_set_hl(0, "@tag", { fg = c.color5 })
+  vim.api.nvim_set_hl(0, "@tag.attribute", { fg = c.color3 })
+  vim.api.nvim_set_hl(0, "@tag.delimiter", { fg = c.color7 })
+  vim.api.nvim_set_hl(0, "@namespace", { fg = c.color13 })
+  vim.api.nvim_set_hl(0, "@module", { fg = c.color13 })
+  vim.api.nvim_set_hl(0, "@property", { fg = c.color4 })
+  vim.api.nvim_set_hl(0, "@label", { fg = c.color5 })
+
+  -- LSP semantic tokens (highest priority layer, must be explicit)
+  vim.api.nvim_set_hl(0, "@lsp.type.variable", { fg = fg })
+  vim.api.nvim_set_hl(0, "@lsp.type.parameter", { fg = fg })
+  vim.api.nvim_set_hl(0, "@lsp.type.property", { fg = c.color4 })
+  vim.api.nvim_set_hl(0, "@lsp.type.function", { fg = c.color4, bold = true })
+  vim.api.nvim_set_hl(0, "@lsp.type.method", { fg = c.color4 })
+  vim.api.nvim_set_hl(0, "@lsp.type.keyword", { fg = c.color5, bold = true })
+  vim.api.nvim_set_hl(0, "@lsp.type.type", { fg = c.color3 })
+  vim.api.nvim_set_hl(0, "@lsp.type.class", { fg = c.color3 })
+  vim.api.nvim_set_hl(0, "@lsp.type.interface", { fg = c.color3 })
+  vim.api.nvim_set_hl(0, "@lsp.type.namespace", { fg = c.color13 })
+  vim.api.nvim_set_hl(0, "@lsp.type.string", { fg = c.color2 })
+  vim.api.nvim_set_hl(0, "@lsp.type.number", { fg = c.color1 })
+  vim.api.nvim_set_hl(0, "@lsp.type.operator", { fg = c.color9 })
+  vim.api.nvim_set_hl(0, "@lsp.type.comment", { fg = c.color8, italic = true })
+  vim.api.nvim_set_hl(0, "@lsp.type.macro", { fg = c.color13 })
+  vim.api.nvim_set_hl(0, "@lsp.type.enum", { fg = c.color3 })
+  vim.api.nvim_set_hl(0, "@lsp.type.enumMember", { fg = c.color6 })
+  vim.api.nvim_set_hl(0, "@lsp.type.decorator", { fg = c.color11 })
+  vim.api.nvim_set_hl(0, "@lsp.type.typeParameter", { fg = c.color3, italic = true })
+
+  -- UI chrome
+  vim.api.nvim_set_hl(0, "LineNr", { fg = c.color8 })
+  vim.api.nvim_set_hl(0, "CursorLineNr", { fg = c.color3, bold = true })
+  vim.api.nvim_set_hl(0, "CursorLine", { bg = c.color0 })
+  vim.api.nvim_set_hl(0, "SignColumn", { bg = bg })
+  vim.api.nvim_set_hl(0, "MatchParen", { fg = c.color3, bold = true, underline = true })
+  vim.api.nvim_set_hl(0, "Search", { fg = bg, bg = c.color3 })
+  vim.api.nvim_set_hl(0, "IncSearch", { fg = bg, bg = c.color11, bold = true })
+  vim.api.nvim_set_hl(0, "Substitute", { fg = bg, bg = c.color1 })
+  vim.api.nvim_set_hl(0, "Visual", { bg = "#44475a", nocombine = true }) -- hardcoded, intentional
+  vim.api.nvim_set_hl(0, "FloatBorder", { fg = c.color4, bg = bg })
+  vim.api.nvim_set_hl(0, "WinSeparator", { fg = c.color8 })
+  vim.api.nvim_set_hl(0, "Pmenu", { fg = fg, bg = c.color0 })
+  vim.api.nvim_set_hl(0, "PmenuSel", { fg = bg, bg = c.color4 })
+  vim.api.nvim_set_hl(0, "PmenuSbar", { bg = c.color8 })
+  vim.api.nvim_set_hl(0, "PmenuThumb", { bg = c.color7 })
+  vim.api.nvim_set_hl(0, "StatusLine", { fg = fg, bg = c.color0 })
+  vim.api.nvim_set_hl(0, "StatusLineNC", { fg = c.color8, bg = c.color0 })
+
+  -- Diagnostics
+  vim.api.nvim_set_hl(0, "DiagnosticError", { fg = c.color1 })
+  vim.api.nvim_set_hl(0, "DiagnosticWarn", { fg = c.color3 })
+  vim.api.nvim_set_hl(0, "DiagnosticInfo", { fg = c.color4 })
+  vim.api.nvim_set_hl(0, "DiagnosticHint", { fg = c.color6 })
+  vim.api.nvim_set_hl(0, "DiagnosticUnderlineError", { undercurl = true, sp = c.color1 })
+  vim.api.nvim_set_hl(0, "DiagnosticUnderlineWarn", { undercurl = true, sp = c.color3 })
+
+  -- Git (gitsigns)
+  vim.api.nvim_set_hl(0, "GitSignsAdd", { fg = c.color2 })
+  vim.api.nvim_set_hl(0, "GitSignsChange", { fg = c.color3 })
+  vim.api.nvim_set_hl(0, "GitSignsDelete", { fg = c.color1 })
+end
+
+return M
+
+-- local M = {}
+--
+-- function M.load()
+--   local wal_colors_path = vim.fn.expand("~/.cache/wal/colors.json")
+--
+--   local file = io.open(wal_colors_path, "r")
+--   if not file then
+--     return
+--   end
+--
+--   local content = file:read("*a")
+--   file:close()
+--
+--   local ok, data = pcall(vim.fn.json_decode, content)
+--
+--   if not ok or not data.colors then
+--     return
+--   end
+--
+--   local c = data.colors
+--
+--   -- custom overrides only
+--
+--   vim.api.nvim_set_hl(0, "CursorLineNr", {
+--     fg = c.color3,
+--     bold = true,
+--   })
+--
+--   vim.api.nvim_set_hl(0, "Comment", {
+--     fg = c.color8,
+--     italic = true,
+--   })
+--
+--   -- all three below are for not choosing pywal color for visual mode highlight
+--
+--   -- vim.api.nvim_set_hl(0, "Visual", {
+--   --   bg = "#3b4252",
+--   --   fg = "NONE",
+--   -- })
+--
+--   --   vim.api.nvim_create_autocmd("ColorScheme", {
+--   --     callback = function()
+--   --       vim.api.nvim_set_hl(0, "Visual", {
+--   --         bg = "NONE",
+--   --         fg = "NONE",
+--   --         nocombine = true,
+--   --       })
+--   --     end,
+--   --   })
+--   -- end
+--
+--   vim.api.nvim_set_hl(0, "Visual", {
+--     bg = "#44475a",
+--     nocombine = true,
+--   })
+--
+--   -- wal.lua M.load() — link @-groups to pywal base groups
+--   local ts_links = {
+--     ["@variable"] = "Identifier",
+--     ["@keyword"] = "Keyword",
+--     ["@function"] = "Function",
+--     ["@string"] = "String",
+--     ["@comment"] = "Commen
+--     ["@type"] = "Type",
+--     ["@constant"] = "Constant",
+--     ["@operator"] = "Operator",
+--     ["@punctuation"] = "Delimiter",
+--     ["@parameter"] = "Identifier",
+--     ["@field"] = "Identifier",
+--     ["@namespace"] = "Include",
+--     ["@tag"] = "Tag",
+--     ["@tag.attribute"] = "Identifier",
+--   }
+--
+--   for capture, target in pairs(ts_links) do
+--     vim.api.nvim_set_hl(0, capture, { link = target })
+--   end
+-- end
+--
+-- return M

@@ -1,0 +1,87 @@
+@import url("file:///home/pbs/.cache/wal/colors-gtk.css");
+
+@define-color window_bg_color  @color0;
+@define-color accent_bg_color  @color4;
+@define-color highlight_color  @color6;
+@define-color theme_fg_color   @foreground;
+@define-color subtle_color     @color8;
+@define-color error_bg_color   @color1;
+@define-color error_fg_color   @foreground;
+
+* { all: unset; box-sizing: border-box; }
+
+.box-wrapper {
+  background:    @window_bg_color;
+  border:        1px solid alpha(@subtle_color, 0.40);
+  border-radius: 14px;
+  padding:       18px;
+  box-shadow: 0 24px 48px rgba(0,0,0,0.55), 0 8px 16px rgba(0,0,0,0.30);
+}
+
+.search-container { margin-bottom: 12px; }
+
+.input {
+  background:    alpha(@subtle_color, 0.20);
+  color:         @theme_fg_color;
+  caret-color:   @accent_bg_color;
+  padding:       10px 14px;
+  border-radius: 8px;
+  font-size:     15px;
+  border-left:   3px solid @accent_bg_color;
+}
+.input:focus {
+  background:  alpha(@subtle_color, 0.30);
+  border-left: 3px solid @highlight_color;
+}
+.input placeholder { color: @theme_fg_color; opacity: 0.30; }
+
+.list { color: @theme_fg_color; }
+scrollbar { opacity: 0; }
+
+.item-box { padding: 8px 12px; border-radius: 8px; }
+child:hover .item-box    { background: alpha(@accent_bg_color, 0.18); }
+child:selected .item-box {
+  background:   alpha(@accent_bg_color, 0.32);
+  border-left:  2px solid @accent_bg_color;
+  padding-left: 10px;
+}
+
+.item-text    { font-size: 14px;   color: @theme_fg_color; }
+.item-subtext { font-size: 11.5px; color: @subtle_color; opacity: 0.80; margin-top: 1px; }
+.item-image, .item-image-text { margin-right: 10px; }
+.item-quick-activation {
+  margin-left: auto;
+  background:  alpha(@accent_bg_color, 0.18);
+  border-radius: 5px; padding: 4px 8px;
+  font-size: 11px; color: @accent_bg_color;
+}
+
+.normal-icons { -gtk-icon-size: 16px; }
+.large-icons  { -gtk-icon-size: 28px; }
+
+.placeholder, .elephant-hint { color: @theme_fg_color; opacity: 0.28; font-size: 13px; padding: 16px 0; }
+
+.keybinds-wrapper {
+  border-top: 1px solid alpha(@subtle_color, 0.22);
+  padding-top: 10px; margin-top: 10px;
+  font-size: 11px; color: @subtle_color; opacity: 0.65;
+}
+.keybind-bind {
+  font-weight: bold; text-transform: lowercase;
+  color: @accent_bg_color; background: alpha(@accent_bg_color, 0.14);
+  border-radius: 4px; padding: 2px 6px;
+}
+
+.error { padding: 10px 14px; background: @error_bg_color; color: @error_fg_color; border-radius: 6px; }
+
+.preview {
+  border: 1px solid alpha(@subtle_color, 0.22);
+  border-radius: 10px; padding: 12px; margin-left: 12px;
+  color: @theme_fg_color; background: lighter(@window_bg_color); font-size: 13px;
+}
+
+.calc .item-text { font-family: monospace; font-size: 16px; color: @highlight_color; }
+.todo.done .item-text   { opacity: 0.40; text-decoration: line-through; }
+.todo.urgent .item-text { color: @error_bg_color; }
+.todo.active .item-text { color: @highlight_color; }
+.bluetooth.disconnected { opacity: 0.35; }

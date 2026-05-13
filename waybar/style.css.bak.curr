@@ -1,0 +1,199 @@
+/* Import the raw colors from Pywal */
+@import "../../.cache/wal/colors-waybar.css";
+
+/* ---<==== COLOR MAPPING ====>--- */
+/* This section translates Pywal colors to your variable names */
+@define-color module-bg     rgba(20, 20, 20, 0.7); /* Dark semi-transparent */
+@define-color tooltip-bg    @background;
+@define-color inactive      @color8;
+@define-color fg            @foreground;
+@define-color workspace-fg  @color7;
+@define-color primary       @color4;
+
+@define-color red           @color1;
+@define-color blue          @color4;
+@define-color yellow        @color3;
+@define-color green         @color2;
+
+/* ---<==== CORE STYLE ====>--- */
+* {
+    font-family: 'CaskaydiaCove Nerd Font Propo';
+    border: none;
+    border-radius: 0;
+    min-height: 0;
+    margin: 0;
+    padding: 0;
+    text-shadow: none;
+}
+
+#waybar {
+    font-weight: 700;
+    background: transparent;
+    font-size: 14px;
+    color: @fg;
+}
+
+/* global paddings */
+#temperature, #bluetooth, #battery, #memory, #mpris, #window, #cpu, #load {
+    padding: 1px 7px;
+}
+
+#network, #tray {
+    padding: 1px 6px;
+}
+
+#backlight, #pulseaudio {
+    padding: 1px 8px;
+}
+
+## added 
+#pulseaudio{
+	padding-left: 4px
+}
+
+## added
+#backlight-slider,
+#pulseaudio-slider {
+	padding: 0 7px 0 2px;
+}
+
+
+#workspaces,
+#bluetooth,
+#battery,
+#memory,
+#temperature,
+#cpu,
+#mpris,
+#window,
+#load {
+    margin: 0 3px;
+}
+
+#right,
+#left,
+#right-hidden-top,
+#left-hidden-top {
+    padding: 2px 10px;
+    border-radius: 15px;
+    background: @module-bg;
+}
+
+#right-hidden-top,
+#left-hidden-top {
+    padding: 0 12px;
+}
+
+#right, #left  {
+    margin: 0 8px;
+	background: @module-bg
+}
+
+#clock {
+    background: @module-bg;
+    padding: 1px 18px;
+    border-radius: 15px;
+}
+
+#custom-ctlcenter {
+    margin-left: 7px;
+}
+
+#power-profiles-daemon,
+#custom-start {
+    margin-right: 7px;
+}
+
+
+
+/* State Colors */
+#cpu.critical, #memory.critical, #battery.critical, #temperature.critical {
+    color: @red;
+}
+
+#cpu.warning, #memory.warning, #battery.warning {
+    color: @yellow;
+}
+
+#workspaces button {
+    color: @workspace-fg;
+    font-size: 14px;
+    border-radius: 100%;	
+	padding: 0 2px;
+	margin: 0 3px;
+	
+}
+
+#workspaces button.active {
+    color: @primary;
+    background: rgba(255, 255, 255, 0.1);
+}
+
+## added
+/* 
+#workspaces button.empty:not(.active) {
+    color: @inactive;
+} */
+
+#workspaces button:hover {
+    background: transparent;
+}
+
+#mpris.paused {
+    color: @inactive;
+}
+
+/* ---<==== Misc ====>--- */
+tooltip {
+    border-radius: 15px;
+    background: @tooltip-bg;
+}
+
+tooltip label {
+    padding: 3px 10px;
+    color: @fg;
+        font-weight: 700;
+}
+
+.popup * {
+    box-shadow: none;
+    outline: none;
+}
+
+menu, menu {
+    border-radius: 10px;
+    font-weight: 700;
+    color: @fg;
+    background: @tooltip-bg;
+}
+
+menu > *, menu > * {
+    padding: 3px 0px;
+}
+
+menu > *:hover, menu > *:hover{
+    border-radius: 10px;
+    background-color: @inactive;
+}
+
+
+
+
+/* Sliders */
+
+slider {
+	opacity: 0;
+	box-shadow: none;
+}
+
+trough {
+    min-width: 50px;
+    min-height: 5px;
+    border-radius: 8px;
+    background: @inactive;
+}
+
+trough highlight {
+    border-radius: 8px;
+    background-color: @primary;
+}

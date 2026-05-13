@@ -1,0 +1,103 @@
+* {
+    bg:     #111111ee;
+    bg-alt: #1a1a1aee;
+
+    fg:     #e5e5e5;
+    fg-alt: #a0a0a0;
+
+    accent: #89b4fa;
+
+    border: #313244;
+
+    background-color: transparent;
+
+    text-color: @fg;
+
+    margin: 0;
+    padding: 0;
+    spacing: 0;
+}
+
+window {
+    location: center;
+    anchor: center;
+
+    width: 700px;
+
+    border: 2px;
+    border-color: @border;
+
+    border-radius: 16px;
+
+    background-color: @bg;
+}
+
+mainbox {
+    padding: 16px;
+    spacing: 12px;
+    background-color: transparent;
+}
+
+inputbar {
+    background-color: @bg-alt;
+
+    border-radius: 12px;
+
+    padding: 12px;
+    spacing: 10px;
+}
+
+prompt {
+    text-color: @accent;
+}
+
+entry {
+    placeholder: "Search...";
+    placeholder-color: @fg-alt;
+}
+
+message {
+    margin: 10px 0 0;
+}
+
+listview {
+    lines: 10;
+    columns: 1;
+
+    fixed-height: false;
+
+    background-color: transparent;
+
+    spacing: 6px;
+
+    margin: 10px 0 0;
+}
+
+element {
+    padding: 12px;
+    border-radius: 12px;
+
+    background-color: transparent;
+    text-color: @fg;
+}
+
+element normal.normal {
+    background-color: transparent;
+}
+
+element selected.normal {
+    background-color: @accent;
+    text-color: #111111;
+}
+
+element-icon {
+    size: 24px;
+    margin: 0 10px 0 0;
+    background-color: transparent;
+}
+
+element-text {
+    background-color: transparent;
+    text-color: inherit;
+    vertical-align: 0.5;
+}

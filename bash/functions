@@ -1,0 +1,26 @@
+# yazi file manager
+
+function y() {
+	local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
+	command yazi "$@" --cwd-file="$tmp"
+	IFS= read -r -d '' cwd < "$tmp"
+	[ "$cwd" != "$PWD" ] && [ -d "$cwd" ] && builtin cd -- "$cwd"
+	command rm -f -- "$tmp"
+}
+
+# run cpp for comp prog
+runcpp() {
+    mkdir -p ./bin
+
+    local src="$1"
+    local exe="./bin/${src%.cpp}"
+
+    g++ "$src" -o "$exe" || return
+
+    if [[ -f ./input.txt ]]; then
+      time "$exe" < ./input.txt | tee ./output.txt
+
+    else
+      time "$exe"
+    fi
+};
