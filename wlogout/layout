@@ -18,7 +18,7 @@
 }
 {
     "label" : "suspend",
-    "action" : "systemctl suspend",
+    "action" : "sh -c 'pidof hyprlock || (hyprlock &); sleep 1; systemctl suspend'",
     "text" : "Suspend",
     "keybind" : "u"
 }
