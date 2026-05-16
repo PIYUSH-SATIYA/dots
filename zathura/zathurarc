@@ -1,0 +1,74 @@
+# =========================
+# General
+# =========================
+
+set adjust-open "best-fit"
+set pages-per-row 1
+
+set scroll-page-aware "true"
+set scroll-full-overlap 0.01
+set scroll-step 50
+
+set zoom-min 10
+set guioptions ""
+
+set render-loading "false"
+
+# =========================
+# Font
+# =========================
+
+set font "inconsolata 15"
+
+# =========================
+# Transparency + Dark Mode
+# =========================
+
+set recolor "true"
+set recolor-lightcolor "#000000"
+set recolor-darkcolor "#E0E0E0"
+set recolor-reverse-video "true"
+set recolor-keephue "true"
+
+# Transparent backgrounds
+set default-bg rgba(0,0,0,0)
+set statusbar-bg rgba(0,0,0,0)
+set inputbar-bg rgba(0,0,0,0)
+set notification-bg rgba(0,0,0,0)
+
+# Foregrounds
+set default-fg "#F7F7F6"
+set statusbar-fg "#B0B0B0"
+set inputbar-fg "#FFFFFF"
+set notification-fg "#FFFFFF"
+
+# Highlights
+# set highlight-color "#F4BF75"
+# set highlight-active-color "#6A9FB5"
+#
+# set completion-highlight-fg "#151515"
+# set completion-highlight-bg "#90A959"
+#
+# set completion-bg "#303030"
+# set completion-fg "#E0E0E0"
+
+# Errors / warnings
+set notification-error-bg "#AC4142"
+set notification-error-fg "#151515"
+
+set notification-warning-bg "#AC4142"
+set notification-warning-fg "#151515"
+
+# =========================
+# Clipboard
+# =========================
+
+set selection-clipboard clipboard
+
+# =========================
+# Keymaps
+# =========================
+
+unmap f
+map f toggle_fullscreen
+map [fullscreen] f toggle_fullscreen
