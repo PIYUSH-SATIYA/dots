@@ -28,7 +28,8 @@
 
     "group/left-hidden-top" : {
         "orientation": "horizontal",
-        "modules" : [ "custom/start", "battery", "group/left-hidden"]
+        // "modules" : [ "custom/start", "battery", "group/left-hidden"]
+        "modules" : ["battery", "group/left-hidden"]
     },
 
     "group/right" : {
