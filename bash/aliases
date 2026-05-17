@@ -59,3 +59,7 @@ alias ls='eza -lha --group-directories-last --icons=auto'
 alias tab='kitty @ launch --type=tab --cwd=current'
 
 alias obspreview='wl-mirror --backend screencopy-shm OBS'
+
+
+## nvim
+alias nv='nvim .'
