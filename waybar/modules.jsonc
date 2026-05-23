@@ -160,7 +160,7 @@
   "clock": {
     "timezone": "Asia/Kolkata",
     "tooltip-format": "<tt><small>{calendar}</small></tt>",
-    "format": "{:%I:%M %p}",
+    "format": "{:%I:%M %p %a}",
     "format-alt": "{:%I:%M %p %d %B %Y}",
     "on-click-right": "hyprctl dispatch exec 'kitty --class=peaclock -e peaclock'",
     "calendar": {
