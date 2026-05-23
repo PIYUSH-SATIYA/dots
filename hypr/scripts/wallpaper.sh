@@ -33,6 +33,48 @@ awww img "$FULL_PATH" \
 # wal -i "$FULL_PATH" -n --backend colorthief
 wal -i "$FULL_PATH" -n --backend colorthief
 
+# Apply pywal color to Chromium
+source "$HOME/.cache/wal/colors.sh"
+
+hex_to_rgb() {
+  hex="${1#"#"}"
+  printf "%d %d %d\n" \
+    "0x${hex:0:2}" \
+    "0x${hex:2:2}" \
+    "0x${hex:4:2}"
+}
+
+rgb_to_hex() {
+  printf "#%02x%02x%02x\n" "$1" "$2" "$3"
+}
+
+blend_colors() {
+  read r1 g1 b1 <<<"$(hex_to_rgb "$1")"
+  read r2 g2 b2 <<<"$(hex_to_rgb "$2")"
+
+  r=$(((r1 * 60 + r2 * 40) / 100))
+  g=$(((g1 * 60 + g2 * 40) / 100))
+  b=$(((b1 * 60 + b2 * 40) / 100))
+
+  rgb_to_hex "$r" "$g" "$b"
+}
+
+# Blend background with muted accent
+CHROMIUM_COLOR=$(blend_colors "$background" "$color2")
+
+mkdir -p /etc/chromium/policies/managed
+
+cat <<EOF >/etc/chromium/policies/managed/theme.json
+{
+  "BrowserThemeColor": "$CHROMIUM_COLOR",
+  "BrowserColorScheme": "dark"
+}
+EOF
+
+if pgrep -x chromium >/dev/null; then
+  chromium --refresh-platform-policy --no-startup-window >/dev/null 2>&1 &
+fi
+
 ### adding for more readability and contrast by opencode
 # Override pywal special colors for readability
 # ~/.config/wal/override-special.py

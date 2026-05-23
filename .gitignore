@@ -21,3 +21,31 @@ spotify/
 opencode/node_modules/
 opencode/package.json
 opencode/package-lock.json
+
+*.sqlite
+*.sqlite-shm
+*.sqlite-wal
+
+# Firefox runtime state
+mozilla/firefox/**/*.sqlite
+mozilla/firefox/**/*.sqlite-shm
+mozilla/firefox/**/*.sqlite-wal
+
+mozilla/firefox/**/sessionstore*
+mozilla/firefox/**/saved-telemetry-pings/
+mozilla/firefox/**/datareporting/
+mozilla/firefox/**/glean/
+mozilla/firefox/**/crashes/
+mozilla/firefox/**/Crash Reports/
+mozilla/firefox/**/storage/
+mozilla/firefox/**/extensions/
+mozilla/firefox/**/security_state/
+mozilla/firefox/**/settings/
+mozilla/firefox/**/gmp-gmpopenh264/
+
+mozilla/firefox/**/lock
+mozilla/firefox/**/AlternateServices.bin
+mozilla/firefox/**/SiteSecurityServiceState.bin
+mozilla/firefox/**/addonStartup.json.lz4
+
+mozilla/

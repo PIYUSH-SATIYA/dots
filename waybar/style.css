@@ -2,8 +2,8 @@
 @import "../../.cache/wal/colors-waybar.css";
 
 @define-color fg @foreground;
-@define-color module-bg alpha(@color1, 0.80);
-@define-color tooltip-bg alpha(@color0, 0.92);
+/* @define-color module-bg alpha(@color1, 0.80); */
+/* @define-color tooltip-bg alpha(@color0, 0.92); */
 @define-color primary @color6;
 @define-color inactive @color8;
 @define-color workspace-fg @color7;
@@ -11,6 +11,8 @@
 @define-color yellow @color3;
 @define-color green @color5;
 @define-color blue @color4;
+@define-color module-bg alpha(@color1, 0.45);
+@define-color tooltip-bg alpha(@color0, 0.85);
 
 * {
     font-family: 'CaskaydiaCove Nerd Font Propo';
