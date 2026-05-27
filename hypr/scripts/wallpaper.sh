@@ -97,9 +97,17 @@ fi
     -resize 1920x1080^ \
     -gravity center \
     -extent 1920x1080 \
-    -blur 0x16 \
-    -brightness-contrast -20x-25 \
+    -gaussian-blur 0x4 \
+    -fill black -colorize 35% \
     "$TMP_LOCK"
+
+  # magick "$FULL_PATH" \
+  #   -resize 1920x1080^ \
+  #   -gravity center \
+  #   -extent 1920x1080 \
+  #   -blur 0x4 \
+  #   -brightness-contrast -20x-25 \
+  #   "$TMP_LOCK"
 
   mv "$TMP_LOCK" "$LOCK_WALL"
 ) &

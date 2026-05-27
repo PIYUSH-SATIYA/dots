@@ -36,8 +36,8 @@ runcode() {
     time "./bin/${1%.c}"
 }
 
-runcpp() {
-    mkdir -p ./bin || return
-    g++ "$1" -o "./bin/${1%.cpp}" || return
-    time "./bin/${1%.cpp}"
-}
+# runcpp() {
+#     mkdir -p ./bin || return
+#     g++ "$1" -o "./bin/${1%.cpp}" || return
+#     time "./bin/${1%.cpp}"
+# }

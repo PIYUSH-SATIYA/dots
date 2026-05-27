@@ -17,3 +17,5 @@ fi
 
 [[ -f /usr/share/fzf/completion.bash ]] &&
   source /usr/share/fzf/completion.bash
+
+eval "$(fnm env --use-on-cd)"

@@ -1,5 +1,8 @@
 return {
   "saghen/blink.cmp",
+  dependencies = {
+    "L3MON4D3/LuaSnip",
+  },
   opts = {
 
     keymap = {
@@ -37,14 +40,35 @@ return {
             return cmp.accept()
           end
         end,
+        -- function()
+        --   if vim.snippet and vim.snippet.active({ direction = 1 }) then
+        --     vim.snippet.jump(1)
+        --     return true
+        --   end
+        -- end,
+        "fallback",
+        -- No step 3. Let Neovim handle Tab natively → expandtab gives 2 spaces.
+      },
+      ["<M-k>"] = {
         function()
-          if vim.snippet and vim.snippet.active({ direction = 1 }) then
-            vim.snippet.jump(1)
+          local ls = require("luasnip")
+
+          if ls.expand_or_jumpable() then
+            ls.expand_or_jump()
             return true
           end
         end,
-        "fallback",
-        -- No step 3. Let Neovim handle Tab natively → expandtab gives 2 spaces.
+      },
+
+      ["<M-j>"] = {
+        function()
+          local ls = require("luasnip")
+
+          if ls.jumpable(-1) then
+            ls.jump(-1)
+            return true
+          end
+        end,
       },
       ["<S-Tab>"] = {
         function(cmp)
@@ -107,20 +131,31 @@ return {
       --     end,
       --   },
       -- },
+    },
+    -- ── Auto-select first item (VS Code behaviour) ────────────────────────
+    -- Without this, Tab would have nothing to accept until you press C-j once.
+    completion = {
+      list = {
+        selection = {
+          preselect = true, -- highlight item #1 the moment menu opens
+          auto_insert = false, -- don't ghost-write it into the buffer yet
+        },
+      },
+      -- Optional: show menu instantly with no delay (feels snappier)
+      trigger = {
+        show_on_insert_on_trigger_character = true,
+      },
+    },
+    snippets = {
+      preset = "luasnip",
+    },
 
-      -- ── Auto-select first item (VS Code behaviour) ────────────────────────
-      -- Without this, Tab would have nothing to accept until you press C-j once.
-      completion = {
-        list = {
-          selection = {
-            preselect = true, -- highlight item #1 the moment menu opens
-            auto_insert = false, -- don't ghost-write it into the buffer yet
-          },
-        },
-        -- Optional: show menu instantly with no delay (feels snappier)
-        trigger = {
-          show_on_insert_on_trigger_character = true,
-        },
+    sources = {
+      default = {
+        "lsp",
+        "path",
+        "snippets",
+        "buffer",
       },
     },
   },
