@@ -19,3 +19,7 @@ fi
   source /usr/share/fzf/completion.bash
 
 eval "$(fnm env --use-on-cd)"
+
+# bash completion
+[[ -r /usr/share/bash-completion/bash_completion ]] && \
+    . /usr/share/bash-completion/bash_completion

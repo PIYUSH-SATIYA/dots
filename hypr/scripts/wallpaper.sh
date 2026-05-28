@@ -32,6 +32,7 @@ awww img "$FULL_PATH" \
 # Generate pywal colors
 # wal -i "$FULL_PATH" -n --backend colorthief
 wal -i "$FULL_PATH" -n --backend colorthief
+# ~/.cargo/bin/wallust run "$FULL_PATH"
 
 # Apply pywal color to Chromium
 source "$HOME/.cache/wal/colors.sh"

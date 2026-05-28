@@ -74,6 +74,19 @@ function M.apply()
   vim.api.nvim_set_hl(0, "GitSignsAdd", { fg = c.color2 })
   vim.api.nvim_set_hl(0, "GitSignsChange", { fg = c.color3 })
   vim.api.nvim_set_hl(0, "GitSignsDelete", { fg = c.color1 })
+  -- Neo-tree
+  vim.api.nvim_set_hl(0, "NeoTreeNormal", { fg = fg, bg = bg })
+  vim.api.nvim_set_hl(0, "NeoTreeNormalNC", { fg = fg, bg = bg })
+  vim.api.nvim_set_hl(0, "NeoTreeFileName", { fg = fg })
+  vim.api.nvim_set_hl(0, "NeoTreeDirectoryName", { fg = c.color4 or fg, bold = true })
+  vim.api.nvim_set_hl(0, "NeoTreeDirectoryIcon", { fg = c.color4 or fg })
+  vim.api.nvim_set_hl(0, "NeoTreeRootName", { fg = c.color6 or fg, bold = true })
+  vim.api.nvim_set_hl(0, "NeoTreeGitAdded", { fg = c.color2 })
+  vim.api.nvim_set_hl(0, "NeoTreeGitModified", { fg = c.color3 })
+  vim.api.nvim_set_hl(0, "NeoTreeGitDeleted", { fg = c.color1 })
+  vim.api.nvim_set_hl(0, "NeoTreeIndentMarker", { fg = c.color8 })
+  vim.api.nvim_set_hl(0, "NeoTreeExpander", { fg = c.color8 })
+  vim.api.nvim_set_hl(0, "NeoTreeFileIcon", { fg = c.color6 })
   local ts_links = {
     ["@variable"] = "Identifier",
     ["@variable.builtin"] = "Special",
