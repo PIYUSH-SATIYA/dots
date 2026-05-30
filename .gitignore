@@ -49,3 +49,12 @@ mozilla/firefox/**/SiteSecurityServiceState.bin
 mozilla/firefox/**/addonStartup.json.lz4
 
 mozilla/
+
+Antigravity/
+Antigravity*/
+
+libreoffice/
+
+github-copilot/auth.db-*
+dconf/user
+opencode/opencode-notifier-state.json

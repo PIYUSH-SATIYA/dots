@@ -4,6 +4,7 @@ inode/directory=yazi.desktop
 x-scheme-handler/file=yazi.desktop
 
 inode/directory=yazi.desktop
+x-scheme-handler/antigravity=antigravity.desktop
 [Added Associations]
 inode/directory=yazi.desktop
 text/csv=chromium.desktop;
