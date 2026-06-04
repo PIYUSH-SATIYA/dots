@@ -1,0 +1,41 @@
+# Browser tags
+windowrule = tag +chromium-based-browser,class:(Google-chrome|Brave-browser|microsoft-edge|Vivaldi-stable|helium)
+windowrule = tag +firefox-based-browser,class:(firefox|Firefox|zen|librewolf)
+
+windowrule = tag -default-opacity,tag:chromium-based-browser
+windowrule = tag -default-opacity,tag:firefox-based-browser
+
+# Video apps
+windowrule = tag -chromium-based-browser,class:(chrome-youtube.com__-Default|chrome-app.zoom.us__wc_home-Default)
+windowrule = tag -default-opacity,class:(chrome-youtube.com__-Default|chrome-app.zoom.us__wc_home-Default)
+
+# Force tiling
+windowrule = tile,class:(Google-chrome|Brave-browser|microsoft-edge|Vivaldi-stable|helium)
+
+# Opacity
+windowrule = opacity 1.0 0.97,class:(Google-chrome|Brave-browser|microsoft-edge|Vivaldi-stable|helium)
+windowrule = opacity 1.0 0.97,class:(firefox|Firefox|zen|librewolf)
+
+# Hide screenshare bar
+windowrule = workspace special silent,title:.*is sharing.*
+#
+#
+# # Browser types
+# match:class ((google-)?(chrom(e|ium)|Chrom(e|ium))|(brave-browser|Brave-browser)|(microsoft-edge|Microsoft-edge)|Vivaldi-stable|helium)
+# match:class (firefox|Firefox|zen|librewolf)
+# windowrule = tag -default-opacity, match:tag chromium-based-browser
+# windowrule = tag -default-opacity, match:tag firefox-based-browser
+#
+# # Video apps: remove chromium browser tag so they don't get opacity applied
+# windowrule = tag -chromium-based-browser, match:class (chrome-youtube.com__-Default|chrome-app.zoom.us__wc_home-Default)
+# windowrule = tag -default-opacity, match:class (chrome-youtube.com__-Default|chrome-app.zoom.us__wc_home-Default)
+#
+# # Force chromium-based browsers into a tile to deal with --app bug
+# windowrule = tile on, match:tag chromium-based-browser
+#
+# # Only a subtle opacity change, but not for video sites
+# windowrule = opacity 1.0 0.97, match:tag chromium-based-browser
+# windowrule = opacity 1.0 0.97, match:tag firefox-based-browser
+#
+# # Hide the screen-sharing notification bar (the "Hide" button on it is broken on Wayland)
+# windowrule = workspace special silent, match:title .*is sharing.*

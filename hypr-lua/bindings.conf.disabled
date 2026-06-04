@@ -1,0 +1,8 @@
+source = ~/.config/hypr/binds/apps.conf
+source = ~/.config/hypr/binds/windows.conf
+source = ~/.config/hypr/binds/workspaces.conf
+source = ~/.config/hypr/binds/media.conf
+source = ~/.config/hypr/binds/scratchpads.conf
+source = ~/.config/hypr/binds/groups.conf
+source = ~/.config/hypr/binds/utilities.conf
+source = ~/.config/hypr/binds/mouse.conf

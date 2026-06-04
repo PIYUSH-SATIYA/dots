@@ -5,6 +5,7 @@ x-scheme-handler/file=yazi.desktop
 
 inode/directory=yazi.desktop
 x-scheme-handler/antigravity=antigravity.desktop
+x-scheme-handler/jetbrains=jetbrainsd.desktop
 [Added Associations]
 inode/directory=yazi.desktop
 text/csv=chromium.desktop;

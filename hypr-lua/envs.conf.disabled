@@ -1,0 +1,41 @@
+# Cursor
+env = XCURSOR_SIZE,24
+env = HYPRCURSOR_SIZE,24
+
+# Wayland
+env = XDG_SESSION_TYPE,wayland
+env = XDG_CURRENT_DESKTOP,Hyprland
+env = XDG_SESSION_DESKTOP,Hyprland
+
+# GTK
+env = GDK_BACKEND,wayland,x11,*
+
+# Qt
+env = QT_QPA_PLATFORM,wayland;xcb
+env = QT_QPA_PLATFORMTHEME,qt6ct
+
+# Mozilla
+env = MOZ_ENABLE_WAYLAND,1
+
+# Electron
+env = ELECTRON_OZONE_PLATFORM_HINT,wayland
+env = OZONE_PLATFORM,wayland
+
+# XCompose
+env = XCOMPOSEFILE,~/.XCompose
+
+xwayland {
+    force_zero_scaling = true
+}
+
+ecosystem {
+    no_update_news = true
+}
+
+env = LIBVA_DRIVER_NAME,nvidia
+env = __GLX_VENDOR_LIBRARY_NAME,nvidia
+env = NVD_BACKEND,direct
+env = GBM_BACKEND,nvidia-drm
+
+# hybrid gpu
+# env = AQ_DRM_DEVICES,/dev/dri/by-path/pci-0000:00:02.0-card

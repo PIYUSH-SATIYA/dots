@@ -2,7 +2,7 @@
 
 ## Git Workflow
 
-When making code changes ALWAYS follow this process:
+When making code changes for a new task ALWAYS follow this process:
 
 1. Ensure current branch is committed if not do not continue until the user has committed and pushed the changes.
 
@@ -21,20 +21,12 @@ When making code changes ALWAYS follow this process:
    - run linters
    - ensure project builds
 
+6. you can commit to main or master directly after explicite permission of the user in chat.
+
 ## Session Handling
 
 After each agent run or session :
-
-1. Export the session for traceability:
-   opencode export
-
-2. Save a summary in:
-   docs/agent-sessions/<date>-session.md
-
-3. Include:
-   - goal
-   - files changed
-   - commands run
+give the detailed summary with relevant code files and snippets of the task completed after the run or session
 
 ## Mandatory Rules
 
@@ -44,4 +36,4 @@ These rules must always be followed:
 - ALWAYS create a git branch before editing code.
 - NEVER modify protected branches.
 - ALWAYS run tests before committing.
-- ALWAYS export the session on each completed agent run
+- ALWAYS provide detailed summary of the user so that the code do not become technical debt.

@@ -14,7 +14,7 @@ bindd = SUPER SHIFT, COMMA, Close latest notification, exec, swaync-client --clo
 bindd = SUPER CTRL, COMMA, Clear all notifications, exec, swaync-client -C && notify-send "Notifications cleared"
 
 # Toggle DND
-bindd = SUPER ALT, COMMA, Toggle Do Not Disturb mode, exec, sh -c 'STATE=$(swaync-client -d); [ "$STATE" = "true" ] && notify-send -u critical "DND Enabled" || notify-send "DND Disabled"'
+bindd = SUPER ALT, COMMA, Toggle Do Not Disturb mode, exec, ~/.config/hypr/scripts/toggle-dnd.sh
 
 # Reload config
 bindd = SUPER SHIFT, R, Reload Hyprland config, exec, hyprctl reload
@@ -51,7 +51,3 @@ bindd = SUPER, K,  show all keybinds, exec, walker -t pywal --provider menus:key
 
 # toggle idle
 bind = CTRL SHIFT, I, exec, ~/.config/hypr/scripts/toggle-idle.sh
-
-
-# calculator
-bindd = , XF86Calculator, Calculator, exec, gnome-calculator

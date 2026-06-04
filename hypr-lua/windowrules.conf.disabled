@@ -13,7 +13,4 @@ windowrule = match:class ^(floating_bluetui), float on, size 1000 600, center on
 windowrule = match:class ^(floating_btop), float on, size 1200 800, center on
 
 # zathura transperancy
-windowrule = match:class ^(org\.pwmt\.zathura)$, opacity 0.85 0.65
-
-# gnome calculator
-windowrule = match:class ^(org\.gnome\.Calculator)$, size 360 616, center on, float on, opacity 0.95 0.75
+# windowrule = match:class ^(org\.pwmt\.zathura)$, opacity 0.85 0.65

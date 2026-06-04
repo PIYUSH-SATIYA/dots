@@ -1,0 +1,103 @@
+# =========================
+# Environment
+# =========================
+source = ~/.config/hypr/envs.conf
+require("envs")
+
+# =========================
+# Monitor configuration
+# =========================
+source = ~/.config/hypr/monitors.conf
+require("monitors")
+
+# =========================
+# Look and feel
+# =========================
+source = ~/.config/hypr/looknfeel.conf
+require("looknfeel")
+
+# =========================
+# Window rules
+# =========================
+source = ~/.config/hypr/windowrules.conf
+require("windowrules")
+
+# =========================
+# Keybindings
+# =========================
+source = ~/.config/hypr/bindings.conf
+require("bindings")
+
+# =========================
+# Startup applications
+# =========================
+source = ~/.config/hypr/autostart.conf
+require("autostart")
+
+# =========================
+# Layer rules
+# =========================
+source = ~/.config/hypr/layerrules.conf
+require("layerrules")
+
+# =========================
+# Input
+# =========================
+input {
+    kb_layout = us
+
+    follow_mouse = 1
+
+    touchpad {
+        natural_scroll = true
+        tap-to-click = true
+        disable_while_typing = true
+    }
+
+    sensitivity = 0
+}
+
+# =========================
+# Decorations
+# =========================
+
+decoration {
+    blur {
+        enabled = true
+        size = 2
+    }
+}
+
+# =========================
+# Gestures
+# =========================
+ 
+# Horizontal 3-finger swipe for workspace navigation
+gesture = 3, horizontal, workspace, m-1 # or m+1 depending on preference
+
+
+# =========================
+# XWayland
+# =========================
+xwayland {
+    force_zero_scaling = true
+}
+
+# =========================
+# Device-specific overrides
+# =========================
+# device {
+#     name = epic-mouse-v1
+#     sensitivity = -0.5
+# }
+
+
+# hyprlock with suspend
+# bindl=,switch:on:Lid Switch, exec, hyprlock
+bindl=,switch:on:Lid Switch,exec,pidof hyprlock || hyprlock
+
+
+
+
+
+

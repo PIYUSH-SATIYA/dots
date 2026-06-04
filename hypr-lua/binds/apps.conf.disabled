@@ -1,0 +1,34 @@
+# Launcher
+# bindd = SUPER, SPACE, Open application launcher with rofi, exec, ~/.config/rofi/launchers/drun.sh
+# bindd = SUPER, SPACE, Open Walker launcher, exec, walker
+
+# Terminal
+bindd = SUPER, RETURN, Open Kitty terminal, exec, kitty --directory="$(~/.config/hypr/scripts/terminal-open-cwd.sh)"
+
+# Browser
+bindd = SUPER, B, Open Chromium browser, exec, chromium
+
+# Private browser
+bindd = SUPER SHIFT, B, Open Chromium in incognito mode, exec, chromium --incognito
+
+# File manager
+bindd = SUPER SHIFT, F, Open Nautilus file manager, exec, kitty yazi
+
+# Editor
+bindd = SUPER SHIFT, N, Open VS Code editor, exec, code
+
+# Resource monitor
+bindd = SUPER CTRL, T, Open btop system monitor in floating terminal, exec, kitty --class floating_btop btop
+
+# Lock
+bindd = SUPER, L, Lock screen with Hyprlock, exec, hyprlock
+
+# Logout menu
+bindd = SUPER CTRL, Q, Open logout and power menu, exec, wlogout -b 6 --protocol layer-shell
+
+# wifi impala
+bindd = SUPER CTRL, W, Open Impala WiFi manager in floating terminal, exec, kitty --class floating_impala impala
+
+# bluetooth bluetui
+bindd = SUPER CTRL, B, Open Bluetui Bluetooth manager in floating terminal, exec, kitty --class floating_bluetui bluetui
+
