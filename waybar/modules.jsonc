@@ -1,8 +1,8 @@
 {
   "hyprland/workspaces": {
     "format": "{icon}",
-    "on-scroll-down": "hyprctl dispatch workspace e+1",
-    "on-scroll-up": "hyprctl dispatch workspace e-1",
+    "on-scroll-down": "hyprctl dispatch \"hl.dsp.focus({workspace = 'e+1'})\"",
+    "on-scroll-up": "hyprctl dispatch \"hl.dsp.focus({workspace = 'e-1'})\"",
     "persistent-workspaces": { "*": 5 },
     "cursor" : true,
     "format-icons": {
@@ -12,17 +12,17 @@
     }
   },
 
-  "niri/workspaces": {
-    "format": "{icon}",
-    "cursor" : true,
-    "on-scroll-up": "niri msg action focus-workspace-up",
-    "on-scroll-down": "niri msg action focus-workspace-down",
-    "format-icons": {
-      "active": "󰮯",
-      "default": "",
-      "empty": ""
-    }
-  },
+  // "niri/workspaces": {
+  //   "format": "{icon}",
+  //   "cursor" : true,
+  //   "on-scroll-up": "niri msg action focus-workspace-up",
+  //   "on-scroll-down": "niri msg action focus-workspace-down",
+  //   "format-icons": {
+  //     "active": "󰮯",
+  //     "default": "",
+  //     "empty": ""
+  //   }
+  // },
 
   "hyprland/window" : {
     "max-length": 45
@@ -77,7 +77,7 @@
     "format": "{icon}",
     "format-bluetooth": "{icon}",
     "on-click": "pactl set-sink-mute @DEFAULT_SINK@ toggle",
-    "on-click-right": "hyprctl dispatch exec 'pavucontrol -t 4'",
+    "on-click-right": "hyprctl dispatch hl.dsp.exec_command(\"pavucontrol -t 4\")",
     "tooltip-format": "{volume}%",
     "format-muted": "<span size='12pt'>󰝟</span>",
     "scroll-step": 2,
@@ -100,7 +100,6 @@
     "min": 0,
     "max": 100,
     "cursor": true,
-    "on-click-right": "hyprctl dispatch exec 'pavucontrol -t 4'"
   },
 
   "backlight/slider": {
@@ -117,13 +116,13 @@
     "format-ethernet": "",
     "tooltip-format": "{essid}\n\nFrequency: {frequency}GHz\nStrength: {signalStrength}%\n\n{bandwidthUpBytes}   {bandwidthDownBytes}",
     "menu": "on-click-right",
-    "on-click": "kitty --class floating_impala impala",
+"on-click": "hyprctl dispatch \"hl.dsp.exec_cmd('kitty --class floating_impala impala')\"",
     "menu-file": "~/.config/waybar/context/network.xml",
     "menu-actions": {
-      "action-1": "iwctl station wlan0 disconnect",
-      "action-2": "iwctl station wlan0 scan",		
-      "action-3": "kitty --class floating_impala impala",
-      "action-4": "kitty --class floating_impala impala"
+"action-1": "hyprctl dispatch \"hl.dsp.exec_cmd('iwctl station wlan0 disconnect')\"",
+"action-2": "hyprctl dispatch \"hl.dsp.exec_cmd('iwctl station wlan0 scan')\"",
+"action-3": "hyprctl dispatch \"hl.dsp.exec_cmd('kitty --class floating_impala impala')\"",
+"action-4": "hyprctl dispatch \"hl.dsp.exec_cmd('kitty --class floating_impala impala')\"",
     }
   },
 
@@ -137,7 +136,7 @@
     "tooltip-format": "{device_enumerate}",
     "tooltip-format-enumerate-connected": "{device_alias}",
     "tooltip-format-enumerate-connected-battery": "{device_alias}   {device_battery_percentage}%",
-    "on-click": "kitty --class floating_bluetui bluetui",
+"on-click": "hyprctl dispatch \"hl.dsp.exec_cmd('kitty --class floating_bluetui bluetui')\"",
     "on-click-right": ""
   },
 
@@ -162,7 +161,7 @@
     "tooltip-format": "<tt><small>{calendar}</small></tt>",
     "format": "{:%I:%M %p %a}",
     "format-alt": "{:%I:%M %p %d %B %Y}",
-    "on-click-right": "hyprctl dispatch exec 'kitty --class=peaclock -e peaclock'",
+"on-click-right": "hyprctl dispatch \"hl.dsp.exec_cmd('kitty --class=peaclock -e peaclock')\"",
     "calendar": {
       "mode": "year",
       "weeks-pos": "right",
@@ -210,19 +209,18 @@
     "menu": "on-click-right",
     "menu-file": "~/.config/waybar/context/ctlcenter.xml",
     "menu-actions": {
-      "action-1-1": "hyprctl dispatch exec '[float] kitty -e htop'",
-      "action-1-2": "hyprctl dispatch exec '[float] kitty -e nvtop'",
-      "action-1-3": "hyprctl dispatch exec '[float] kitty -e pkexec powertop'",
-      "action-1-4": "hyprctl dispatch exec '[float] missioncenter'",
+"action-1-1": "hyprctl dispatch \"hl.dsp.exec_cmd('kitty -e htop', { float = true })\"",
+"action-1-2": "hyprctl dispatch \"hl.dsp.exec_cmd('kitty -e nvtop', { float = true })\"",
+"action-1-3": "hyprctl dispatch \"hl.dsp.exec_cmd('kitty -e pkexec powertop', { float = true })\"",
+"action-1-4": "hyprctl dispatch \"hl.dsp.exec_cmd('missioncenter', { float = true })\"",
 
-      "action-2-1": "hyprctl dispatch exec nwg-look",
-      "action-2-2": "hyprctl dispatch exec qt6ct",
-      "action-2-3": "hyprctl dispatch exec kvantummanager",
+"action-2-1": "hyprctl dispatch \"hl.dsp.exec_cmd('nwg-look')\"",
+"action-2-2": "hyprctl dispatch \"hl.dsp.exec_cmd('qt6ct')\"",
+"action-2-3": "hyprctl dispatch \"hl.dsp.exec_cmd('kvantummanager')\"",
 
-
-      "action-3-1": "hyprctl keyword monitor 'eDP-1,1920x1080@60, auto,1'",
-      "action-3-2": "hyprctl keyword monitor 'eDP-1,1920x1080@144,auto,1'",
-      "action-6": "hyprctl reload"
+"action-3-1": "hyprctl keyword monitor 'eDP-1,1920x1080@60,auto,1'",
+"action-3-2": "hyprctl keyword monitor 'eDP-1,1920x1080@144,auto,1'",
+"action-6": "hyprctl reload"
     }
   },
 
