@@ -16,9 +16,8 @@ hl.layer_rule({
 		namespace = "swaync-control-center",
 	},
 	ignore_alpha = 0.4,
+	dim_around = true,
 })
-
---
 
 hl.layer_rule({
 	match = {
@@ -38,7 +37,8 @@ hl.layer_rule({
 	match = {
 		namespace = "logout_dialog",
 	},
-	blur = on,
+	blur = true,
+	dim_around = true,
 })
 
 hl.layer_rule({
@@ -54,29 +54,34 @@ hl.layer_rule({
 	match = {
 		namespace = "^waybar$",
 	},
-	blur = on,
-})
-
-hl.layer_rule({
-	match = {
-		namespace = "^waybar$",
-	},
-	ignore_alpha = 0.3,
-})
-
-hl.layer_rule({
-	match = {
-		namespace = "^waybar-tooltip$",
-	},
-	blur = on,
-})
-
-hl.layer_rule({
-	match = {
-		namespace = "^waybar-tooltip$",
-	},
+	blur = true,
 	ignore_alpha = 0.2,
+	xray = true,
+	dim_around = false,
 })
+
+-- hl.layer_rule({
+-- 	match = {
+-- 		namespace = "^waybar$",
+-- 	},
+-- 	ignore_alpha = 0.8,
+-- })
+
+hl.layer_rule({
+	match = {
+		namespace = "^waybar-tooltip$",
+	},
+	blur = on,
+	ignore_alpha = 0.2,
+	xray = true,
+})
+
+-- hl.layer_rule({
+-- 	match = {
+-- 		namespace = "^waybar-tooltip$",
+-- 	},
+-- 	ignore_alpha = 0.2,
+-- })
 
 --
 

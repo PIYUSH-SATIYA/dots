@@ -9,16 +9,25 @@
 for workspace = 1, 10 do
 	local key = "code:" .. tostring(workspace + 9)
 
-	hl.bind("SUPER + " .. key, hl.dsp.focus({ workspace = tostring(workspace) }))
+	hl.bind(
+		"SUPER + " .. key,
+		hl.dsp.focus({ workspace = tostring(workspace) }),
+		{ description = "Focus workspace " .. tostring(workspace) }
+	)
 
-	hl.bind("SUPER + SHIFT + " .. key, hl.dsp.window.move({ workspace = tostring(workspace) }))
+	hl.bind(
+		"SUPER + SHIFT + " .. key,
+		hl.dsp.window.move({ workspace = tostring(workspace) }),
+		{ description = "Move active window to workspace " .. tostring(workspace) }
+	)
 
 	hl.bind(
 		"SUPER + SHIFT + ALT + " .. key,
 		hl.dsp.window.move({
 			workspace = tostring(workspace),
 			follow = false,
-		})
+		}),
+		{ description = "Move active window to workspace " .. tostring(workspace) .. " silently" }
 	)
 end
 

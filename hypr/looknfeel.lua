@@ -174,6 +174,9 @@ hl.config({
 	},
 })
 
+-- gestures
+hl.gesture({ fingers = 3, direction = "horizontal", action = "workspace" })
+
 -- https://wiki.hypr.land/Configuring/Variables/#cursor
 
 hl.config({

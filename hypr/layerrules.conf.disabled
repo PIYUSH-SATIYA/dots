@@ -1,18 +1,18 @@
-layerrule = blur on, match:namespace swaync-control-center
-layerrule = ignore_alpha 0.4, match:namespace swaync-control-center
+# layerrule = blur on, match:namespace swaync-control-center
+# layerrule = ignore_alpha 0.4, match:namespace swaync-control-center
 #
-layerrule = blur on, match:namespace swaync-notification-window
-layerrule = ignore_alpha 0.4, match:namespace swaync-notification-window
+# layerrule = blur on, match:namespace swaync-notification-window
+# layerrule = ignore_alpha 0.4, match:namespace swaync-notification-window
 
-layerrule = blur on, match:namespace logout_dialog
-layerrule = ignore_alpha 0.2, match:namespace logout_dialog
+# layerrule = blur on, match:namespace logout_dialog
+# layerrule = ignore_alpha 0.2, match:namespace logout_dialog
 
 # Waybar main panel
-layerrule = blur on, match:namespace ^waybar$
-layerrule = ignore_alpha 0.3, match:namespace ^waybar$
+# layerrule = blur on, match:namespace ^waybar$
+# layerrule = ignore_alpha 0.3, match:namespace ^waybar$
 
-layerrule = blur on, match:namespace ^waybar-tooltip$
-layerrule = ignore_alpha 0.2, match:namespace ^waybar-tooltip$
+# layerrule = blur on, match:namespace ^waybar-tooltip$
+# layerrule = ignore_alpha 0.2, match:namespace ^waybar-tooltip$
 
 #
 #

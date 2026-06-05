@@ -118,4 +118,8 @@ hl.bind("ALT + SHIFT + TAB", hl.dsp.window.bring_to_top(), { description = "Brin
 
 hl.bind("SUPER + G", hl.dsp.group.toggle(), { description = "Toggle grouped windows mode" })
 
-hl.bind("SUPER + ALT + G", hl.dsp.window.move({ out_of_group = true }), { description = "Move active window into current group" })
+hl.bind(
+	"SUPER + ALT + G",
+	hl.dsp.window.move({ out_of_group = true }),
+	{ description = "Move active window out of current group" }
+)

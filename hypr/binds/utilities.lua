@@ -28,30 +28,6 @@ hl.bind("ALT + PRINT", hl.dsp.exec_cmd("wf-recorder"), { description = "Start sc
 
 hl.bind("SUPER + PRINT", hl.dsp.exec_cmd("hyprpicker -a"), { description = "Pick color and copy hex code" })
 
--- Notifications
-
-hl.bind("SUPER + COMMA", hl.dsp.exec_cmd("swaync-client -t"), { description = "Toggle notification center" })
-
-hl.bind(
-	"SUPER + SHIFT + COMMA",
-	hl.dsp.exec_cmd("swaync-client --close-latest"),
-	{ description = "Dismiss latest notification" }
-)
-
-hl.bind(
-	"SUPER + CTRL + COMMA",
-	hl.dsp.exec_cmd("swaync-client -C && notify-send 'Notifications cleared'"),
-	{ description = "Clear all notifications" }
-)
-
--- Toggle DND
-
-hl.bind(
-	"SUPER + ALT + COMMA",
-	hl.dsp.exec_cmd("bash ~/.config/hypr/scripts/toggle-dnd.sh"),
-	{ description = "Toggle do not disturb mode" }
-)
-
 -- Reload config
 
 hl.bind("SUPER + SHIFT + R", hl.dsp.exec_cmd("hyprctl reload"), { description = "Reload Hyprland configuration" })
@@ -113,7 +89,7 @@ hl.bind(
 -- toggle idle
 
 hl.bind(
-	"CTRL + SHIFT + I",
+	"CTRL + ALT + I",
 	hl.dsp.exec_cmd("bash ~/.config/hypr/scripts/toggle-idle.sh"),
 	{ description = "Toggle idle mode" }
 )

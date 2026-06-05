@@ -1,4 +1,3 @@
-
 @import "../../.cache/wal/colors-waybar.css";
 
 @define-color fg @foreground;
@@ -83,7 +82,6 @@
     background: @module-bg;
 }
 
-
 #right-hidden-top,
 #left-hidden-top {
     padding: 0 12px;
@@ -142,11 +140,6 @@
     padding: 0 2px;
     margin: 0 3px;
 }
-
-#workspace button.active {
-	color: @primary;
-}
-
 /* 
 #workspaces button.empty:not(.active) {
     color: @inactive;
@@ -175,22 +168,23 @@ tooltip label {
 .popup * {
     box-shadow: none;
     outline: none;
+    border-radius: 10px;
 }
 
-menu, menu {
+menu {
     border-radius: 10px;
     font-weight: 700;
     color: @fg;
     background: @tooltip-bg;
 }
 
-menu > *, menu > * {
+menu > * {
     padding: 3px 0px;
 }
 
-menu > *:hover, menu > *:hover{
+menu > *:hover {
     border-radius: 10px;
-    background-color: @inactive;
+    background-color: @highlight;
 }
 
 /* Sliders */
@@ -210,6 +204,5 @@ trough {
 trough highlight {
     border-radius: 8px;
     background-color: @primary;
-    background-image: none;
+    background-image: none; /* Some gtk themes set an svg for background. */
 }
-

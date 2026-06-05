@@ -73,3 +73,28 @@ hl.bind(
 	hl.dsp.exec_cmd("kitty --class floating_bluetui bluetui"),
 	{ description = "Open Bluetui Bluetooth manager" }
 )
+
+-- swaync
+-- Notifications
+
+hl.bind("SUPER + SHIFT + COMMA", hl.dsp.exec_cmd("swaync-client -t"), { description = "Toggle notification center" })
+
+hl.bind(
+	"SUPER + CTRL + COMMA",
+	hl.dsp.exec_cmd("swaync-client --close-latest"),
+	{ description = "Dismiss latest notification" }
+)
+
+hl.bind(
+	"SUPER + SHIFT + CTRL + COMMA",
+	hl.dsp.exec_cmd("swaync-client -C && notify-send 'Notifications cleared'"),
+	{ description = "Clear all notifications" }
+)
+
+-- Toggle DND
+
+hl.bind(
+	"SUPER + ALT + COMMA",
+	hl.dsp.exec_cmd("bash ~/.config/hypr/scripts/toggle-dnd.sh"),
+	{ description = "Toggle do not disturb mode" }
+)

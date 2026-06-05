@@ -8,64 +8,70 @@ HideFromProviderlist = false
 
 Description = "Hyprland keybinds"
 
-function trim(s)
-	return s:match("^%s*(.-)%s*$")
+------------------------------------------------------------
+-- MODMASK MAPPING
+------------------------------------------------------------
+
+local mods = {
+	[1] = "SHIFT",
+	[4] = "CTRL",
+	[8] = "ALT",
+	[64] = "SUPER",
+}
+
+function modmask_to_string(mask)
+	local result = {}
+
+	for value, name in pairs(mods) do
+		if math.floor(mask / value) % 2 == 1 then
+			table.insert(result, name)
+		end
+	end
+
+	return table.concat(result, " + ")
 end
+
+------------------------------------------------------------
+-- MAIN
+------------------------------------------------------------
 
 function GetEntries()
 	local entries = {}
 
-	local handle = io.popen("grep -rh '^bind' ~/.config/hypr/binds/*.conf 2>/dev/null")
+	local handle = io.popen([[hyprctl binds -j | jq -c '.[]']])
 
 	if not handle then
-		return {
-			{
-				Text = "Could not load binds",
-			},
-		}
+		return entries
 	end
 
 	for line in handle:lines() do
-		local bind = line:match("^%s*bind[%w]*%s*=%s*(.+)$")
+		local modmask = tonumber(line:match('"modmask":(%d+)')) or 0
 
-		if bind then
-			local parts = {}
+		local key = line:match('"key":"([^"]*)"') or ""
 
-			for part in bind:gmatch("[^,]+") do
-				table.insert(parts, trim(part))
-			end
+		local description = line:match('"description":"([^"]*)"') or "No description"
 
-			if #parts >= 4 then
-				local mods = parts[1]
-				local key = parts[2]
+		local dispatcher = line:match('"dispatcher":"([^"]*)"') or ""
 
-				local description = nil
-				local dispatcher = nil
-				local command = nil
+		local arg = line:match('"arg":"([^"]*)"') or ""
 
-				-- bindd
-				if line:match("^%s*bindd") then
-					description = parts[3]
-					dispatcher = parts[4]
+		local mod_string = modmask_to_string(modmask)
 
-					command = table.concat(parts, ", ", 5)
-				else
-					dispatcher = parts[3]
+		local text = key
 
-					command = table.concat(parts, ", ", 4)
-				end
-
-				table.insert(entries, {
-					Text = mods .. " + " .. key,
-
-					Subtext = (description and (description .. " -> ") or "") .. dispatcher .. " -> " .. command,
-
-					Search = mods .. " " .. key .. " " .. (description or "") .. " " .. dispatcher .. " " .. command,
-
-					Icon = "preferences-desktop-keyboard",
-				})
-			end
+		if mod_string ~= "" then
+			text = mod_string .. " + " .. key
 		end
+
+		table.insert(entries, {
+			Text = text,
+
+			Subtext = description .. " -> " .. dispatcher,
+
+			Match = text .. " " .. description .. " " .. dispatcher .. " " .. arg,
+
+			Icon = "preferences-desktop-keyboard",
+		})
 	end
 
 	handle:close()
