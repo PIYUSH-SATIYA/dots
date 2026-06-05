@@ -10,9 +10,23 @@ hl.bind("SUPER + Q", hl.dsp.window.close(), { description = "Close active window
 
 -- Fullscreen and full width
 
-hl.bind("SUPER + F", hl.dsp.window.fullscreen(), { description = "Toggle fullscreen for active window" })
+hl.bind(
+	"SUPER + F",
+	hl.dsp.window.fullscreen({ mode = "fullscreen", action = "toggle" }),
+	{ description = "Full screen" }
+)
 
-hl.bind("SUPER + ALT + F", hl.dsp.window.fullscreen(), { description = "Toggle fullscreen mode alternative binding" })
+hl.bind(
+	"SUPER + CTRL + F",
+	hl.dsp.window.fullscreen_state({ internal = 0, client = 2, action = "toggle" }),
+	{ description = "Tiled full screen" }
+)
+
+hl.bind(
+	"SUPER + ALT + F",
+	hl.dsp.window.fullscreen({ mode = "maximized", action = "toggle" }),
+	{ description = "Full width" }
+)
 
 -- Floating
 
