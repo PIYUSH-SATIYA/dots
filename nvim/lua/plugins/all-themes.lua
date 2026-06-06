@@ -73,4 +73,14 @@ return {
     lazy = true,
     priority = 1000,
   },
+  {
+    "ficcdaf/ashen.nvim",
+    lazy = true,
+    priority = 1000,
+  },
+  {
+    "OldJobobo/miasma.nvim",
+    lazy = true,
+    priority = 1000,
+  },
 }

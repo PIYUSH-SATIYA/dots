@@ -3,14 +3,8 @@
 set -e
 
 DIR="$HOME/Pictures/wallpapers"
+
 FULL_PATH="${1:-$(find "$DIR" -type f | shuf -n 1)}"
-
-LOCK_WALL="$HOME/.cache/lockscreen.png"
-
-# Set wallpaper
-# awww img "$FULL_PATH" \
-#   --transition-type outer \
-#   --transition-step 90
 
 TRANSITIONS=(
   "grow"
@@ -29,98 +23,133 @@ awww img "$FULL_PATH" \
   --transition-duration 1.2 \
   --transition-step 90
 
-# Generate pywal colors
-# wal -i "$FULL_PATH" -n --backend colorthief
-wal -i "$FULL_PATH" -n --backend colorthief
-# ~/.cargo/bin/wallust run "$FULL_PATH"
+"$HOME/.config/theme-system/generate-lockscreen.sh" "$FULL_PATH"
 
-# Apply pywal color to Chromium
-source "$HOME/.cache/wal/colors.sh"
+MODE=$(cat "$HOME/.config/theme-system/mode")
 
-hex_to_rgb() {
-  hex="${1#"#"}"
-  printf "%d %d %d\n" \
-    "0x${hex:0:2}" \
-    "0x${hex:2:2}" \
-    "0x${hex:4:2}"
-}
+if [ "$MODE" = "dynamic" ]; then
+  wal -i "$FULL_PATH" \
+    -n \
+    --backend colorthief
 
-rgb_to_hex() {
-  printf "#%02x%02x%02x\n" "$1" "$2" "$3"
-}
-
-blend_colors() {
-  read r1 g1 b1 <<<"$(hex_to_rgb "$1")"
-  read r2 g2 b2 <<<"$(hex_to_rgb "$2")"
-
-  r=$(((r1 * 60 + r2 * 40) / 100))
-  g=$(((g1 * 60 + g2 * 40) / 100))
-  b=$(((b1 * 60 + b2 * 40) / 100))
-
-  rgb_to_hex "$r" "$g" "$b"
-}
-
-# Blend background with muted accent
-CHROMIUM_COLOR=$(blend_colors "$background" "$color2")
-
-mkdir -p /etc/chromium/policies/managed
-
-cat <<EOF >/etc/chromium/policies/managed/theme.json
-{
-  "BrowserThemeColor": "$CHROMIUM_COLOR",
-  "BrowserColorScheme": "dark"
-}
-EOF
-
-if pgrep -x chromium >/dev/null; then
-  chromium --refresh-platform-policy --no-startup-window >/dev/null 2>&1 &
+  "$HOME/.config/theme-system/refresh.sh"
 fi
 
-### adding for more readability and contrast by opencode
-# Override pywal special colors for readability
-# ~/.config/wal/override-special.py
-# Override pywal special colors for readability (fast path, requires jq)
-# wal_json="$HOME/.cache/wal/colors.json"
-# tmp_json="${wal_json}.tmp"
-# jq \
-#   --arg bg "#101317" \
-#   --arg fg "#e6e6e6" \
-#   '(.special.background) = $bg
-#    | (.special.foreground) = $fg
-#    | (.special.cursor) = $fg' \
-#   "$wal_json" >"$tmp_json" && mv "$tmp_json" "$wal_json"
-
-# Generate blurred lockscreen
-(
-  TMP_LOCK="${LOCK_WALL}.tmp"
-
-  magick "$FULL_PATH" \
-    -resize 1920x1080^ \
-    -gravity center \
-    -extent 1920x1080 \
-    -gaussian-blur 0x4 \
-    -fill black -colorize 35% \
-    "$TMP_LOCK"
-
-  # magick "$FULL_PATH" \
-  #   -resize 1920x1080^ \
-  #   -gravity center \
-  #   -extent 1920x1080 \
-  #   -blur 0x4 \
-  #   -brightness-contrast -20x-25 \
-  #   "$TMP_LOCK"
-
-  mv "$TMP_LOCK" "$LOCK_WALL"
-) &
-
-# Reload waybar
-killall waybar || true
-
-while pgrep -u "$USER" -x waybar >/dev/null; do
-  sleep 0.2
-done
-
-waybar >/dev/null 2>&1 &
+##!/bin/bash
+#
+#set -e
+#
+#DIR="$HOME/Pictures/wallpapers"
+#FULL_PATH="${1:-$(find "$DIR" -type f | shuf -n 1)}"
+#
+#LOCK_WALL="$HOME/.cache/lockscreen.png"
+#
+#MODE=$(cat "$HOME/.config/theme-system/mode")
+#
+## Set wallpaper
+## awww img "$FULL_PATH" \
+##   --transition-type outer \
+##   --transition-step 90
+#
+#TRANSITIONS=(
+#  "grow"
+#  "outer"
+#  "wipe"
+#  "wave"
+#  "center"
+#  "random"
+#)
+#
+#TRANSITION=${TRANSITIONS[$RANDOM % ${#TRANSITIONS[@]}]}
+#
+#awww img "$FULL_PATH" \
+#  --transition-type "$TRANSITION" \
+#  --transition-fps 60 \
+#  --transition-duration 1.2 \
+#  --transition-step 90
+#
+## Generate pywal colors
+## wal -i "$FULL_PATH" -n --backend colorthief
+#if [ "$MODE" = "dynamic" ]; then
+#  wal -i "$FULL_PATH" \
+#    -n \
+#    --backend colorthief \
+#    -o "$HOME/.config/theme-system/refresh-for-custom-theme.sh"
+#fi
+#
+## Apply pywal color to Chromium
+#source "$HOME/.cache/wal/colors.sh"
+#
+#hex_to_rgb() {
+#  hex="${1#"#"}"
+#  printf "%d %d %d\n" \
+#    "0x${hex:0:2}" \
+#    "0x${hex:2:2}" \
+#    "0x${hex:4:2}"
+#}
+#
+#rgb_to_hex() {
+#  printf "#%02x%02x%02x\n" "$1" "$2" "$3"
+#}
+#
+#blend_colors() {
+#  read r1 g1 b1 <<<"$(hex_to_rgb "$1")"
+#  read r2 g2 b2 <<<"$(hex_to_rgb "$2")"
+#
+#  r=$(((r1 * 60 + r2 * 40) / 100))
+#  g=$(((g1 * 60 + g2 * 40) / 100))
+#  b=$(((b1 * 60 + b2 * 40) / 100))
+#
+#  rgb_to_hex "$r" "$g" "$b"
+#}
+#
+## Blend background with muted accent
+#CHROMIUM_COLOR=$(blend_colors "$background" "$color2")
+#
+#mkdir -p /etc/chromium/policies/managed
+#
+#cat <<EOF >/etc/chromium/policies/managed/theme.json
+#{
+#  "BrowserThemeColor": "$CHROMIUM_COLOR",
+#  "BrowserColorScheme": "dark"
+#}
+#EOF
+#
+#if pgrep -x chromium >/dev/null; then
+#  chromium --refresh-platform-policy --no-startup-window >/dev/null 2>&1 &
+#fi
+#
+## Generate blurred lockscreen
+#(
+#  TMP_LOCK="${LOCK_WALL}.tmp"
+#
+#  magick "$FULL_PATH" \
+#    -resize 1920x1080^ \
+#    -gravity center \
+#    -extent 1920x1080 \
+#    -gaussian-blur 0x4 \
+#    -fill black -colorize 35% \
+#    "$TMP_LOCK"
+#
+#  # magick "$FULL_PATH" \
+#  #   -resize 1920x1080^ \
+#  #   -gravity center \
+#  #   -extent 1920x1080 \
+#  #   -blur 0x4 \
+#  #   -brightness-contrast -20x-25 \
+#  #   "$TMP_LOCK"
+#
+#  mv "$TMP_LOCK" "$LOCK_WALL"
+#) &
+#
+## Reload waybar
+#killall waybar || true
+#
+#while pgrep -u "$USER" -x waybar >/dev/null; do
+#  sleep 0.2
+#done
+#
+#waybar >/dev/null 2>&1 &
 
 # Reload swaync
 swaync-client -rs || true

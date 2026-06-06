@@ -10,7 +10,7 @@
 @define-color yellow @color3;
 @define-color green @color5;
 @define-color blue @color4;
-@define-color module-bg alpha(@color1, 0.45);
+@define-color module-bg alpha(@color8, 0.25);
 @define-color tooltip-bg alpha(@color0, 0.85);
 
 * {

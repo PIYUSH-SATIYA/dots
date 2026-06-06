@@ -98,3 +98,6 @@ hl.bind(
 	hl.dsp.exec_cmd("bash ~/.config/hypr/scripts/toggle-dnd.sh"),
 	{ description = "Toggle do not disturb mode" }
 )
+
+-- gnome-calculator
+hl.bind("XF86Calculator", hl.dsp.exec_cmd("gnome-calculator"), { description = "Open calculator" })

@@ -59,7 +59,13 @@ hl.bind("SUPER + W", hl.dsp.exec_cmd("bash ~/.config/hypr/scripts/wallpaper.sh")
 hl.bind(
 	"SUPER + SHIFT + W",
 	hl.dsp.exec_cmd("walker -t pywal --provider menus:wallpaper"),
-	{ description = "Open wallpaper selection menu" }
+	{ description = "Open wallpaper-grid selection menu" }
+)
+
+hl.bind(
+	"SUPER + ALT + W",
+	hl.dsp.exec_cmd("walker -t pywal --provider menus:themes"),
+	{ description = "Open theme selection menu" }
 )
 
 -- Clipboard
@@ -91,5 +97,5 @@ hl.bind(
 hl.bind(
 	"CTRL + ALT + I",
 	hl.dsp.exec_cmd("bash ~/.config/hypr/scripts/toggle-idle.sh"),
-	{ description = "Toggle idle mode" }
+	{ description = "Toggle idle screen locking" }
 )

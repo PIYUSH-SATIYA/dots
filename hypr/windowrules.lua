@@ -28,7 +28,7 @@ hl.window_rule({
 		class = "^(floating_impala)$",
 	},
 	float = true,
-	size = {1000, 600},
+	size = { 1000, 600 },
 	center = true,
 })
 
@@ -39,7 +39,7 @@ hl.window_rule({
 		class = "^(floating_bluetui)$",
 	},
 	float = true,
-	size = {1000, 600},
+	size = { 1000, 600 },
 	center = true,
 })
 
@@ -50,7 +50,7 @@ hl.window_rule({
 		class = "^(floating_btop)$",
 	},
 	float = true,
-	size = {1200, 800},
+	size = { 1200, 800 },
 	center = true,
 })
 
@@ -61,4 +61,16 @@ hl.window_rule({
 		class = "^(org\\.pwmt\\.zathura)$",
 	},
 	opacity = "0.85 0.65",
+})
+
+-- gnome-calculator
+hl.window_rule({
+	name = "Calculator",
+	match = {
+		class = "^(org.gnome.Calculator)$",
+	},
+	float = true,
+	size = { 400, 500 },
+	center = true,
+  opacity = "0.9 0.65"
 })
