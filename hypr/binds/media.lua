@@ -12,10 +12,24 @@
 
 -- bindel = , XF86AudioMute, exec, pamixer -t
 
+-- audio
+
 hl.bind(
 	"XF86AudioRaiseVolume",
 	hl.dsp.exec_cmd("swayosd-client --output-volume +5"),
 	{ locked = true, description = "Increase system volume" }
+)
+
+hl.bind(
+	"ALT + XF86AudioRaiseVolume",
+	hl.dsp.exec_cmd("swayosd-client --output-volume +1"),
+	{ locked = true, description = "Increase system volume (fine)" }
+)
+
+hl.bind(
+	"ALT + XF86AudioLowerVolume",
+	hl.dsp.exec_cmd("swayosd-client --output-volume -1"),
+	{ locked = true, description = "Decrease system volume (fine)" }
 )
 
 hl.bind(
@@ -40,10 +54,6 @@ hl.bind(
 
 -- Brightness
 
--- bindel = , XF86MonBrightnessUp, exec, brightnessctl s +5%
-
--- bindel = , XF86MonBrightnessDown, exec, brightnessctl s 5%-
-
 hl.bind(
 	"XF86MonBrightnessUp",
 	hl.dsp.exec_cmd("swayosd-client --brightness +5"),
@@ -54,6 +64,18 @@ hl.bind(
 	"XF86MonBrightnessDown",
 	hl.dsp.exec_cmd("swayosd-client --brightness -5"),
 	{ locked = true, description = "Decrease screen brightness" }
+)
+
+hl.bind(
+	"ALT + XF86MonBrightnessUp",
+	hl.dsp.exec_cmd("swayosd-client --brightness +1"),
+	{ locked = true, description = "Increase screen brightness (fine)" }
+)
+
+hl.bind(
+	"ALT + XF86MonBrightnessDown",
+	hl.dsp.exec_cmd("swayosd-client --brightness -1"),
+	{ locked = true, description = "Decrease screen brightness (fine)" }
 )
 
 -- Media
