@@ -65,7 +65,7 @@ JetBrains/*
 whoozle.github.io/
 whoozle.github.io/*
 
-~/.config/nvim/lua/current_theme.lua
-~/.config/theme-system/current_wallpaper
-~/.config/theme-system/current_wallpaper
-~/.config/theme-system/mode
+nvim/lua/current_theme.lua
+theme-system/current-theme
+theme-system/current-wallpaper
+theme-system/mode
