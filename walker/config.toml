@@ -313,6 +313,6 @@ keybinds = [
 ]
 
 wallpaper = [
-{ action = "execute", default = true, bind = "Return", after = "KeepOpen" }
+{ action = "execute", default = true, bind = "Return", after = "KeepOpen" },
 { action = "menus:parent", default = true, bind = "ctrl b", after = "Nothing" }
 ]

@@ -1,7 +1,10 @@
 #!/bin/bash
 
-echo "dynamic" >"$HOME/.config/theme-system/mode"
+set -e
 
-FULL_PATH=$(cat ~/.cache/wal/wal)
+HOME_DIR="$HOME"
 
-~/.config/hypr/scripts/wallpaper.sh "$FULL_PATH"
+echo "dynamic" \
+  >"$HOME_DIR/.config/theme-system/mode"
+
+"$HOME_DIR/.config/theme-system/apply-theme.sh"

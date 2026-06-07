@@ -54,7 +54,13 @@ hl.bind("SUPER + SPACE", hl.dsp.exec_cmd("walker -t pywal"), { description = "Op
 
 -- wallpaper change with awww
 
-hl.bind("SUPER + W", hl.dsp.exec_cmd("bash ~/.config/hypr/scripts/wallpaper.sh"), { description = "Change wallpaper" })
+hl.bind(
+	"SUPER + W",
+	hl.dsp.exec_cmd("bash ~/.config/theme-system/set-wallpaper.sh"),
+	{ description = "Change wallpaper" }
+)
+
+-- hl.bind("SUPER + W", hl.dsp.exec_cmd("bash ~/.config/hypr/scripts/wallpaper.sh"), { description = "Change wallpaper" })
 
 hl.bind(
 	"SUPER + SHIFT + W",

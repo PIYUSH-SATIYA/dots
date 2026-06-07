@@ -80,7 +80,7 @@ function GetEntries()
 					Preview = line,
 					PreviewType = "file",
 					Actions = {
-						default = "~/.config/hypr/scripts/wallpaper.sh " .. sq(line),
+						default = "~/.config/theme-system/set-wallpaper.sh" .. sq(line),
 					},
 				})
 			end

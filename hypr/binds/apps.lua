@@ -32,11 +32,11 @@ hl.bind(
 
 -- File manager
 
-hl.bind("SUPER + SHIFT + F", hl.dsp.exec_cmd("kitty yazi"), { description = "Open Yazi file manager" })
+hl.bind("SUPER + SHIFT + F", hl.dsp.exec_cmd("nautilus"), { description = "Open Yazi file manager" })
 
 -- Editor
 
-hl.bind("SUPER + SHIFT + N", hl.dsp.exec_cmd("code"), { description = "Open VS Code" })
+hl.bind("SUPER + SHIFT + N", hl.dsp.exec_cmd("kitty nvim"), { description = "Open VS Code" })
 
 -- Resource monitor
 

@@ -1,13 +1,21 @@
 #!/bin/bash
 
 # Reload Waybar
-killall waybar || true
+pkill waybar || true
 
 while pgrep -u "$USER" -x waybar >/dev/null; do
   sleep 0.1
 done
 
 waybar >/dev/null 2>&1 &
+
+# Reload Neovim
+if command -v nvr >/dev/null; then
+  nvr --serverlist | while read -r server; do
+    nvr --servername "$server" \
+      -c "doautocmd User ThemeReload"
+  done
+fi
 
 # Reload swaync
 swaync-client -rs || true
@@ -39,7 +47,7 @@ blend_colors() {
   rgb_to_hex "$r" "$g" "$b"
 }
 
-CHROMIUM_COLOR=$(blend_colors "$background" "$color2")
+CHROMIUM_COLOR=$(blend_colors "$background" "$color8")
 
 mkdir -p /etc/chromium/policies/managed
 
@@ -53,12 +61,4 @@ EOF
 if pgrep -x chromium >/dev/null; then
   chromium --refresh-platform-policy \
     --no-startup-window >/dev/null 2>&1 &
-fi
-
-# Reload Neovim
-if command -v nvr >/dev/null; then
-  nvr --serverlist | while read -r server; do
-    nvr --servername "$server" \
-      -c "doautocmd User ThemeReload"
-  done
 fi

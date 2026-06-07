@@ -72,5 +72,24 @@ hl.window_rule({
 	float = true,
 	size = { 400, 500 },
 	center = true,
-  opacity = "0.9 0.65"
+	opacity = "0.9 0.65",
+})
+
+hl.window_rule({
+	name = "notes",
+
+	match = {
+		title = "^(nvim notes.md)$",
+	},
+
+	float = true,
+	pin = true,
+
+	size = { 700, 500 },
+	move = { "70%", "5%" },
+
+	opacity = 0.85,
+
+	border_size = 0,
+	no_focus = true,
 })

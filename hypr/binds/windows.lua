@@ -137,3 +137,9 @@ hl.bind(
 	hl.dsp.window.move({ out_of_group = true }),
 	{ description = "Move active window out of current group" }
 )
+
+hl.bind("SUPER + o", hl.dsp.exec_raw("~/.config/hypr/scripts/window-pop.sh"), { description = "Pop window out" })
+
+hl.bind("SUPER + mouse:272", hl.dsp.window.drag(), { description = "Move window with mouse", mouse = true })
+
+hl.bind("SUPER + mouse:273", hl.dsp.window.resize(), { description = "Resize window with mouse", mouse = true })
