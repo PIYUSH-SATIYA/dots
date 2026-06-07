@@ -20,3 +20,22 @@ echo "$THEME" \
   >"$HOME_DIR/.config/theme-system/current-theme"
 
 "$HOME_DIR/.config/theme-system/apply-theme.sh"
+
+# RANDOM WALLPAPER FROM THEME DIRECTORY
+
+WALLPAPER_DIR="$HOME_DIR/Pictures/wallpapers/$THEME"
+
+FULL_PATH=$(
+  find "$WALLPAPER_DIR" -type f \
+    \( \
+    -iname "*.jpg" -o \
+    -iname "*.jpeg" -o \
+    -iname "*.png" -o \
+    -iname "*.webp" \
+    \) | shuf -n 1
+)
+
+if [ -n "$FULL_PATH" ]; then
+  "$HOME_DIR/.config/theme-system/set-wallpaper.sh" \
+    "$FULL_PATH"
+fi
