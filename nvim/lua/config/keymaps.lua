@@ -13,3 +13,6 @@ vim.keymap.set("i", "<M-l>", "<Esc>$a", { desc = "Move to line end" })
 
 -- to map jk in insert mode as escape key
 vim.keymap.set("i", "kj", "<Esc>", { noremap = true, silent = true })
+
+-- file manager
+vim.keymap.set("n", "<leader>y", "<cmd>Yazi<cr>", { desc = "Open Yazi" })

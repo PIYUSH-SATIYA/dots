@@ -1,23 +1,16 @@
 #!/bin/bash
 
 terminal_pid=$(hyprctl activewindow | awk '/pid:/ {print $2}')
-echo "$terminal_pid" \
-  -P $terminal_pid" >&2" >&2"
-echo "pgrep
 
 shell_pid=$(
   pgrep -P "$terminal_pid" | while read -r pid; do
     exe=$(readlink -f "/proc/$pid/exe" 2>/dev/null) || continue
-    echo "Checking PID $pid with exe $exe" >&2
     grep -qsF "$exe" /etc/shells && echo "$pid" && break
-    echo "PID $pid is not a shell" >&2
   done
 )
-echo "Found shell PID: $shell_pid" >&2
 
 if [[ -n $shell_pid ]]; then
   cwd=$(readlink -f "/proc/$shell_pid/cwd" 2>/dev/null)
-  echo "Shell CWD: $cwd" >&2
   [[ -d $cwd ]] && echo "$cwd" || echo "$HOME"
 else
   echo "$HOME"

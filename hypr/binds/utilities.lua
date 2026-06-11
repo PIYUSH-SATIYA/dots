@@ -34,13 +34,12 @@ hl.bind("SUPER + SHIFT + R", hl.dsp.exec_cmd("hyprctl reload"), { description = 
 
 -- Exit Hyprland
 
-hl.bind("SUPER + SHIFT + Q", hl.dsp.exit(), { description = "Exit Hyprland session" })
+-- hl.bind("SUPER + SHIFT + Q", hl.dsp.exit(), { description = "Exit Hyprland session" })
 
 -- OBS monitor focus
 
-hl.bind("SUPER + F9", hl.dsp.focus({ workspace = "name:OBS" }), { description = "Focus OBS monitor" })
-
-hl.bind("SUPER + F8", hl.dsp.focus({ workspace = "name:eDP-2" }), { description = "Focus laptop display" })
+hl.bind("SUPER + F9", hl.dsp.focus({ monitor = "OBS" }), { description = "Focus OBS monitor" })
+hl.bind("SUPER + F8", hl.dsp.focus({ monitor = "eDP-1" }), { description = "Focus laptop display" })
 
 -- refresh waybar
 

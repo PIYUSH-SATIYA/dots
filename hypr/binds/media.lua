@@ -53,28 +53,50 @@ hl.bind(
 )
 
 -- Brightness
+--
+local function brightness(step)
+	return string.format(
+		[[
+		sh -c '
+			brightnessctl -e set "%s"
+
+			current=$(brightnessctl g)
+			max=$(brightnessctl m)
+
+			progress=$(awk "BEGIN { print $current/$max }")
+			percent=$(( current * 100 / max ))
+
+			swayosd-client \
+				--custom-icon display-brightness-symbolic \
+				--custom-progress "$progress" \
+				--custom-progress-text "$(printf "%%3d%%%%" "$percent")"
+		'
+	]],
+		step
+	)
+end
 
 hl.bind(
 	"XF86MonBrightnessUp",
-	hl.dsp.exec_cmd("swayosd-client --brightness +5"),
+	hl.dsp.exec_cmd(brightness("+5%")),
 	{ locked = true, description = "Increase screen brightness" }
 )
 
 hl.bind(
 	"XF86MonBrightnessDown",
-	hl.dsp.exec_cmd("swayosd-client --brightness -5"),
+	hl.dsp.exec_cmd(brightness("5%-")),
 	{ locked = true, description = "Decrease screen brightness" }
 )
 
 hl.bind(
 	"ALT + XF86MonBrightnessUp",
-	hl.dsp.exec_cmd("swayosd-client --brightness +1"),
+	hl.dsp.exec_cmd(brightness("+1%")),
 	{ locked = true, description = "Increase screen brightness (fine)" }
 )
 
 hl.bind(
 	"ALT + XF86MonBrightnessDown",
-	hl.dsp.exec_cmd("swayosd-client --brightness -1"),
+	hl.dsp.exec_cmd(brightness("1%-")),
 	{ locked = true, description = "Decrease screen brightness (fine)" }
 )
 

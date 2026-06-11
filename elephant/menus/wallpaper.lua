@@ -4,84 +4,85 @@ Icon = "image-x-generic"
 Cache = false
 HideFromProviderlist = false
 Description = "Wallpaper picker"
+Action = ""
 
 local HOME = os.getenv("HOME")
 local ROOT_DIR = HOME .. "/Pictures/wallpapers"
 local STATE = "/tmp/walker-wallpaper-nav"
--- adjust if your open command differs:
-local OPEN_CMD = "walker -t pywal --provider menus:wallpaper"
 
-local function is_image(path)
-	path = path:lower()
-	return path:match("%.jpg$") or path:match("%.jpeg$") or path:match("%.png$") or path:match("%.webp$")
+local function is_image(p)
+	p = p:lower()
+	return p:match("%.jpg$") or p:match("%.jpeg$") or p:match("%.png$") or p:match("%.webp$")
 end
-
-local function basename(path)
-	return path:match("([^/]+)$")
+local function basename(p)
+	return p:match("([^/]+)$")
 end
-
-local function sq(path)
-	return "'" .. path:gsub("'", "'\\''") .. "'"
+local function sq(p)
+	return "'" .. p:gsub("'", "'\\''") .. "'"
 end
 
 local function read_state()
 	local f = io.open(STATE, "r")
 	if f then
-		local dir = f:read("*l")
+		local d = f:read("*l")
 		f:close()
-		if dir and dir ~= "" then
-			return dir
+		if d and d ~= "" then
+			return d
 		end
 	end
 	return ROOT_DIR
 end
 
--- shell cmd: write new dir to statefile, reopen walker
-local function nav(path)
-	return "printf '%s\\n' " .. sq(path) .. " > " .. STATE .. " && " .. OPEN_CMD .. " &"
+local function set_dir(path)
+	return "printf '%s\\n' " .. sq(path) .. " > " .. STATE
 end
 
 function GetEntries()
 	local current_dir = read_state()
 	local entries = {}
 
-	-- BACK
-	if current_dir ~= ROOT_DIR then
-		local parent = current_dir:match("(.+)/[^/]+$") or ROOT_DIR
+	local parent = current_dir:match("(.+)/[^/]+$") or ROOT_DIR
+	local can_go_back = current_dir ~= ROOT_DIR
+
+	if can_go_back then
 		table.insert(entries, {
 			Text = "    ..",
 			Subtext = "↑ " .. basename(parent),
-			Actions = { default = nav(parent) },
+			Actions = { navigate = set_dir(parent), back = set_dir(parent) },
 		})
 	end
 
-	-- DIRS
 	local dh = io.popen("find " .. sq(current_dir) .. " -maxdepth 1 -mindepth 1 -type d | sort")
 	if dh then
 		for line in dh:lines() do
+			local a = { navigate = set_dir(line) }
+			if can_go_back then
+				a.back = set_dir(parent)
+			end
 			table.insert(entries, {
 				Text = "    " .. basename(line),
 				Subtext = line,
-				Actions = { default = nav(line) },
+				Actions = a,
 			})
 		end
 		dh:close()
 	end
 
-	-- IMAGES
 	local fh = io.popen("find " .. sq(current_dir) .. " -maxdepth 1 -mindepth 1 -type f | sort")
 	if fh then
 		for line in fh:lines() do
 			if is_image(line) then
+				local a = { apply = "~/.config/theme-system/set-wallpaper.sh " .. sq(line) }
+				if can_go_back then
+					a.back = set_dir(parent)
+				end
 				table.insert(entries, {
 					Text = basename(line):gsub("%.%w+$", ""),
 					Subtext = line,
 					Value = line,
 					Preview = line,
 					PreviewType = "file",
-					Actions = {
-						default = "~/.config/theme-system/set-wallpaper.sh" .. sq(line),
-					},
+					Actions = a,
 				})
 			end
 		end
