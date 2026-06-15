@@ -166,3 +166,7 @@ hl.config({
 hl.bind("switch:on:Lid Switch", hl.dsp.exec_cmd("pidof hyprlock || hyprlock"), { locked = true })
 
 require("input")
+
+-- debug({
+-- 	disable_logs = true,
+-- })

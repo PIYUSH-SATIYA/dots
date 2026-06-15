@@ -16,3 +16,9 @@ vim.keymap.set("i", "kj", "<Esc>", { noremap = true, silent = true })
 
 -- file manager
 vim.keymap.set("n", "<leader>y", "<cmd>Yazi<cr>", { desc = "Open Yazi" })
+
+-- toggle comment in insert mode
+vim.keymap.set("i", "<C-/>", "<Esc>gcci", {
+  remap = true,
+  desc = "Toggle comment",
+})

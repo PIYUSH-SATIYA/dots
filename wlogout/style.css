@@ -12,9 +12,10 @@
 window {
   background-color: rgba(0, 0, 0, 0.05);
 }
+
 button {
   color: @foreground;
-  font-size:23px;
+  font-size: 23px;
 
   margin: 120px 0px;
 
@@ -50,6 +51,7 @@ Buttons
 #lock {
   border-radius: 50px 0px 0px 50px;
 }
+
 #lock:hover {
   border-radius: 50px;
 }

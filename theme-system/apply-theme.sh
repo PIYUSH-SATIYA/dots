@@ -20,11 +20,11 @@ else
 
   wal -f "$HOME_DIR/.config/themes/${THEME}/${THEME}.json"
 
-  NVIM_THEME="$HOME_DIR/.config/themes/$THEME/nvim.lua"
+  NVIM_THEME="$HOME_DIR/.config/themes/$THEME/nvim.txt"
 
   if [ -f "$NVIM_THEME" ]; then
     cp "$NVIM_THEME" \
-      "$HOME_DIR/.config/nvim/lua/current_theme.lua"
+      "$HOME_DIR/.config/nvim/lua/current_theme.txt"
   fi
 
 fi

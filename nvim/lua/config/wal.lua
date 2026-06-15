@@ -87,6 +87,9 @@ function M.apply()
   vim.api.nvim_set_hl(0, "NeoTreeIndentMarker", { fg = c.color8 })
   vim.api.nvim_set_hl(0, "NeoTreeExpander", { fg = c.color8 })
   vim.api.nvim_set_hl(0, "NeoTreeFileIcon", { fg = c.color6 })
+  vim.api.nvim_set_hl(0, "IblScope", {
+    fg = c.color4,
+  })
   local ts_links = {
     ["@variable"] = "Identifier",
     ["@variable.builtin"] = "Special",

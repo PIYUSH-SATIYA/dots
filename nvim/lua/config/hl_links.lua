@@ -97,6 +97,13 @@ local function link_group(name, target)
   if name == target or skip[name] then
     return true
   end
+  if name:match("^SnacksIndent") then
+    return true
+  end
+
+  if name == target or skip[name] then
+    return true
+  end
   vim.api.nvim_set_hl(0, name, { link = target })
   return true
 end

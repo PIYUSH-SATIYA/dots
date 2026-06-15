@@ -32,7 +32,7 @@ hl.bind(
 
 -- File manager
 
-hl.bind("SUPER + SHIFT + F", hl.dsp.exec_cmd("nautilus"), { description = "Open Yazi file manager" })
+hl.bind("SUPER + SHIFT + F", hl.dsp.exec_cmd("kitty -e yazi"), { description = "Open Yazi file manager" })
 
 -- Editor
 

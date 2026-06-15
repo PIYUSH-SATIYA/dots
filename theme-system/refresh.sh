@@ -10,12 +10,31 @@ done
 waybar >/dev/null 2>&1 &
 
 # Reload Neovim
-if command -v nvr >/dev/null; then
-  nvr --serverlist | while read -r server; do
-    nvr --servername "$server" \
-      -c "doautocmd User ThemeReload"
-  done
+mode=$(<~/.config/theme-system/mode)
+
+if [ "$mode" = "dynamic" ]; then
+  theme="pywal16"
+else
+  theme=$(<~/.config/nvim/lua/current_theme.txt)
 fi
+
+while read -r server; do
+  nvr --servername "$server" \
+    -c "colorscheme $theme"
+done < <(nvr --serverlist)
+
+#
+#
+# for server in $(nvr --serverlist); do
+#   nvr --servername "$server" \
+#     -c "colorscheme $(cat ~/.config/nvim/lua/current_theme.txt)"
+# done
+# if command -v nvr >/dev/null; then
+#   nvr --serverlist | while read -r server; do
+#     nvr --servername "$server" \
+#       -c "doautocmd User ThemeReload"
+#   done
+# fi
 
 # Reload swaync
 swaync-client -rs || true

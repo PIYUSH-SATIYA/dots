@@ -67,5 +67,8 @@ whoozle.github.io/*
 
 nvim/lua/current_theme.lua
 theme-system/current-theme
+themes/*/nvim.txt
 theme-system/current-wallpaper
 theme-system/mode
+nvim/lua/current_theme.txt
+

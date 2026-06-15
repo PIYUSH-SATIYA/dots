@@ -13,6 +13,10 @@ return {
           pcall(function()
             vim.cmd("colorscheme pywal16")
             require("config.wal").apply()
+            local ok, ibl = pcall(require, "ibl")
+            if ok then
+              ibl.setup()
+            end
             for _, buf in ipairs(vim.api.nvim_list_bufs()) do
               if vim.api.nvim_buf_is_loaded(buf) then
                 local ft = vim.bo[buf].filetype
