@@ -14,10 +14,3 @@ vim.api.nvim_create_autocmd({ "FocusLost", "BufLeave", "InsertLeave" }, {
     end
   end,
 })
-
-vim.api.nvim_create_autocmd("User", {
-  pattern = "ThemeReload",
-  callback = function()
-    print("Theme reload fired")
-  end,
-})
