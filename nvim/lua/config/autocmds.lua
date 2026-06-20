@@ -14,3 +14,10 @@ vim.api.nvim_create_autocmd({ "FocusLost", "BufLeave", "InsertLeave" }, {
     end
   end,
 })
+
+-- lsp keyword highlighting
+--
+vim.api.nvim_set_hl(0, "LspReferenceText", {})
+vim.api.nvim_set_hl(0, "LspReferenceRead", {})
+vim.api.nvim_set_hl(0, "LspReferenceWrite", {})
+

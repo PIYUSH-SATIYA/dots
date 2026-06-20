@@ -1,8 +1,9 @@
 return {
   "saghen/blink.cmp",
   dependencies = { "L3MON4D3/LuaSnip" },
+  require("config.wal").apply(),
   opts = {
-    signature = { enabled = true },
+    signature = { enabled = false },
     keymap = {
       preset = "none",
       ["<C-Space>"] = { "show", "hide" },
@@ -32,6 +33,9 @@ return {
       },
     },
     completion = {
+      documentation = {
+        auto_show = false, -- re-add if this is your only blink spec file
+      },
       list = {
         selection = { preselect = true, auto_insert = false },
       },

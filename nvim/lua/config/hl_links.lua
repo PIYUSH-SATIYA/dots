@@ -94,16 +94,31 @@ local patterns = {
   { ".*Normal$", "Normal" },
 }
 local function link_group(name, target)
+  -- 1. Skip exact matches (your existing skip list)
   if name == target or skip[name] then
-    return true
-  end
-  if name:match("^SnacksIndent") then
     return true
   end
 
-  if name == target or skip[name] then
-    return true
+  -- 2. THE HARDCODED EXCEPTIONS (Prefix matching)
+  -- Add any plugin namespace here to protect its custom colors from being overwritten.
+  local ignore_prefixes = {
+    "^Snacks", -- Protects Snacks.nvim (animations, indent scopes)
+    "^Blink", -- Protects blink.cmp (autocomplete menus)
+    "^Noice", -- Protects Noice (command line, messages, popup UI)
+    "^Mini", -- Protects mini.nvim components
+    "^Yazi", -- Protects Yazi file explorer integration
+    "^Avante", -- Protects Avante AI UI
+  }
+
+  for _, prefix in ipairs(ignore_prefixes) do
+    if name:match(prefix) then
+      -- If the highlight group name starts with one of these prefixes,
+      -- return immediately and DO NOT link/overwrite it.
+      return true
+    end
   end
+
+  -- 3. If it survived the checks above, enforce the Pywal target!
   vim.api.nvim_set_hl(0, name, { link = target })
   return true
 end

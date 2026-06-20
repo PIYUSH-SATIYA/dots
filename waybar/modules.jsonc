@@ -91,9 +91,9 @@
       "portable": "",
       "car": "",
       "default": [
-        "<span size='12pt'>󰕿</span>",
-        "<span size='12pt'>󰖀</span>",
-        "<span size='12pt'>󰕾</span>"
+          "󰕿",
+          "󰖀",
+          "󰕾"
       ]
     }
   },

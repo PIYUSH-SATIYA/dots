@@ -52,7 +52,7 @@ function M.apply()
   local sp = data.special or {}
   local fg = sp.foreground or c.color15
   local bg = sp.background or c.color0
-  local visual_bg = blend(c.color8 or fg, bg, 0.35)
+  local visual_bg = blend(c.color8 or fg, bg, 0.25)
   local cursorline_bg = blend(c.color8 or fg, bg, 0.2)
   local float_bg = blend(bg, c.color0 or bg, 0.95)
   local border_fg = blend(c.color4 or fg, bg, 0.6)
@@ -87,6 +87,10 @@ function M.apply()
   vim.api.nvim_set_hl(0, "NeoTreeIndentMarker", { fg = c.color8 })
   vim.api.nvim_set_hl(0, "NeoTreeExpander", { fg = c.color8 })
   vim.api.nvim_set_hl(0, "NeoTreeFileIcon", { fg = c.color6 })
+
+  -- for completion ghost text color
+  vim.api.nvim_set_hl(0, "BlinkCmpGhostText", { fg = c.color8 or fg, italic = true })
+
   vim.api.nvim_set_hl(0, "IblScope", {
     fg = c.color4,
   })
