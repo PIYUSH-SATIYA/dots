@@ -23,24 +23,21 @@ end
 return {
   {
     "LazyVim/LazyVim",
-    opts = {
-      colorscheme = startup_theme,
-    },
+    opts = { colorscheme = startup_theme },
   },
-
-  "uZer/pywal16.nvim",
-  lazy = false,
-  priority = 1000,
-  config = function()
-    require("config.hl_links").setup()
-
-    if mode == "dynamic" then
-      require("config.wal").setup()
-      require("config.wal").apply()
-    end
-  end,
+  {
+    "uZer/pywal16.nvim",
+    lazy = false,
+    priority = 1000,
+    config = function()
+      require("config.hl_links").setup()
+      if mode == "dynamic" then
+        require("config.wal").setup()
+        require("config.wal").apply()
+      end
+    end,
+  },
 }
-
 --
 --
 -- return {

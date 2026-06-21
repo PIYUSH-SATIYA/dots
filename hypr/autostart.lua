@@ -6,21 +6,15 @@
 
 -- Notifications
 
-
 -- Wallpaper
-
 
 -- Idle daemon
 
-
 -- Status bar
-
 
 -- Volume OSD
 
-
 -- Polkit agent
-
 
 -- Clipboard manager (optional later)
 
@@ -32,24 +26,28 @@
 
 -- walker and elephant
 
-
-
 -- Cursor
-
 
 -- Environment propagation
 
-
 -- Autostart
 hl.on("hyprland.start", function()
-    hl.exec_cmd("swaync")
-    hl.exec_cmd("awww-daemon")
-    hl.exec_cmd("hypridle")
-    hl.exec_cmd("waybar")
-    hl.exec_cmd("swayosd-server")
-    hl.exec_cmd("/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1")
-    hl.exec_cmd("elephant")
-    hl.exec_cmd("env GSK_RENDERER=cairo walker --gapplication-service")
-    hl.exec_cmd("hyprctl setcursor Bibata-Modern-Ice 22")
-    hl.exec_cmd("dbus-update-activation-environment --systemd --all")
+	hl.exec_cmd("swaync")
+	hl.exec_cmd("awww-daemon")
+	hl.exec_cmd("hypridle")
+	hl.exec_cmd("waybar")
+	hl.exec_cmd("swayosd-server")
+	hl.exec_cmd("/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1")
+	hl.exec_cmd("elephant")
+	hl.exec_cmd("env GSK_RENDERER=cairo walker --gapplication-service")
+	hl.exec_cmd("hyprctl setcursor Bibata-Modern-Ice 22")
+	hl.exec_cmd("dbus-update-activation-environment --systemd --all")
+
+	-- for graphical session starting to xdg-desktop portal
+	-- manually bridges Hyprland into systemd's graphical-session.target — required since xdg-desktop-portal 1.22
+	hl.exec_cmd("systemctl --user start hyprland-session.target")
+end)
+
+hl.on("hyprland.shutdown", function()
+	os.execute("systemctl --user stop hyprland-session.target && sleep 0.1")
 end)
