@@ -56,7 +56,7 @@
 
     "group/right-hidden-top" : {
         "orientation": "horizontal",
-        "modules" : [ "group/right-hidden",  "custom/ctlcenter" ]
+        "modules" : [ "group/right-hidden" , "temperature" , "custom/ctlcenter"]
     },
 
     "modules-left"   : ["group/left-hidden-top", "group/left"],

@@ -116,7 +116,11 @@ hl.config({
 	decoration = {
 		blur = {
 			enabled = true,
-			size = 2,
+			size = 3,
+			xray = true,
+			special = true,
+			popups = true,
+			passes = 3,
 		},
 	},
 })

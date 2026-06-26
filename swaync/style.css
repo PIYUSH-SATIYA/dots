@@ -12,30 +12,40 @@
   /* bg-1 / bg-2: semi-transparent panel backgrounds.
      color-mix() requires GTK 4.10+ / recent WebKitGTK.
      Fallback: replace with just var(--background) if broken. */
-  --bg-1:            color-mix(in srgb, var(--background) 92%, transparent);
-  --bg-2:            color-mix(in srgb, var(--color0)     90%, transparent);
-  --bg-btn:          var(--color8);       /* #515252 — neutral gray button  */
-  --bg-btn-hover:    var(--color5);       /* #7f6a65 — warmer hover accent  */
-  --text:            var(--foreground);   /* #c5c5c5 — main text            */
-  --text-disabled:   var(--color8);       /* #515252 — muted / disabled     */
-  --border:          var(--color1);       /* #394d58 — subtle border        */
-  --pri-low:         var(--color7);       /* #c5c5c5 — low-priority stripe  */
-  --pri-normal:      var(--color3);       /* #4c616b — normal priority      */
-  --pri-critical:    var(--color6);       /* #bd8266 — critical (most vivid)*/
+  --bg-1: color-mix(in srgb, var(--background) 92%, transparent);
+  --bg-2: color-mix(in srgb, var(--color0) 90%, transparent);
+  --bg-btn: var(--color8);
+  /* #515252 — neutral gray button  */
+  --bg-btn-hover: var(--color5);
+  /* #7f6a65 — warmer hover accent  */
+  --text: var(--foreground);
+  /* #c5c5c5 — main text            */
+  --text-disabled: var(--color8);
+  /* #515252 — muted / disabled     */
+  /* --border:          var(--color1);       /* #394d58 — subtle border        */
+  */ --pri-low: var(--color7);
+  /* #c5c5c5 — low-priority stripe  */
+  --pri-normal: var(--color3);
+  /* #4c616b — normal priority      */
+  --pri-critical: var(--color6);
+  /* #bd8266 — critical (most vivid)*/
 
   /* --- Layout & Sizes --------------------------------------- */
-  --radius:          16px;
-  --border-width:    1px;
-  --btn-size:        44px;
+  --radius: 16px;
+  --border-width: 1px;
+  --btn-size: 44px;
 
   /* --- Effects ---------------------------------------------- */
-  --transition:      0.15s ease-in-out;
-  --shadow:          0 4px 20px rgba(0, 0, 0, 0.55);
+  --transition: 0.15s ease-in-out;
+  --shadow: 0 4px 20px rgba(0, 0, 0, 0.55);
 
   /* --- Typography ------------------------------------------- */
-  --font-xs:         12px;   /* was 10px */
-  --font-sm:         14px;   /* was 12px */
-  --font-md:         15px;   /* was 14px */
+  --font-xs: 12px;
+  /* was 10px */
+  --font-sm: 14px;
+  /* was 12px */
+  --font-md: 15px;
+  /* was 14px */
 }
 
 /* ─── Base ──────────────────────────────────────────────────── */
@@ -44,40 +54,40 @@
 }
 
 *:focus {
-  outline:    none;
+  outline: none;
   box-shadow: none;
 }
 
 /* ─── Scrollbar ─────────────────────────────────────────────── */
 scrollbar,
 scrollbar slider {
-  opacity:    0;
-  min-width:  0;
+  opacity: 0;
+  min-width: 0;
   min-height: 0;
   background: transparent;
 }
 
 /* ─── Buttons ───────────────────────────────────────────────── */
 .close-button,
-.widget-title > button,
+.widget-title>button,
 .widget-dnd switch,
-.widget-menubar > .menu-button-bar > .widget-menubar-container button,
-.widget-menubar > revealer button,
-.widget-inhibitors > button {
+.widget-menubar>.menu-button-bar>.widget-menubar-container button,
+.widget-menubar>revealer button,
+.widget-inhibitors>button {
   border-radius: var(--radius);
-  border:        none;
-  box-shadow:    none;
-  transition:    background var(--transition);
+  border: none;
+  box-shadow: none;
+  transition: background var(--transition);
 }
 
 .close-button {
-  background:    var(--bg-btn);
-  color:         var(--text);
-  padding:       0;
+  background: var(--bg-btn);
+  color: var(--text);
+  padding: 0;
   border-radius: 50%;
-  margin:        8px;
-  min-width:     var(--btn-size);
-  min-height:    var(--btn-size);
+  margin: 8px;
+  min-width: var(--btn-size);
+  min-height: var(--btn-size);
 }
 
 .close-button:hover {
@@ -100,11 +110,13 @@ scrollbar slider {
 
 .notification-row .notification-background .notification {
   border-radius: var(--radius);
-  border:        var(--border-width) solid var(--border);
-  transition:    background var(--transition);
-  background:    var(--bg-1);
-  padding:       6px;           /* was 2px — more breathing room */
-  min-width:     380px;         /* explicit min-width for floating toasts */
+  border: var(--border-width) solid var(--border);
+  transition: background var(--transition);
+  background: var(--bg-1);
+  padding: 6px;
+  /* was 2px — more breathing room */
+  min-width: 380px;
+  /* explicit min-width for floating toasts */
 }
 
 .notification-row .notification-background .notification.low {
@@ -120,45 +132,48 @@ scrollbar slider {
 }
 
 .notification-default-action {
-  padding:       8px;           /* was 4px */
-  margin:        0;
-  box-shadow:    none;
-  background:    transparent;
-  border:        none;
-  color:         var(--text);
-  transition:    background var(--transition);
+  padding: 8px;
+  /* was 4px */
+  margin: 0;
+  box-shadow: none;
+  background: transparent;
+  border: none;
+  color: var(--text);
+  transition: background var(--transition);
   border-radius: var(--radius);
 }
 
 .notification-default-action:hover {
   -gtk-icon-filter: none;
-  background:       var(--bg-1);
+  background: var(--bg-1);
 }
 
 .notification-default-action:not(:only-child) {
-  border-bottom-left-radius:  0;
+  border-bottom-left-radius: 0;
   border-bottom-right-radius: 0;
 }
 
 /* ─── Notification Content ───────────────────────────────────── */
 .notification-content {
-  background:    transparent;
+  background: transparent;
   border-radius: var(--radius);
-  padding:       4px;           /* was 0 */
+  padding: 4px;
+  /* was 0 */
 }
 
 .notification-content .image {
   -gtk-icon-filter: none;
-  -gtk-icon-size:   36px;       /* was 30px */
-  border-radius:    50px;
-  margin:           0 10px 0 0;
+  -gtk-icon-size: 36px;
+  /* was 30px */
+  border-radius: 50px;
+  margin: 0 10px 0 0;
 }
 
 .notification-content .app-icon {
   -gtk-icon-filter: none;
-  -gtk-icon-size:   calc(28px / 3);
+  -gtk-icon-size: calc(28px / 3);
   -gtk-icon-shadow: 0 1px 4px black;
-  margin:           6px;
+  margin: 6px;
 }
 
 .notification-content .text-box label {
@@ -168,16 +183,18 @@ scrollbar slider {
 .notification-content .text-box .summary,
 .notification-content .text-box .time,
 .notification-content .text-box .body {
-  font-size:  var(--font-xs);   /* 12px — was 10px */
+  font-size: var(--font-xs);
+  /* 12px — was 10px */
   background: transparent;
-  color:      var(--text);
+  color: var(--text);
   text-shadow: none;
 }
 
 .notification-content .text-box .summary,
 .notification-content .text-box .time {
   font-weight: bold;
-  font-size:   var(--font-sm);  /* 14px for headers */
+  font-size: var(--font-sm);
+  /* 14px for headers */
 }
 
 .notification-content .text-box .time {
@@ -186,7 +203,7 @@ scrollbar slider {
 
 .notification-content .text-box .body {
   font-weight: normal;
-  font-size:   var(--font-xs);
+  font-size: var(--font-xs);
 }
 
 .notification-content progressbar {
@@ -194,7 +211,7 @@ scrollbar slider {
 }
 
 .notification-content .body-image {
-  margin-top:       6px;
+  margin-top: 6px;
   background-color: white;
   -gtk-icon-filter: none;
 }
@@ -205,27 +222,27 @@ scrollbar slider {
 }
 
 .notification-content .inline-reply .inline-reply-entry {
-  background:    var(--bg-2);
-  color:         var(--text);
-  caret-color:   var(--text);
-  border:        var(--border-width) solid var(--border);
+  background: var(--bg-2);
+  color: var(--text);
+  caret-color: var(--text);
+  border: var(--border-width) solid var(--border);
   border-radius: var(--radius);
-  font-size:     var(--font-xs);
+  font-size: var(--font-xs);
 }
 
 .notification-content .inline-reply .inline-reply-button {
-  margin-left:   4px;
-  background:    var(--bg-btn);
-  border:        var(--border-width) solid var(--border);
+  margin-left: 4px;
+  background: var(--bg-btn);
+  border: var(--border-width) solid var(--border);
   border-radius: var(--radius);
-  color:         var(--text);
-  font-size:     var(--font-xs);
+  color: var(--text);
+  font-size: var(--font-xs);
 }
 
 .notification-content .inline-reply .inline-reply-button:disabled {
-  background:   initial;
-  color:        var(--text-disabled);
-  border:       var(--border-width) solid var(--border);
+  background: initial;
+  color: var(--text-disabled);
+  border: var(--border-width) solid var(--border);
   border-color: transparent;
 }
 
@@ -235,22 +252,23 @@ scrollbar slider {
 
 /* ─── Alternative Actions ────────────────────────────────────── */
 .notification-alt-actions {
-  background:               none;
-  border-bottom-left-radius:  12px;
+  background: none;
+  border-bottom-left-radius: 12px;
   border-bottom-right-radius: 12px;
-  padding:                  4px;
+  padding: 4px;
 }
 
 .notification-action {
-  margin:    4px;
-  padding:   0;
+  margin: 4px;
+  padding: 0;
   font-size: var(--font-xs);
 }
 
-.notification-action > button {
+.notification-action>button {
   border-radius: var(--radius);
-  font-size:     var(--font-xs);
-  padding:       3px 6px;       /* was 1px */
+  font-size: var(--font-xs);
+  padding: 3px 6px;
+  /* was 1px */
 }
 
 /* ─── Notification Groups ────────────────────────────────────── */
@@ -265,27 +283,27 @@ scrollbar slider {
 .notification-group .notification-group-buttons,
 .notification-group .notification-group-headers {
   margin: 0 16px;
-  color:  var(--text);
+  color: var(--text);
 }
 
 .notification-group .notification-group-headers {
-  font-size:  var(--font-xs);
-  min-width:  10px;
+  font-size: var(--font-xs);
+  min-width: 10px;
   min-height: 10px;
 }
 
 .notification-group .notification-group-headers .notification-group-icon {
-  color:        var(--text);
+  color: var(--text);
   -gtk-icon-size: 22px;
-  font-size:    var(--font-sm);
-  font-weight:  700;
-  margin:       5px 5px 5px 0;
+  font-size: var(--font-sm);
+  font-weight: 700;
+  margin: 5px 5px 5px 0;
 }
 
 .notification-group .notification-group-headers .notification-group-header {
-  font-size:   var(--font-sm);
+  font-size: var(--font-sm);
   font-weight: 700;
-  color:       var(--text);
+  color: var(--text);
 }
 
 .notification-group .notification-group-buttons {
@@ -311,13 +329,14 @@ scrollbar slider {
 
 /* ─── Control Center ─────────────────────────────────────────── */
 .control-center {
-  background:    var(--bg-1);
-  color:         var(--text);
+  background: var(--bg-1);
+  color: var(--text);
   border-radius: var(--radius);
-  border:        var(--border-width) solid var(--border);
-  box-shadow:    var(--shadow);
-  min-width:     440px;         /* panel width — was not set */
-  font-size:     var(--font-xs);
+  border: var(--border-width) solid var(--border);
+  box-shadow: var(--shadow);
+  min-width: 440px;
+  /* panel width — was not set */
+  font-size: var(--font-xs);
 }
 
 .control-center .control-center-list-placeholder {
@@ -348,24 +367,27 @@ scrollbar slider {
 
 .floating-notifications .notification {
   box-shadow: none;
-  min-width:  380px;            /* floating toast min-width */
+  min-width: 380px;
+  /* floating toast min-width */
 }
 
 /* ─── Widget: Title ──────────────────────────────────────────── */
-.widget-title > label {
-  margin:      10px;            /* was 8px */
+.widget-title>label {
+  margin: 10px;
+  /* was 8px */
   font-weight: 700;
-  font-size:   var(--font-sm);  /* was 12px */
+  font-size: var(--font-sm);
+  /* was 12px */
 }
 
-.widget-title > button {
-  margin:        10px;
-  font-size:     var(--font-xs);
-  background:    var(--bg-1);
-  border:        var(--border-width) solid var(--text-disabled);
-  padding:       4px 12px;
-  color:         var(--text);
-  font-weight:   700;
+.widget-title>button {
+  margin: 10px;
+  font-size: var(--font-xs);
+  background: var(--bg-1);
+  border: var(--border-width) solid var(--text-disabled);
+  padding: 4px 12px;
+  color: var(--text);
+  font-weight: 700;
 }
 
 /* ─── Common Widget Styles ───────────────────────────────────── */
@@ -378,8 +400,8 @@ scrollbar slider {
 }
 
 .widget-dnd label,
-.widget-label > label {
-  color:     var(--text);
+.widget-label>label {
+  color: var(--text);
   font-size: var(--font-xs);
 }
 
@@ -389,11 +411,11 @@ scrollbar slider {
 }
 
 .widget-dnd switch {
-  margin:        8px;
-  background:    var(--bg-btn);
+  margin: 8px;
+  background: var(--bg-btn);
   border-radius: var(--radius);
-  min-width:     38px;
-  min-height:    18px;
+  min-width: 38px;
+  min-height: 18px;
 }
 
 .widget-dnd switch:checked {
@@ -401,12 +423,12 @@ scrollbar slider {
 }
 
 .widget-dnd switch slider {
-  min-width:     14px;
-  min-height:    14px;
-  margin:        2px;
+  min-width: 14px;
+  min-height: 14px;
+  margin: 2px;
   border-radius: var(--radius);
-  background:    var(--text);
-  border:        var(--border-width) solid var(--border);
+  background: var(--text);
+  border: var(--border-width) solid var(--border);
 }
 
 .widget-label {
@@ -419,10 +441,10 @@ scrollbar slider {
 }
 
 .widget-mpris .widget-mpris-player {
-  margin:        10px;
+  margin: 10px;
   border-radius: var(--radius);
-  box-shadow:    0px 0px 10px rgba(0, 0, 0, 0.75);
-  border:        var(--border-width) solid var(--border);
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.75);
+  border: var(--border-width) solid var(--border);
 }
 
 .widget-mpris .widget-mpris-player .mpris-background {
@@ -430,7 +452,7 @@ scrollbar slider {
 }
 
 .widget-mpris .widget-mpris-player .mpris-overlay {
-  padding:          16px;
+  padding: 16px;
   background-color: rgba(0, 0, 0, 0.55);
 }
 
@@ -439,67 +461,69 @@ scrollbar slider {
 }
 
 .widget-mpris .widget-mpris-player .mpris-overlay .widget-mpris-album-art {
-  border-radius:  var(--radius);
-  box-shadow:     0px 0px 10px rgba(0, 0, 0, 0.75);
+  border-radius: var(--radius);
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.75);
   -gtk-icon-size: 55px;
 }
 
 .widget-mpris .widget-mpris-player .mpris-overlay .widget-mpris-title {
   font-weight: bold;
-  font-size:   var(--font-sm);  /* was 10px */
+  font-size: var(--font-sm);
+  /* was 10px */
 }
 
 .widget-mpris .widget-mpris-player .mpris-overlay .widget-mpris-subtitle {
-  font-size: var(--font-xs);    /* was 10px */
+  font-size: var(--font-xs);
+  /* was 10px */
 }
 
-.widget-mpris .widget-mpris-player .mpris-overlay > box > button {
+.widget-mpris .widget-mpris-player .mpris-overlay>box>button {
   margin: 2px;
-  color:  var(--text);
-}
-
-.widget-mpris .widget-mpris-player .mpris-overlay > box > button:hover {
-  background-color: rgba(0, 0, 0, 0.5);
-}
-
-.widget-mpris > box > button {
   color: var(--text);
 }
 
-.widget-mpris > box > button:disabled {
+.widget-mpris .widget-mpris-player .mpris-overlay>box>button:hover {
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.widget-mpris>box>button {
+  color: var(--text);
+}
+
+.widget-mpris>box>button:disabled {
   color: var(--text-disabled);
 }
 
 /* ─── Widget: Buttons Grid ───────────────────────────────────── */
 .widget-buttons-grid {
-  padding:       8px;
-  margin:        8px;
+  padding: 8px;
+  margin: 8px;
   border-radius: var(--radius);
 }
 
-.widget-buttons-grid flowboxchild > button {
+.widget-buttons-grid flowboxchild>button {
   border-radius: var(--radius);
 }
 
 /* ─── Widget: Menubar ────────────────────────────────────────── */
-.widget-menubar > .menu-button-bar > .start {
+.widget-menubar>.menu-button-bar>.start {
   margin-left: 8px;
 }
 
-.widget-menubar > .menu-button-bar > .end {
+.widget-menubar>.menu-button-bar>.end {
   margin-right: 8px;
 }
 
-.widget-menubar > .menu-button-bar > .widget-menubar-container button {
+.widget-menubar>.menu-button-bar>.widget-menubar-container button {
   margin: 0 4px;
 }
 
-.widget-menubar > revealer {
+.widget-menubar>revealer {
   margin-top: 8px;
 }
 
-.widget-menubar > revealer button {
-  margin:    8px;
+.widget-menubar>revealer button {
+  margin: 8px;
   margin-top: 0;
 }
 
@@ -507,32 +531,33 @@ scrollbar slider {
 .widget-volume,
 .widget-backlight {
   background-color: var(--bg-1);
-  padding:          0;
-  margin:           10px 15px;
-  border-radius:    var(--radius);
-  border:           var(--border-width) solid var(--border);
+  padding: 0;
+  margin: 10px 15px;
+  border-radius: var(--radius);
+  border: var(--border-width) solid var(--border);
 }
 
 /* ─── Widget: Volume (rows) ──────────────────────────────────── */
 .widget-volume {
-  padding:       8px;
+  padding: 8px;
   border-radius: var(--radius);
 }
 
 .widget-volume row image {
-  -gtk-icon-size: 26px;         /* was 24px */
+  -gtk-icon-size: 26px;
+  /* was 24px */
 }
 
 .per-app-volume {
   background-color: var(--bg-2);
-  padding:          4px 8px 8px 8px;
-  margin:           0 8px 8px 8px;
-  border-radius:    var(--radius);
+  padding: 4px 8px 8px 8px;
+  margin: 0 8px 8px 8px;
+  border-radius: var(--radius);
 }
 
 /* ─── Widget: Slider ─────────────────────────────────────────── */
 .widget-slider {
-  padding:       8px;
+  padding: 8px;
   border-radius: var(--radius);
 }
 
@@ -542,43 +567,44 @@ scrollbar slider {
 
 /* ─── Widget: Backlight ──────────────────────────────────────── */
 .widget-backlight {
-  padding:       8px;
+  padding: 8px;
   border-radius: var(--radius);
 }
 
 /* ─── Widget: Inhibitors ─────────────────────────────────────── */
-.widget-inhibitors > label {
-  margin:    8px;
+.widget-inhibitors>label {
+  margin: 8px;
   font-size: var(--font-xs);
 }
 
-.widget-inhibitors > button {
+.widget-inhibitors>button {
   margin: 8px;
 }
 
 /* ─── Icon + Label Color ─────────────────────────────────────── */
 .widget-volume label,
 .widget-backlight label {
-  color:       var(--text);
-  font-size:   var(--font-md);
+  color: var(--text);
+  font-size: var(--font-md);
   padding-left: 10px;
 }
 
 /* ─── Slider: Trough (empty track) ──────────────────────────── */
 .widget-volume scale trough,
 .widget-backlight scale trough {
-  background:    var(--bg-btn);
+  background: var(--bg-btn);
   border-radius: var(--radius);
-  min-height:    26px;          /* was 24px */
-  margin:        0 10px 0 0;
+  min-height: 26px;
+  /* was 24px */
+  margin: 0 10px 0 0;
 }
 
 /* ─── Slider: Highlight (filled track) ──────────────────────── */
 .widget-volume scale highlight,
 .widget-backlight scale highlight {
-  background:    var(--text);
+  background: var(--text);
   border-radius: var(--radius);
-  min-height:    26px;
+  min-height: 26px;
 }
 
 /* ─── Slider: Handle (hidden, bar acts as handle) ────────────── */
@@ -586,13 +612,14 @@ scrollbar slider {
 .widget-backlight scale slider {
   background: transparent;
   box-shadow: none;
-  border:     none;
+  border: none;
   min-height: 26px;
-  min-width:  10px;
+  min-width: 10px;
 }
 
 /* ─── Slider: Hover state ────────────────────────────────────── */
 .widget-volume scale:hover highlight,
 .widget-backlight scale:hover highlight {
-  background: var(--pri-normal);  /* var(--color3) = #4c616b on hover */
+  background: var(--pri-normal);
+  /* var(--color3) = #4c616b on hover */
 }
