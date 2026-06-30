@@ -1,68 +1,46 @@
-// { "include": [ "~/.config/waybar/layouts/with_music.jsonc" ] }
-
-
 {
     "layer": "top",
     "position": "top",
-    "width": 1910,
-    "height": 25,
-    "margin": "5 0",
+    "height": 24,
+    "spacing": 0,
 
-    "group/left" : {
-        "orientation": "horizontal",
-        "modules" : [
-            "hyprland/workspaces", 
-//            "niri/workspaces",
-            "mpris"
-        ]
-    },
+    "modules-left":   ["hyprland/workspaces", "hyprland/window"],
+    "modules-center": ["clock"],
+    "modules-right": [
+        "mpris",
+        "custom/cpu-cores",
+        "cpu",
+        "memory",
+        "temperature",
+        "load",
+        "battery",
+        "power-profiles-daemon",
+        "bluetooth",
+        "group/audio",
+        "group/bright",
+        "network",
+        "tray",
+        "custom/ctlcenter",
+        "custom/start"
+    ],
 
-    "group/left-hidden" : {
-        "orientation": "horizontal",
-        "drawer": {
-            "transition-duration": 500,
-            "transition-left-to-right": false,
-            "click-to-reveal": true
-        },
-        "modules" : [
-            "custom/arrow-right", "cpu", "load"
-        ]
-    },
-
-    "group/left-hidden-top" : {
-        "orientation": "horizontal",
-        // "modules" : [ "custom/start", "battery", "group/left-hidden"]
-        "modules" : ["battery", "group/left-hidden"]
-    },
-
-    "group/right" : {
-        "orientation": "horizontal",
-        "modules" : [
-            "bluetooth", "group/group-volume", "group/group-backlight", "network", "tray"
-        ]
-    },
-
-    "group/right-hidden" : {
+    "group/audio": {
         "orientation": "horizontal",
         "drawer": {
-            "transition-duration": 500,
-            "transition-left-to-right": true,
-            "click-to-reveal": true
+            "transition-duration": 300,
+            "transition-left-to-right": false
         },
-        "modules" : [
-            "custom/arrow-left", "memory"
-        ]
+        "modules": ["pulseaudio", "pulseaudio/slider"]
     },
 
-    "group/right-hidden-top" : {
+    "group/bright": {
         "orientation": "horizontal",
-        "modules" : [ "group/right-hidden" , "temperature" , "custom/ctlcenter"]
+        "drawer": {
+            "transition-duration": 300,
+            "transition-left-to-right": false
+        },
+        "modules": ["backlight", "backlight/slider"]
     },
-
-    "modules-left"   : ["group/left-hidden-top", "group/left"],
-    "modules-center" : ["clock"],
-    "modules-right"  : [ "group/right",  "group/right-hidden-top"],
 
     "include": [ "~/.config/waybar/modules.jsonc" ]
 }
-

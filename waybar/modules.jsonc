@@ -1,108 +1,138 @@
 {
   "hyprland/workspaces": {
-    "format": "{icon}",
+    "format": "{id}",
     "on-scroll-down": "hyprctl dispatch \"hl.dsp.focus({workspace = 'e+1'})\"",
     "on-scroll-up": "hyprctl dispatch \"hl.dsp.focus({workspace = 'e-1'})\"",
     "persistent-workspaces": { "*": 5 },
-    "cursor" : true,
-    "action" : {"onclick": "activate"},
-    "onclick": "activate",
-    "format-icons": {
-      "active": "󰮯",
-      "persistent": "",
-      "empty": ""
-    }
+    "cursor": true,
+    "action": { "onclick": "activate" },
+    "onclick": "activate"
   },
 
-  // "niri/workspaces": {
-  //   "format": "{icon}",
-  //   "cursor" : true,
-  //   "on-scroll-up": "niri msg action focus-workspace-up",
-  //   "on-scroll-down": "niri msg action focus-workspace-down",
-  //   "format-icons": {
-  //     "active": "󰮯",
-  //     "default": "",
-  //     "empty": ""
-  //   }
-  // },
+  "hyprland/window": {
+    "format": "{title}",
+    "max-length": 40,
+    "separate-outputs": true
+  },
 
-  "hyprland/window" : {
-    "max-length": 45
+  "mpris": {
+    "format": " {artist} - {title}",
+    "format-paused": " {artist} - {title}",
+    "format-stopped": "",
+    "tooltip-format": "{album}",
+    "on-click": "playerctl play-pause",
+    "on-click-right": "playerctl stop",
+    "on-scroll-up": "playerctl previous",
+    "on-scroll-down": "playerctl next",
+    "max-length": 35
+  },
+
+  "custom/cpu-cores": {
+    "exec": "~/.config/waybar/scripts/cpu-cores.sh",
+    "interval": 3,
+    "return-type": "json",
+    "tooltip": true
   },
 
   "cpu": {
-    "interval": 30,
-    "format":" {usage}%",
+    "interval": 3,
+    "format": " CPU {usage}%",
+    "tooltip": false,
     "cursor": true,
-    "states": {
-      "warning": 80,
-      "critical": 90
-    }
-  },
-
-  "tray" : {
-    "icon-size": 13,
-    "spacing": 12,
-    "cursor": true
-  },
-
-  "load": {
-    "interval": 30,
-    "format": " {load1}%",
-    "cursor": true
+    "states": { "warning": 80, "critical": 90 }
   },
 
   "memory": {
     "interval": 3,
-    "format": "  {used:0.1f}G/{total:0.1f}G",
-    "states": {
-      "warning": 80,
-      "critical": 90
+    "format": " MEM {used:0.1f}G",
+    "tooltip-format": "RAM: {percentage}% used ({used:0.1f}G / {total:0.1f}G)\nSwap: {swapUsed:0.1f}G / {swapTotal:0.1f}G",
+    "states": { "warning": 80, "critical": 90 }
+  },
+
+  "temperature": {
+    "hwmon-path": "/sys/class/hwmon/hwmon6/temp1_input",
+    "interval": 5,
+    "format": "{icon} {temperatureC}°",
+    "tooltip-format": "CPU package: {temperatureC}°C",
+    "critical-threshold": 90,
+    "format-icons": ["", "", "", "", ""]
+  },
+
+  "load": {
+    "interval": 10,
+    "format": " {load1}",
+    "tooltip-format": "load average\n1m:  {load1}\n5m:  {load5}\n15m: {load15}",
+    "cursor": true
+  },
+
+  "battery": {
+    "interval": 20,
+    "full-at": 100,
+    "tooltip": true,
+    "format-full": "󰂄 {capacity}%",
+    "format": "{icon} {capacity}%",
+    "format-plugged": " {capacity}%",
+    "format-time": "{H}:{M:02}",
+    "format-charging": " {capacity}% ({time})",
+    "format-icons": ["󰁺", "󰁻", "󰁼", "󰁽", "󰁾", "󰁿", "󰂀", "󰂂", "󰁹"],
+    "states": { "warning": 30, "critical": 15 }
+  },
+
+  "power-profiles-daemon": {
+    "format": "{icon}",
+    "tooltip-format": "power profile: {profile}\n(click to cycle)",
+    "format-icons": {
+      "performance": "",
+      "balanced": "",
+      "power-saver": ""
     }
   },
 
-"temperature": {
-    "hwmon-path": "/sys/class/hwmon/hwmon6/temp1_input",
-    "interval": 10,
-    "format": "{icon} {temperatureC}°",
-    "critical-threshold": 90,
-    "format-icons": ["", "", "", "", ""]
-},
-
-  "backlight": {
-    "scroll-step" : 2,
-    "format": "{icon}",
-    "tooltip-format" : "{percent}%",
-    "format-icons": [ "󰃞", "󰃝", "󰃟", "󰃠" ]
+  "bluetooth": {
+    "format": "{}",
+    "format-on": "󰂯",
+    "format-off": "󰂲",
+    "format-disabled": "󰂲",
+    "format-connected": "󰂱 {device_alias}",
+    "format-connected-battery": "󰂱 {device_alias}  {device_battery_percentage}%",
+    "tooltip-format": "{device_enumerate}",
+    "tooltip-format-enumerate-connected": "{device_alias}",
+    "tooltip-format-enumerate-connected-battery": "{device_alias}   {device_battery_percentage}%",
+    "on-click": "hyprctl dispatch \"hl.dsp.exec_cmd('kitty --class floating_bluetui bluetui')\"",
+    "on-click-right": ""
   },
 
   "pulseaudio": {
     "format": "{icon}",
-    "format-bluetooth": "{icon}",
+    "format-bluetooth": "󰂯 {icon}",
+    "format-bluetooth-muted": "󰂯 <span size='12pt'>󰝟</span>",
+    "format-muted": "<span size='12pt'>󰝟</span>",
     "on-click": "pactl set-sink-mute @DEFAULT_SINK@ toggle",
     "on-click-right": "hyprctl dispatch hl.dsp.exec_command(\"pavucontrol -t 4\")",
-    "tooltip-format": "{volume}%",
-    "format-muted": "<span size='12pt'>󰝟</span>",
+    "tooltip-format": "volume: {volume}%",
     "scroll-step": 2,
     "format-icons": {
-      "headphone": "",
-      "hands-free": "",
-      "headset": "",
-      "phone": "",
-      "portable": "",
-      "car": "",
-      "default": [
-          "󰕿",
-          "󰖀",
-          "󰕾"
-      ]
+      "headphone": "",
+      "hands-free": "",
+      "headset": "",
+      "phone": "",
+      "portable": "",
+      "car": "",
+      "default": ["󰕿", "󰖀", "󰕾"]
     }
   },
 
   "pulseaudio/slider": {
     "min": 0,
     "max": 100,
-    "cursor": true,
+    "cursor": true
+  },
+
+  "backlight": {
+    "scroll-step": 2,
+    "format": "{icon}",
+    "tooltip-format": "brightness: {percent}%",
+    "format-icons": ["󰃞", "󰃝", "󰃟", "󰃠"]
   },
 
   "backlight/slider": {
@@ -112,152 +142,70 @@
   },
 
   "network": {
+    "interface": "wlan0",
     "interval": 10,
-    "format-disabled": "",
-    "format-disconnected": "",
-    "format-wifi": "",
-    "format-ethernet": "",
-    "tooltip-format": "{essid}\n\nFrequency: {frequency}GHz\nStrength: {signalStrength}%\n\n{bandwidthUpBytes}   {bandwidthDownBytes}",
+    "format": "",
+    "format-disabled": "",
+    "format-disconnected": "",
+    "format-wifi": " {essid}",
+    "format-ethernet": "",
+    "tooltip-format": "{essid}\n\nfrequency: {frequency}GHz\nstrength: {signalStrength}%\n\n {bandwidthUpBytes}    {bandwidthDownBytes}",
     "menu": "on-click-right",
-"on-click": "hyprctl dispatch \"hl.dsp.exec_cmd('kitty --class floating_impala impala')\"",
+    "on-click": "hyprctl dispatch \"hl.dsp.exec_cmd('kitty --class floating_impala impala')\"",
     "menu-file": "~/.config/waybar/context/network.xml",
     "menu-actions": {
-"action-1": "hyprctl dispatch \"hl.dsp.exec_cmd('iwctl station wlan0 disconnect')\"",
-"action-2": "hyprctl dispatch \"hl.dsp.exec_cmd('iwctl station wlan0 scan')\"",
-"action-3": "hyprctl dispatch \"hl.dsp.exec_cmd('kitty --class floating_impala impala')\"",
-"action-4": "hyprctl dispatch \"hl.dsp.exec_cmd('kitty --class floating_impala impala')\"",
+      "action-1": "hyprctl dispatch \"hl.dsp.exec_cmd('iwctl station wlan0 disconnect')\"",
+      "action-2": "hyprctl dispatch \"hl.dsp.exec_cmd('iwctl station wlan0 scan')\"",
+      "action-3": "hyprctl dispatch \"hl.dsp.exec_cmd('kitty --class floating_impala impala')\""
     }
   },
 
-  "bluetooth": {
-    "format": "{}",
-    "format-on": "󰂰",
-    "format-off": "󰂲",
-    "format-disabled": "󰂲",
-    "format-connected": "{device_alias}",
-    "format-connected-battery": "{device_alias}",
-    "tooltip-format": "{device_enumerate}",
-    "tooltip-format-enumerate-connected": "{device_alias}",
-    "tooltip-format-enumerate-connected-battery": "{device_alias}   {device_battery_percentage}%",
-"on-click": "hyprctl dispatch \"hl.dsp.exec_cmd('kitty --class floating_bluetui bluetui')\"",
-    "on-click-right": ""
-  },
-
-  "battery": {
-    "interval": 20,
-    "full-at": 100,
-    "tooltip": true,
-    "format-full": "",
-    "format": "{icon} {capacity}%",
-    "format-plugged": " {capacity}%",
-    "format-time": "{H}:{M:02}",
-    "format-charging": " {capacity}% ({time})",
-    "format-icons": ["󰁺", "󰁻", "󰁼", "󰁽", "󰁾", "󰁿", "󰂀", "󰂂", "󰁹"],
-    "states": {
-      "warning": 30,
-      "critical": 15
-    }
+  "tray": {
+    "icon-size": 13,
+    "spacing": 10,
+    "cursor": true
   },
 
   "clock": {
     "timezone": "Asia/Kolkata",
+    "interval": 1,
+    "format": "{:%H:%M:%S  %a %d %b}",
     "tooltip-format": "<tt><small>{calendar}</small></tt>",
-    "format": "{:%I:%M %p %a}",
-    "format-alt": "{:%I:%M %p %d %B %Y}",
-"on-click-right": "hyprctl dispatch \"hl.dsp.exec_cmd('kitty --class=peaclock -e peaclock')\"",
+    "on-click-right": "hyprctl dispatch \"hl.dsp.exec_cmd('kitty --class=peaclock -e peaclock')\"",
     "calendar": {
       "mode": "year",
       "weeks-pos": "right",
       "mode-mon-col": 3,
       "format": {
-        "months": "<span color='#acb0d0'><b>{}</b></span>",
-        "days": "<span color='#acb0d0'><b>{}</b></span>",
-        "weeks": "<span color='#7aa2f7'><b>W{}</b></span>",
-        "weekdays": "<span color='#e0af68'><b>{}</b></span>",
-        "today": "<span color='#41a6b5'><b><u>{}</u></b></span>"
+        "weeks": "<b>W{}</b>",
+        "today": "<b><u>{}</u></b>"
       }
     }
   },
 
-  "mpris": {
-    "format": "{artist} - {title}",
-    "tooltip-format" : "{album}",
-    "format-paused": " {artist} - {title}",
-    "on-click": "playerctl play-pause",
-    "on-scroll-up": "playerctl previous",
-    "on-scroll-down": "playerctl next",
-    "max-length": 45
-  },
-
-  "power-profiles-daemon": {
-    "format": "{icon}",
-    "tooltip-format": "Power profile: {profile}",
-    "onclick": "",
-    "format-icons": {
-      "performance": "",
-      "balanced": "",
-      "power-saver": ""
-    }
-  },
-
   "custom/start": {
-    "format": "",
+    "format": "",
+    "tooltip": false,
     "on-click": "walker -t pywal"
   },
 
-  "custom/ctlcenter" : {
-    "tooltip" : false,
-    "format" : "",
-    "on-click" : "swaync-client -t",
+  "custom/ctlcenter": {
+    "tooltip": false,
+    "format": "",
+    "on-click": "swaync-client -t",
     "menu": "on-click-right",
     "menu-file": "~/.config/waybar/context/ctlcenter.xml",
     "menu-actions": {
-"action-1-1": "hyprctl dispatch \"hl.dsp.exec_cmd('kitty -e htop', { float = true })\"",
-"action-1-2": "hyprctl dispatch \"hl.dsp.exec_cmd('kitty -e nvtop', { float = true })\"",
-"action-1-3": "hyprctl dispatch \"hl.dsp.exec_cmd('kitty -e pkexec powertop', { float = true })\"",
-"action-1-4": "hyprctl dispatch \"hl.dsp.exec_cmd('missioncenter', { float = true })\"",
+      "action-1-1": "hyprctl dispatch \"hl.dsp.exec_cmd('kitty -e htop', { float = true })\"",
+      "action-1-2": "hyprctl dispatch \"hl.dsp.exec_cmd('kitty -e nvtop', { float = true })\"",
+      "action-1-3": "hyprctl dispatch \"hl.dsp.exec_cmd('missioncenter', { float = true })\"",
 
-"action-2-1": "hyprctl dispatch \"hl.dsp.exec_cmd('nwg-look')\"",
-"action-2-2": "hyprctl dispatch \"hl.dsp.exec_cmd('qt6ct')\"",
-"action-2-3": "hyprctl dispatch \"hl.dsp.exec_cmd('kvantummanager')\"",
+      "action-2-1": "hyprctl dispatch \"hl.dsp.exec_cmd('nwg-look')\"",
+      "action-2-2": "hyprctl dispatch \"hl.dsp.exec_cmd('qt6ct')\"",
+      "action-2-3": "hyprctl dispatch \"hl.dsp.exec_cmd('kvantummanager')\"",
 
-"action-3-1": "hyprctl keyword monitor 'eDP-1,1920x1080@60,auto,1'",
-"action-3-2": "hyprctl keyword monitor 'eDP-1,1920x1080@144,auto,1'",
-"action-6": "hyprctl reload"
+      "action-3-1": "hyprctl keyword monitor 'eDP-1,1920x1080@60,auto,1'",
+      "action-3-2": "hyprctl keyword monitor 'eDP-1,1920x1080@144,auto,1'"
     }
-  },
-
-  "custom/arrow-left":  { 
-    "format": "", 
-    "tooltip": false, 
-    "cursor": true
-  },
-
-  "custom/arrow-right": { 
-    "format": "",  
-    "tooltip": false,
-    "cursor": true
-  },
-
-  "group/group-volume": {
-    "orientation": "horizontal",
-    "drawer": {
-      "transition-duration": 600,
-      "transition-left-to-right": true
-    },
-    "modules" : [
-      "pulseaudio", "pulseaudio/slider"
-    ]
-  },
-
-  "group/group-backlight": {
-    "orientation": "horizontal",
-    "drawer": {
-      "transition-duration": 600,
-      "transition-left-to-right": true
-    },
-    "modules" : [
-      "backlight", "backlight/slider"
-    ]
   }
 }

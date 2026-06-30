@@ -10,24 +10,17 @@
 
     <child>
       <object class="GtkMenuItem" id="action-2">
-        <property name="label">Connect</property>
-      </object>
-    </child>
-
-    <child>
-      <object class="GtkMenuItem" id="action-3">
-        <property name="label">nmtui</property>
+        <property name="label">Scan</property>
       </object>
     </child>
 
     <child><object class="GtkSeparatorMenuItem" id="separator"/></child>
 
     <child>
-      <object class="GtkMenuItem" id="action-4">
-        <property name="label"> Network settings</property>
+      <object class="GtkMenuItem" id="action-3">
+        <property name="label"> Open impala</property>
       </object>
     </child>
 
   </object>
 </interface>
-
