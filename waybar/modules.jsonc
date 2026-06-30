@@ -9,12 +9,6 @@
     "onclick": "activate"
   },
 
-  "hyprland/window": {
-    "format": "{title}",
-    "max-length": 40,
-    "separate-outputs": true
-  },
-
   "mpris": {
     "format": " {artist} - {title}",
     "format-paused": " {artist} - {title}",
@@ -29,7 +23,7 @@
 
   "custom/cpu-cores": {
     "exec": "~/.config/waybar/scripts/cpu-cores.sh",
-    "interval": 3,
+    "interval": 2,
     "return-type": "json",
     "tooltip": true
   },
@@ -39,14 +33,14 @@
     "format": " CPU {usage}%",
     "tooltip": false,
     "cursor": true,
-    "states": { "warning": 80, "critical": 90 }
+    "states": { "warning": 65, "critical": 90 }
   },
 
   "memory": {
     "interval": 3,
     "format": " MEM {used:0.1f}G",
     "tooltip-format": "RAM: {percentage}% used ({used:0.1f}G / {total:0.1f}G)\nSwap: {swapUsed:0.1f}G / {swapTotal:0.1f}G",
-    "states": { "warning": 80, "critical": 90 }
+    "states": { "warning": 65, "critical": 90 }
   },
 
   "temperature": {
@@ -54,7 +48,7 @@
     "interval": 5,
     "format": "{icon} {temperatureC}°",
     "tooltip-format": "CPU package: {temperatureC}°C",
-    "critical-threshold": 90,
+    "critical-threshold": 80,
     "format-icons": ["", "", "", "", ""]
   },
 
@@ -78,49 +72,60 @@
     "states": { "warning": 30, "critical": 15 }
   },
 
-  "power-profiles-daemon": {
-    "format": "{icon}",
-    "tooltip-format": "power profile: {profile}\n(click to cycle)",
-    "format-icons": {
-      "performance": "",
-      "balanced": "",
-      "power-saver": ""
-    }
-  },
+"power-profiles-daemon": {
+  "format": "{icon}",
+  "tooltip-format": "{profile}\nclick to cycle",
+  "format-icons": {
+    "performance": "󰓅",
+    "balanced": "󰾅",
+    "power-saver": "󰌪"
+  }
+},
 
-  "bluetooth": {
-    "format": "{}",
-    "format-on": "󰂯",
-    "format-off": "󰂲",
-    "format-disabled": "󰂲",
-    "format-connected": "󰂱 {device_alias}",
-    "format-connected-battery": "󰂱 {device_alias}  {device_battery_percentage}%",
-    "tooltip-format": "{device_enumerate}",
-    "tooltip-format-enumerate-connected": "{device_alias}",
-    "tooltip-format-enumerate-connected-battery": "{device_alias}   {device_battery_percentage}%",
-    "on-click": "hyprctl dispatch \"hl.dsp.exec_cmd('kitty --class floating_bluetui bluetui')\"",
-    "on-click-right": ""
-  },
+"bluetooth": {
+  "format-disabled": "󰂲",
+  "format-off": "󰂲",
+  "format-no-controller": "󰂲",
+  "format-on": "󰂯",
+  "format-connected": "󰂱 {device_alias}",
+  "format-connected-battery": "󰂱 {device_alias}",
 
-  "pulseaudio": {
-    "format": "{icon}",
-    "format-bluetooth": "󰂯 {icon}",
-    "format-bluetooth-muted": "󰂯 <span size='12pt'>󰝟</span>",
-    "format-muted": "<span size='12pt'>󰝟</span>",
-    "on-click": "pactl set-sink-mute @DEFAULT_SINK@ toggle",
-    "on-click-right": "hyprctl dispatch hl.dsp.exec_command(\"pavucontrol -t 4\")",
-    "tooltip-format": "volume: {volume}%",
-    "scroll-step": 2,
-    "format-icons": {
-      "headphone": "",
-      "hands-free": "",
-      "headset": "",
-      "phone": "",
-      "portable": "",
-      "car": "",
-      "default": ["󰕿", "󰖀", "󰕾"]
-    }
-  },
+  "tooltip-format": "Bluetooth enabled",
+  "tooltip-format-disabled": "Bluetooth disabled",
+  "tooltip-format-off": "Bluetooth disabled",
+
+  "tooltip-format-connected":
+      "{device_alias}",
+
+  "tooltip-format-connected-battery":
+      "{device_alias}\nBattery: {device_battery_percentage}%",
+
+  "on-click":
+      "hyprctl dispatch \"hl.dsp.exec_cmd('kitty --class floating_bluetui bluetui')\""
+},
+
+"pulseaudio": {
+  "format": "{icon}",
+  "format-muted": "󰝟",
+
+  "tooltip-format": "{volume}%",
+
+  "on-click":
+      "pactl set-sink-mute @DEFAULT_SINK@ toggle",
+
+  "on-click-right":
+      "hyprctl dispatch hl.dsp.exec_command(\"pavucontrol -t 4\")",
+
+  "scroll-step": 2,
+
+  "format-icons": {
+    "default": [
+      "󰕿",
+      "󰖀",
+      "󰕾"
+    ]
+  }
+},
 
   "pulseaudio/slider": {
     "min": 0,
@@ -144,20 +149,13 @@
   "network": {
     "interface": "wlan0",
     "interval": 10,
-    "format": "",
-    "format-disabled": "",
-    "format-disconnected": "",
-    "format-wifi": " {essid}",
-    "format-ethernet": "",
+"format-wifi": "󰤨 {essid}",
+"format-disconnected": "󰤭",
+"format-disabled": "󰤮",
+"format-ethernet": "󰈀",
     "tooltip-format": "{essid}\n\nfrequency: {frequency}GHz\nstrength: {signalStrength}%\n\n {bandwidthUpBytes}    {bandwidthDownBytes}",
-    "menu": "on-click-right",
     "on-click": "hyprctl dispatch \"hl.dsp.exec_cmd('kitty --class floating_impala impala')\"",
-    "menu-file": "~/.config/waybar/context/network.xml",
-    "menu-actions": {
-      "action-1": "hyprctl dispatch \"hl.dsp.exec_cmd('iwctl station wlan0 disconnect')\"",
-      "action-2": "hyprctl dispatch \"hl.dsp.exec_cmd('iwctl station wlan0 scan')\"",
-      "action-3": "hyprctl dispatch \"hl.dsp.exec_cmd('kitty --class floating_impala impala')\""
-    }
+    "on-click-right": "iwctl station wlan0 scan",
   },
 
   "tray": {
@@ -166,22 +164,34 @@
     "cursor": true
   },
 
-  "clock": {
-    "timezone": "Asia/Kolkata",
-    "interval": 1,
-    "format": "{:%H:%M:%S  %a %d %b}",
-    "tooltip-format": "<tt><small>{calendar}</small></tt>",
-    "on-click-right": "hyprctl dispatch \"hl.dsp.exec_cmd('kitty --class=peaclock -e peaclock')\"",
-    "calendar": {
-      "mode": "year",
-      "weeks-pos": "right",
-      "mode-mon-col": 3,
-      "format": {
-        "weeks": "<b>W{}</b>",
-        "today": "<b><u>{}</u></b>"
-      }
+"clock": {
+  "timezone": "Asia/Kolkata",
+
+  "interval": 30,
+
+  "format": "{:%H:%M}",
+  "format-alt": "{:%a %d %b %Y}",
+
+  "on-click": "mode",
+
+  "tooltip-format":
+      "<tt><small>{calendar}</small></tt>",
+
+  "on-click-right":
+      "hyprctl dispatch \"hl.dsp.exec_cmd('kitty --class=peaclock -e peaclock')\"",
+
+  "calendar": {
+    "mode": "year",
+    "weeks-pos": "right",
+    "mode-mon-col": 3,
+
+    "format": {
+      "weeks": "<b>W{}</b>",
+      "today":
+        "<span foreground='#89b4fa'><b><u>{}</u></b></span>"
     }
-  },
+  }
+},
 
   "custom/start": {
     "format": "",

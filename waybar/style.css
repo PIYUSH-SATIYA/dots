@@ -174,11 +174,11 @@ menu {
   border: 1px solid @sep;
 }
 
-menu > * {
+menu>* {
   padding: 4px 8px;
 }
 
-menu > *:hover {
+menu>*:hover {
   background-color: alpha(@primary, 0.2);
 }
 
@@ -198,4 +198,79 @@ trough {
 trough highlight {
   background-color: @primary;
   background-image: none;
+}
+
+#clock {
+  min-width: 70px;
+}
+
+#clock.alt {
+  min-width: 150px;
+}
+
+#cpu.warning,
+#memory.warning {
+  color: @yellow;
+}
+
+#cpu.critical,
+#memory.critical,
+#temperature.critical {
+  color: @red;
+}
+
+#workspaces button.active {
+  color: @primary;
+  background: alpha(@primary, 0.15);
+  border-bottom: 2px solid @primary;
+}
+
+#bluetooth {
+  color: @blue;
+}
+
+#network {
+  color: @green;
+}
+
+#power-profiles-daemon.performance {
+  color: @red;
+}
+
+#power-profiles-daemon.balanced {
+  color: @primary;
+}
+
+#power-profiles-daemon.power-saver {
+  color: @green;
+}
+
+
+/* ---------- CPU ---------- */
+
+#cpu {
+  color: @fg;
+}
+
+#cpu.warning {
+  color: @yellow;
+}
+
+#cpu.critical {
+  color: @red;
+}
+
+
+/* ---------- Memory ---------- */
+
+#memory {
+  color: @fg;
+}
+
+#memory.warning {
+  color: @yellow;
+}
+
+#memory.critical {
+  color: @red;
 }
