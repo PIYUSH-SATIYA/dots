@@ -27,7 +27,7 @@
 }
 
 #waybar {
-  background: alpha(@bg, 0.9);
+  background: alpha(@bg, 0.4);
   color: @fg;
 }
 
@@ -97,7 +97,7 @@
 #network.disconnected,
 #temperature.critical,
 #power-profiles-daemon.performance {
-  color: @red;
+  color: @primary;
 }
 
 #cpu.warning,
@@ -234,11 +234,11 @@ trough highlight {
 }
 
 #power-profiles-daemon.performance {
-  color: @red;
+  color: @primary;
 }
 
 #power-profiles-daemon.balanced {
-  color: @primary;
+  color: @red;
 }
 
 #power-profiles-daemon.power-saver {

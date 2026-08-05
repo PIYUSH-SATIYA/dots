@@ -117,7 +117,7 @@ hl.config({
 		blur = {
 			enabled = true,
 			size = 3,
-			xray = true,
+			xray = false,
 			special = true,
 			popups = true,
 			passes = 3,

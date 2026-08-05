@@ -54,14 +54,14 @@ hl.window_rule({
 	center = true,
 })
 
--- zathura transparency
-hl.window_rule({
-	name = "zathura_opacity",
-	match = {
-		class = "^(org\\.pwmt\\.zathura)$",
-	},
-	opacity = "0.85 0.65",
-})
+-- -- zathura transparency
+-- hl.window_rule({
+-- 	name = "zathura_opacity",
+-- 	match = {
+-- 		class = "^(org\\.pwmt\\.zathura)$",
+-- 	},
+-- 	opacity = "0.85 0.65",
+-- })
 
 -- gnome-calculator
 hl.window_rule({

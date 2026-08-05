@@ -21,3 +21,9 @@ vim.api.nvim_set_hl(0, "LspReferenceText", {})
 vim.api.nvim_set_hl(0, "LspReferenceRead", {})
 vim.api.nvim_set_hl(0, "LspReferenceWrite", {})
 
+-- to disable auto adding comments in line below current coment line
+--
+vim.cmd("autocmd BufEnter * set formatoptions-=cro")
+vim.cmd("autocmd BufEnter * setlocal formatoptions-=cro")
+
+

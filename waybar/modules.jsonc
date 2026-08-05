@@ -5,7 +5,6 @@
     "on-scroll-up": "hyprctl dispatch \"hl.dsp.focus({workspace = 'e-1'})\"",
     "persistent-workspaces": { "*": 5 },
     "cursor": true,
-    "action": { "onclick": "activate" },
     "onclick": "activate"
   },
 
@@ -44,12 +43,13 @@
   },
 
   "temperature": {
-    "hwmon-path": "/sys/class/hwmon/hwmon6/temp1_input",
+    // "hwmon-path": "/sys/class/hwmon/hwmon7/temp1_input",
+    "thermal-zone": 9,
     "interval": 5,
     "format": "{icon} {temperatureC}°",
     "tooltip-format": "CPU package: {temperatureC}°C",
     "critical-threshold": 80,
-    "format-icons": ["", "", "", "", ""]
+    "format-icons": ["", "", "", "", ""]
   },
 
   "load": {
@@ -199,23 +199,4 @@
     "on-click": "walker -t pywal"
   },
 
-  "custom/ctlcenter": {
-    "tooltip": false,
-    "format": "",
-    "on-click": "swaync-client -t",
-    "menu": "on-click-right",
-    "menu-file": "~/.config/waybar/context/ctlcenter.xml",
-    "menu-actions": {
-      "action-1-1": "hyprctl dispatch \"hl.dsp.exec_cmd('kitty -e htop', { float = true })\"",
-      "action-1-2": "hyprctl dispatch \"hl.dsp.exec_cmd('kitty -e nvtop', { float = true })\"",
-      "action-1-3": "hyprctl dispatch \"hl.dsp.exec_cmd('missioncenter', { float = true })\"",
-
-      "action-2-1": "hyprctl dispatch \"hl.dsp.exec_cmd('nwg-look')\"",
-      "action-2-2": "hyprctl dispatch \"hl.dsp.exec_cmd('qt6ct')\"",
-      "action-2-3": "hyprctl dispatch \"hl.dsp.exec_cmd('kvantummanager')\"",
-
-      "action-3-1": "hyprctl keyword monitor 'eDP-1,1920x1080@60,auto,1'",
-      "action-3-2": "hyprctl keyword monitor 'eDP-1,1920x1080@144,auto,1'"
-    }
-  }
 }

@@ -72,3 +72,12 @@ theme-system/current-wallpaper
 theme-system/mode
 nvim/lua/current_theme.txt
 
+
+astro/*
+kdeglobals
+kdenliverc
+obs-studio/*
+nextjs-nodejs/*
+unity3d/*
+
+
