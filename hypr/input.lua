@@ -39,6 +39,12 @@ hl.config({
 	},
 })
 
+-- mouse sensitivity Increase
+hl.device({
+	name = "2.4g-mouse-1",
+	sensitivity = 0.7,
+})
+
 hl.config({
 	misc = {
 		key_press_enables_dpms = true,
