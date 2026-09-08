@@ -6,6 +6,11 @@ x-scheme-handler/file=yazi.desktop
 inode/directory=yazi.desktop
 x-scheme-handler/antigravity=antigravity.desktop
 x-scheme-handler/jetbrains=jetbrainsd.desktop
+x-scheme-handler/pttp=CiscoPacketTracerPtsa-9.0.1.desktop
+application/x-pka=CiscoPacketTracer-9.0.1.desktop
+application/x-pkt=CiscoPacketTracer-9.0.1.desktop
+application/x-pkz=CiscoPacketTracer-9.0.1.desktop
+application/x-pksz=CiscoPacketTracer-9.0.1.desktop
 [Added Associations]
 inode/directory=yazi.desktop
 text/csv=chromium.desktop;

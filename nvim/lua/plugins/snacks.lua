@@ -11,5 +11,8 @@ return {
         },
       },
     },
+    scroll = {
+      enabled = false,
+    },
   },
 }

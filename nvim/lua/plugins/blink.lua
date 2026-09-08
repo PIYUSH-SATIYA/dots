@@ -1,7 +1,6 @@
 return {
   "saghen/blink.cmp",
   dependencies = { "L3MON4D3/LuaSnip" },
-  require("config.wal").apply(),
   opts = {
     signature = { enabled = false },
     keymap = {
@@ -9,8 +8,8 @@ return {
       ["<C-Space>"] = { "show", "hide" },
       ["<C-n>"] = { "select_next", "fallback" },
       ["<C-p>"] = { "select_prev", "fallback" },
-      ["<Down>"] = { "select_next", "fallback" }, -- ADD THIS
-      ["<Up>"] = { "select_prev", "fallback" }, -- ADD THIS
+      ["<Down>"] = { "select_next", "fallback" },
+      ["<Up>"] = { "select_prev", "fallback" },
       ["<Tab>"] = { "accept", "snippet_forward", "fallback" },
       ["<S-Tab>"] = { "select_prev", "snippet_backward", "fallback" },
       ["<M-k>"] = {
