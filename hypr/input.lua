@@ -16,8 +16,8 @@ hl.config({
 		kb_options = "fkeys:basic_13-24",
 		-- ,grp:alts_toggle
 		-- Change speed of keyboard repeat
-		repeat_rate = 40,
-		repeat_delay = 600,
+		repeat_rate = 50,           -- was 40, faster key repeat
+		repeat_delay = 300,         -- was 600ms, quicker key response
 		-- Start with numlock on by default
 		numlock_by_default = true,
 		-- Increase sensitivity for mouse/trackpad (default: 0)

@@ -14,6 +14,10 @@ vim.keymap.set("i", "<M-l>", "<Esc>$a", { desc = "Move to line end" })
 -- to map jk in insert mode as escape key
 vim.keymap.set("i", "kj", "<Esc>", { noremap = true, silent = true })
 
+-- j/k move by visual lines (not logical lines), single press without holding
+vim.keymap.set("n", "j", "v:count > 0 ? 'j' : 'gj'", { expr = true, silent = true })
+vim.keymap.set("n", "k", "v:count > 0 ? 'k' : 'gk'", { expr = true, silent = true })
+
 -- file manager
 vim.keymap.set("n", "<leader>y", "<cmd>Yazi<cr>", { desc = "Open Yazi" })
 

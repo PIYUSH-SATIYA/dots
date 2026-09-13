@@ -33,7 +33,7 @@
     "group/audio": {
         "orientation": "horizontal",
         "drawer": {
-            "transition-duration": 300,
+            "transition-duration": 150,           // was 300ms, faster drawer transitions
             "transition-left-to-right": false
         },
         "modules": ["pulseaudio", "pulseaudio/slider"]
@@ -42,7 +42,7 @@
     "group/bright": {
         "orientation": "horizontal",
         "drawer": {
-            "transition-duration": 300,
+            "transition-duration": 150,           // was 300ms, faster drawer transitions
             "transition-left-to-right": false
         },
         "modules": ["backlight", "backlight/slider"]
