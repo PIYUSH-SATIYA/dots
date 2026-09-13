@@ -5,7 +5,8 @@
     "on-scroll-up": "hyprctl dispatch \"hl.dsp.focus({workspace = 'e-1'})\"",
     "persistent-workspaces": { "*": 5 },
     "cursor": true,
-    "onclick": "activate"
+    // "on-click": "activate"
+     "on-click": "hyprctl dispatch workspace {id}",
   },
 
   "mpris": {

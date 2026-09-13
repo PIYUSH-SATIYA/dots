@@ -1,5 +1,33 @@
 ---@module 'hl'
 
+-- ~/.config/hypr/hyprland.lua
+
+-- chatgpt transparent setup
+
+-- 1) Identity only. Tag it once, permanently, no visual effect here.
+--    Runs once while the title still says "ChatGPT - Chromium" (before rename).
+hl.window_rule({
+	name = "tag-chatgpt",
+	match = { class = "chromium", title = "^ChatGPT - Chromium$" }, -- RE2
+	tag = "+chatgpt",
+})
+
+-- (No float dispatch here anymore — you float it manually, e.g. SUPER+V.)
+
+-- 2) Visuals, gated on BOTH the tag (identity) AND float=true (state).
+--    float=true is what makes this re-evaluate live when you toggle floating.
+--    Untiled/tiled: whatever your global/default opacity is, untouched.
+--    Floating: your set transparency.
+--    Floating + fullscreened: opacity forced back to 1.0 (3rd slot).
+hl.window_rule({
+	name = "chatgpt-floating-look",
+	match = { tag = "chatgpt", float = true },
+	opacity = "0.10 override 0.00 override 1.0 override",
+	no_blur = true,
+})
+
+-- -- --
+
 -- suppress maximize events
 hl.window_rule({
 	name = "suppress_maximize",
