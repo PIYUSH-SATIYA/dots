@@ -37,6 +37,7 @@ hl.config({
 
 hl.config({
 	decoration = {
+		inactive_opacity = 0.9,
 		rounding = 10,
 		shadow = {
 			enabled = true,
@@ -44,6 +45,7 @@ hl.config({
 			render_power = 3,
 			color = "rgba(1a1a1aee)",
 		},
+
 		-- https://wiki.hyprland.org/Configuring/Variables/#blur
 		blur = {
 			enabled = true,
