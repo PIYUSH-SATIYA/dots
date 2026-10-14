@@ -7,6 +7,14 @@
 	st = status
 [init]
 	defaultBranch = master
+
+[core]
+    pager = delta
+
+[delta]
+    navigate = true
+    line-numbers = true
+
 [pull]
 	rebase = true 			 # Rebase (instead of merge) on pull
 [push]
