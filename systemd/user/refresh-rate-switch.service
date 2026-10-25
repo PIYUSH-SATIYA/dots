@@ -1,0 +1,12 @@
+[Unit]
+Description=Switch display refresh rate based on AC power
+
+[Service]
+Type=simple
+ExecStart=%h/.local/bin/refresh-rate-switch
+Restart=on-failure
+RestartSec=2
+
+[Install]
+WantedBy=default.target
+

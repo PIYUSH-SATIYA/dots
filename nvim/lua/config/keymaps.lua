@@ -8,8 +8,21 @@ vim.keymap.set("n", "<M-h>", "^", { desc = "Move to line start" })
 vim.keymap.set("n", "<M-l>", "$", { desc = "Move to line end" })
 
 -- Insert mode
-vim.keymap.set("i", "<M-h>", "<Esc>^i", { desc = "Move to line start" })
-vim.keymap.set("i", "<M-l>", "<Esc>$a", { desc = "Move to line end" })
+-- vim.keymap.set("i", "<M-h>", "<Esc>^i", { desc = "Move to line start" })
+-- vim.keymap.set("i", "<M-l>", "<Esc>$a", { desc = "Move to line end" })
+local function insert_line_start()
+  local line = vim.api.nvim_get_current_line()
+  local col = (line:find("%S") or 1) - 1
+  vim.api.nvim_win_set_cursor(0, { vim.fn.line("."), col })
+end
+
+local function insert_line_end()
+  local line = vim.api.nvim_get_current_line()
+  vim.api.nvim_win_set_cursor(0, { vim.fn.line("."), #line })
+end
+
+vim.keymap.set("i", "<M-h>", insert_line_start, { desc = "Move to line start" })
+vim.keymap.set("i", "<M-l>", insert_line_end, { desc = "Move to line end" })
 
 -- to map jk in insert mode as escape key
 vim.keymap.set("i", "kj", "<Esc>", { noremap = true, silent = true })
