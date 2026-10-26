@@ -10,7 +10,20 @@ CURRENT_WALLPAPER_FILE="$HOME_DIR/.config/theme-system/current-wallpaper"
 
 WALLPAPER_DIR="$HOME_DIR/Pictures/wallpapers"
 
-FULL_PATH="${1:-$(find "$WALLPAPER_DIR" -type f | shuf -n 1)}"
+FULL_PATH="${1:-$(
+  find "$WALLPAPER_DIR" -type f \
+    \( \
+    -iname "*.jpg" -o \
+    -iname "*.jpeg" -o \
+    -iname "*.png" -o \
+    -iname "*.webp" \
+    \) | shuf -n 1
+)}"
+
+if [ -z "$FULL_PATH" ]; then
+  notify-send "No wallpaper found"
+  exit 1
+fi
 
 echo "$FULL_PATH" >"$CURRENT_WALLPAPER_FILE"
 

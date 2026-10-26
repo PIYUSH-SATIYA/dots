@@ -12,8 +12,17 @@
 
 -- set no borders
 
-local active_border_color = { colors = { "rgba(33ccffee)", "rgba(00ff99ee)" }, angle = 45 }
-local inactive_border_color = "rgba(595959aa)"
+local ok, theme = pcall(dofile, os.getenv("HOME") .. "/.config/theme-system/generated/hyprland.lua")
+if not ok or type(theme) ~= "table" then
+	theme = {
+		active = "rgba(33ccffee)",
+		active_alt = "rgba(00ff99ee)",
+		inactive = "rgba(595959aa)",
+	}
+end
+
+local active_border_color = { colors = { theme.active, theme.active_alt }, angle = 45 }
+local inactive_border_color = theme.inactive
 
 -- https://wiki.hyprland.org/Configuring/Variables/#general
 

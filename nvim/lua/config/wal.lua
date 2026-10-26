@@ -164,6 +164,16 @@ function M.apply()
   end
   require("config.hl_links").apply()
 end
+local function is_dynamic()
+  local file = io.open(vim.fn.expand("~/.config/theme-system/mode"), "r")
+  if not file then
+    return false
+  end
+  local mode = file:read("*l")
+  file:close()
+  return mode == "dynamic"
+end
+
 function M.setup()
   if M._setup then
     return
@@ -172,6 +182,9 @@ function M.setup()
   vim.api.nvim_create_autocmd("ColorScheme", {
     group = vim.api.nvim_create_augroup("WalApply", { clear = true }),
     callback = function()
+      if not is_dynamic() then
+        return
+      end
       M.apply()
     end,
   })

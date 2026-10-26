@@ -22,8 +22,8 @@
   /* #c5c5c5 — main text            */
   --text-disabled: var(--color8);
   /* #515252 — muted / disabled     */
-  /* --border:          var(--color1);       /* #394d58 — subtle border        */
-  */ --pri-low: var(--color7);
+  --border: var(--color1);
+  --pri-low: var(--color7);
   /* #c5c5c5 — low-priority stripe  */
   --pri-normal: var(--color3);
   /* #4c616b — normal priority      */

@@ -19,8 +19,6 @@ echo "static" \
 echo "$THEME" \
   >"$HOME_DIR/.config/theme-system/current-theme"
 
-"$HOME_DIR/.config/theme-system/apply-theme.sh"
-
 # RANDOM WALLPAPER FROM THEME DIRECTORY
 
 WALLPAPER_DIR="$HOME_DIR/Pictures/wallpapers/$THEME"
@@ -38,4 +36,6 @@ FULL_PATH=$(
 if [ -n "$FULL_PATH" ]; then
   "$HOME_DIR/.config/theme-system/set-wallpaper.sh" \
     "$FULL_PATH"
+else
+  "$HOME_DIR/.config/theme-system/apply-theme.sh"
 fi

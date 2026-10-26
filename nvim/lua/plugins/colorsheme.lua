@@ -31,8 +31,8 @@ return {
     priority = 1000,
     config = function()
       require("config.hl_links").setup()
+      require("config.wal").setup()
       if mode == "dynamic" then
-        require("config.wal").setup()
         require("config.wal").apply()
       end
     end,

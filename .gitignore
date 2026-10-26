@@ -70,6 +70,7 @@ theme-system/current-theme
 themes/*/nvim.txt
 theme-system/current-wallpaper
 theme-system/mode
+theme-system/generated/
 nvim/lua/current_theme.txt
 
 
@@ -83,3 +84,4 @@ unity3d/*
 opencode/*
 
 chromium-chatgpt/
+heroic*

@@ -1,4 +1,4 @@
-@import url("file:///home/pbs/.cache/wal/colors-gtk.css");
+@import url("file:///home/pbs/.config/theme-system/generated/colors-gtk.css");
 
 @define-color window_bg_color  @color0;
 @define-color accent_bg_color  @color4;
@@ -8,7 +8,7 @@
 @define-color error_bg_color   @color1;
 @define-color error_fg_color   @foreground;
 
-* { all: unset; box-sizing: border-box; }
+* { all: unset; }
 
 .box-wrapper {
   background:    @window_bg_color;
@@ -50,7 +50,6 @@ child:selected .item-box {
 .item-subtext { font-size: 11.5px; color: @subtle_color; opacity: 0.80; margin-top: 1px; }
 .item-image, .item-image-text { margin-right: 10px; }
 .item-quick-activation {
-  margin-left: auto;
   background:  alpha(@accent_bg_color, 0.18);
   border-radius: 5px; padding: 4px 8px;
   font-size: 11px; color: @accent_bg_color;

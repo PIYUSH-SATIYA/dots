@@ -1,83 +1,59 @@
 #!/bin/bash
 
-# Reload Waybar
-pkill waybar || true
+set -u
 
-while pgrep -u "$USER" -x waybar >/dev/null; do
-  sleep 0.1
-done
+STATE="$HOME/.config/theme-system"
 
-waybar >/dev/null 2>&1 &
+"$STATE/render.py" || exit 1
 
-# Reload Neovim
-mode=$(<~/.config/theme-system/mode)
-
-if [ "$mode" = "dynamic" ]; then
-  theme="pywal16"
+if pgrep -x waybar >/dev/null; then
+  pkill -x waybar || true
+  for _ in $(seq 1 20); do
+    pgrep -x waybar >/dev/null || break
+    sleep 0.05
+  done
+fi
+if command -v setsid >/dev/null; then
+  setsid -f waybar >/dev/null 2>&1
 else
-  theme=$(<~/.config/nvim/lua/current_theme.txt)
+  nohup waybar >/dev/null 2>&1 &
 fi
 
-while read -r server; do
-  nvr --servername "$server" \
-    -c "colorscheme $theme"
-done < <(nvr --serverlist)
+swaync-client -rs >/dev/null 2>&1 || true
+pkill -USR1 -x kitty >/dev/null 2>&1 || true
+pkill -USR2 -x btop >/dev/null 2>&1 || true
+pkill -USR2 -x opencode >/dev/null 2>&1 || true
 
-#
-#
-# for server in $(nvr --serverlist); do
-#   nvr --servername "$server" \
-#     -c "colorscheme $(cat ~/.config/nvim/lua/current_theme.txt)"
-# done
-# if command -v nvr >/dev/null; then
-#   nvr --serverlist | while read -r server; do
-#     nvr --servername "$server" \
-#       -c "doautocmd User ThemeReload"
-#   done
-# fi
+if command -v nvr >/dev/null; then
+  mode=$(cat "$STATE/mode" 2>/dev/null || true)
+  if [ "$mode" = "dynamic" ]; then
+    theme="pywal16"
+  else
+    theme=$(cat "$HOME/.config/nvim/lua/current_theme.txt" 2>/dev/null || true)
+  fi
+  if [ -n "$theme" ]; then
+    while IFS= read -r server; do
+      [ -n "$server" ] || continue
+      nvr --servername "$server" --remote-expr "execute('colorscheme $theme')" >/dev/null 2>&1 || true
+    done < <(nvr --serverlist 2>/dev/null)
+  fi
+fi
 
-# Reload swaync
-swaync-client -rs || true
+hyprctl reload >/dev/null 2>&1 || true
 
-# Chromium theme
-source "$HOME/.cache/wal/colors.sh"
+if [ -f "$STATE/generated/chromium.json" ] && [ -d /etc/chromium/policies/managed ]; then
+  cp "$STATE/generated/chromium.json" /etc/chromium/policies/managed/theme.json 2>/dev/null || true
+  if pgrep -x chromium >/dev/null; then
+    chromium --refresh-platform-policy --no-startup-window >/dev/null 2>&1 &
+  fi
+fi
 
-hex_to_rgb() {
-  hex="${1#"#"}"
-
-  printf "%d %d %d\n" \
-    "0x${hex:0:2}" \
-    "0x${hex:2:2}" \
-    "0x${hex:4:2}"
-}
-
-rgb_to_hex() {
-  printf "#%02x%02x%02x\n" "$1" "$2" "$3"
-}
-
-blend_colors() {
-  read r1 g1 b1 <<<"$(hex_to_rgb "$1")"
-  read r2 g2 b2 <<<"$(hex_to_rgb "$2")"
-
-  r=$(((r1 * 60 + r2 * 40) / 100))
-  g=$(((g1 * 60 + g2 * 40) / 100))
-  b=$(((b1 * 60 + b2 * 40) / 100))
-
-  rgb_to_hex "$r" "$g" "$b"
-}
-
-CHROMIUM_COLOR=$(blend_colors "$background" "$color8")
-
-mkdir -p /etc/chromium/policies/managed
-
-cat <<EOF >/etc/chromium/policies/managed/theme.json
-{
-  "BrowserThemeColor": "$CHROMIUM_COLOR",
-  "BrowserColorScheme": "dark"
-}
-EOF
-
-if pgrep -x chromium >/dev/null; then
-  chromium --refresh-platform-policy \
-    --no-startup-window >/dev/null 2>&1 &
+if command -v gsettings >/dev/null; then
+  current=$(gsettings get org.gnome.desktop.interface gtk-theme 2>/dev/null | tr -d "'")
+  if [ -n "$current" ]; then
+    other="Adwaita-dark"
+    [ "$current" = "Adwaita-dark" ] && other="Materia-dark"
+    gsettings set org.gnome.desktop.interface gtk-theme "$other" 2>/dev/null || true
+    gsettings set org.gnome.desktop.interface gtk-theme "$current" 2>/dev/null || true
+  fi
 fi

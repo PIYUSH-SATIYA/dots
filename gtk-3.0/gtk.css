@@ -1,0 +1,47 @@
+@import url("file:///home/pbs/.config/theme-system/generated/colors-gtk.css");
+
+window, dialog, .background, .view, .scrolledwindow, .sidebar {
+  background-color: @theme_bg_color;
+  color: @theme_fg_color;
+}
+
+headerbar, .titlebar, .toolbar, .menubar {
+  background-image: none;
+  background-color: @theme_bg_color;
+  color: @theme_fg_color;
+  border-color: @borders;
+}
+
+entry, spinbutton, textview text, treeview.view, list {
+  background-color: @theme_base_color;
+  color: @theme_fg_color;
+}
+
+button, modelbutton, menuitem {
+  background-image: none;
+  color: @theme_fg_color;
+}
+
+button {
+  background-color: alpha(@theme_fg_color, 0.10);
+}
+
+button:hover {
+  background-color: alpha(@theme_fg_color, 0.18);
+}
+
+button:checked, button:active {
+  background-color: @theme_selected_bg_color;
+  color: @theme_selected_fg_color;
+}
+
+selection, *:selected, *:selected:focus {
+  background-color: @theme_selected_bg_color;
+  color: @theme_selected_fg_color;
+}
+
+tooltip {
+  background-color: @theme_bg_color;
+  color: @theme_fg_color;
+  border: 1px solid @borders;
+}
