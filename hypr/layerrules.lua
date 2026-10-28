@@ -48,6 +48,18 @@ hl.layer_rule({
 	ignore_alpha = 0.2,
 })
 
+-- Quickshell bar
+
+hl.layer_rule({
+	match = {
+		namespace = "^quickshell-bar$",
+	},
+	blur = true,
+	ignore_alpha = 0.2,
+	xray = true,
+	dim_around = false,
+})
+
 -- Waybar main panel
 
 hl.layer_rule({

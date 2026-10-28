@@ -41,9 +41,19 @@ hl.bind("SUPER + SHIFT + R", hl.dsp.exec_cmd("hyprctl reload"), { description = 
 hl.bind("SUPER + F9", hl.dsp.focus({ monitor = "OBS" }), { description = "Focus OBS monitor" })
 hl.bind("SUPER + F8", hl.dsp.focus({ monitor = "eDP-1" }), { description = "Focus laptop display" })
 
--- refresh waybar
+-- refresh bar
 
-hl.bind("SUPER + SHIFT + SPACE", hl.dsp.exec_cmd("sh -c 'pkill waybar || waybar'"), { description = "Restart Waybar" })
+hl.bind(
+	"SUPER + SHIFT + SPACE",
+	hl.dsp.exec_cmd("bash ~/.config/hypr/scripts/shell-mode.sh restart"),
+	{ description = "Restart bar" }
+)
+
+hl.bind(
+	"SUPER + CTRL + SPACE",
+	hl.dsp.exec_cmd("bash ~/.config/hypr/scripts/shell-mode.sh toggle"),
+	{ description = "Toggle Waybar/Quickshell bar" }
+)
 
 --## walker menus
 
