@@ -19,3 +19,5 @@ else
 fi
 
 "$STATE/refresh.sh"
+
+rm -f /tmp/walker-wallpaper-nav

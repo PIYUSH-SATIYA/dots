@@ -74,4 +74,11 @@ fi
   fi
 ) &
 
+(
+  if command -v systemctl >/dev/null 2>&1 &&
+    systemctl --user is-active --quiet xdg-desktop-portal-gtk.service 2>/dev/null; then
+    systemctl --user restart xdg-desktop-portal-gtk.service >/dev/null 2>&1 || true
+  fi
+) &
+
 wait
