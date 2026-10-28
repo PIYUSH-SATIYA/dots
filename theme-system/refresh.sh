@@ -14,20 +14,25 @@ else
   IFS= read -r theme <"$HOME/.config/nvim/lua/current_theme.txt" 2>/dev/null || theme=
 fi
 
-(
-  if pgrep -x waybar >/dev/null; then
-    pkill -x waybar || true
-    for _ in {1..20}; do
-      pgrep -x waybar >/dev/null || break
-      sleep 0.05
-    done
-  fi
-  if command -v setsid >/dev/null; then
-    setsid -f waybar >/dev/null 2>&1
-  else
-    nohup waybar >/dev/null 2>&1 &
-  fi
-) &
+SHELL_STATE="${XDG_STATE_HOME:-$HOME/.local/state}/hypr-shell/mode"
+IFS= read -r shell_mode <"$SHELL_STATE" 2>/dev/null || shell_mode=legacy
+
+if [ "$shell_mode" != "quickshell" ]; then
+  (
+    if pgrep -x waybar >/dev/null; then
+      pkill -x waybar || true
+      for _ in {1..20}; do
+        pgrep -x waybar >/dev/null || break
+        sleep 0.05
+      done
+    fi
+    if command -v setsid >/dev/null; then
+      setsid -f waybar >/dev/null 2>&1
+    else
+      nohup waybar >/dev/null 2>&1 &
+    fi
+  ) &
+fi
 
 swaync-client -rs >/dev/null 2>&1 &
 pkill -USR1 -x kitty >/dev/null 2>&1 &
