@@ -68,16 +68,27 @@ function GetEntries()
 		dh:close()
 	end
 
-	local fh = io.popen("find " .. sq(current_dir) .. " -maxdepth 1 -mindepth 1 -type f | sort")
+	local depth = can_go_back and 1 or 2
+	local fh = io.popen(
+		"find " .. sq(current_dir) .. " -maxdepth " .. depth .. " -mindepth 1 -type f | sort"
+	)
 	if fh then
 		for line in fh:lines() do
 			if is_image(line) then
+				local text = basename(line):gsub("%.%w+$", "")
+				if not can_go_back then
+					local rel = line:sub(#ROOT_DIR + 2)
+					local theme = rel:match("^([^/]+)/")
+					if theme then
+						text = theme .. " / " .. text
+					end
+				end
 				local a = { apply = "~/.config/theme-system/set-wallpaper.sh " .. sq(line) }
 				if can_go_back then
 					a.back = set_dir(parent)
 				end
 				table.insert(entries, {
-					Text = basename(line):gsub("%.%w+$", ""),
+					Text = text,
 					Subtext = line,
 					Value = line,
 					Preview = line,
