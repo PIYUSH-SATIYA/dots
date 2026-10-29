@@ -4,14 +4,14 @@ import Quickshell
 Row {
 	BarChunk {
 		text: "󰂚"
-		color: Colors.accent
+		color: NotificationHub.dnd ? Colors.muted : Colors.accent
 		fontSize: 14
 		divider: false
 
 		MouseArea {
 			anchors.fill: parent
 			cursorShape: Qt.PointingHandCursor
-			onClicked: Quickshell.execDetached(["swaync-client", "-t"])
+			onClicked: NotificationHub.toggleCenter()
 		}
 
 	}
