@@ -57,25 +57,70 @@ start_waybar() {
 	is_running waybar || launch waybar
 }
 
+swaync_service_exists() {
+	command -v systemctl >/dev/null 2>&1 &&
+		systemctl --user cat swaync.service >/dev/null 2>&1
+}
+
+stop_swaync() {
+	if swaync_service_exists; then
+		systemctl --user stop swaync.service >/dev/null 2>&1 || true
+	fi
+	stop swaync
+}
+
+start_swaync() {
+	if swaync_service_exists; then
+		systemctl --user unmask swaync.service >/dev/null 2>&1 || true
+		systemctl --user start swaync.service >/dev/null 2>&1 || true
+	fi
+	is_running swaync || launch swaync
+}
+
+mask_swaync() {
+	if swaync_service_exists; then
+		systemctl --user mask swaync.service >/dev/null 2>&1 || true
+	fi
+}
+
 start_quickshell() {
 	if ! command -v quickshell >/dev/null 2>&1; then
 		set_mode legacy
 		notify "Quickshell is not installed" "Falling back to Waybar"
+		start_swaync
 		start_waybar
 		return 0
 	fi
 
-	is_running quickshell || launch quickshell
+	if is_running quickshell; then
+		return 0
+	fi
+
+	launch quickshell
+	for _ in {1..30}; do
+		if is_running quickshell; then
+			return 0
+		fi
+		sleep 0.1
+	done
+
+	set_mode legacy
+	notify "Quickshell failed to start" "Falling back to Waybar"
+	start_swaync
+	start_waybar
 }
 
 apply_mode() {
 	case "$1" in
 	quickshell)
 		stop waybar
+		stop_swaync
+		mask_swaync
 		start_quickshell
 		;;
 	legacy)
 		stop quickshell
+		start_swaync
 		start_waybar
 		;;
 	esac
@@ -119,6 +164,13 @@ toggle)
 	;;
 restart)
 	mode="$(get_mode)"
+	case "$mode" in
+	quickshell) stop quickshell ;;
+	legacy)
+		stop waybar
+		stop_swaync
+		;;
+	esac
 	apply_mode "$mode"
 	notify "Shell mode" "Restarted $mode"
 	;;
