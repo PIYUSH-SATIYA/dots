@@ -57,6 +57,14 @@ start_waybar() {
 	is_running waybar || launch waybar
 }
 
+start_swayosd() {
+	is_running swayosd-server || launch swayosd-server
+}
+
+stop_swayosd() {
+	stop swayosd-server
+}
+
 swaync_service_exists() {
 	command -v systemctl >/dev/null 2>&1 &&
 		systemctl --user cat swaync.service >/dev/null 2>&1
@@ -88,6 +96,7 @@ start_quickshell() {
 		set_mode legacy
 		notify "Quickshell is not installed" "Falling back to Waybar"
 		start_swaync
+		start_swayosd
 		start_waybar
 		return 0
 	fi
@@ -107,6 +116,7 @@ start_quickshell() {
 	set_mode legacy
 	notify "Quickshell failed to start" "Falling back to Waybar"
 	start_swaync
+	start_swayosd
 	start_waybar
 }
 
@@ -115,12 +125,14 @@ apply_mode() {
 	quickshell)
 		stop waybar
 		stop_swaync
+		stop_swayosd
 		mask_swaync
 		start_quickshell
 		;;
 	legacy)
 		stop quickshell
 		start_swaync
+		start_swayosd
 		start_waybar
 		;;
 	esac
@@ -169,6 +181,7 @@ restart)
 	legacy)
 		stop waybar
 		stop_swaync
+		stop_swayosd
 		;;
 	esac
 	apply_mode "$mode"

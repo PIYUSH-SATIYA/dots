@@ -80,6 +80,17 @@ hl.layer_rule({
 	xray = true,
 })
 
+-- Quickshell OSD
+
+hl.layer_rule({
+	match = {
+		namespace = "^quickshell-osd$",
+	},
+	blur = true,
+	ignore_alpha = 0.2,
+	xray = true,
+})
+
 -- Waybar main panel
 
 hl.layer_rule({

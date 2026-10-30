@@ -6,9 +6,8 @@ BarChunk {
 	id: root
 
 	readonly property var sink: Pipewire.defaultAudioSink
-	readonly property var audio: root.sink ? root.sink.audio : null
-	readonly property bool muted: root.audio ? root.audio.muted : false
-	readonly property int volume: root.audio ? Math.round(root.audio.volume * 100) : 0
+	readonly property bool muted: Stats.muted
+	readonly property int volume: Stats.volume
 
 	function volumeIcon(value) {
 		if (value <= 0)
@@ -31,20 +30,14 @@ BarChunk {
 		cursorShape: Qt.PointingHandCursor
 		acceptedButtons: Qt.LeftButton | Qt.RightButton
 		onClicked: (mouse) => {
-			if (!root.audio)
-				return
-
-			if (mouse.button === Qt.LeftButton)
-				root.audio.muted = !root.audio.muted
-			else
+			if (mouse.button === Qt.LeftButton) {
+				Osd.toggleMute()
+			} else {
 				Quickshell.execDetached(["pavucontrol", "-t", "4"])
+			}
 		}
 		onWheel: (wheel) => {
-			if (!root.audio)
-				return
-
-			const step = wheel.angleDelta.y > 0 ? 0.02 : -0.02
-			root.audio.volume = Math.max(0, Math.min(1.5, root.audio.volume + step))
+			Osd.adjustVolume(wheel.angleDelta.y > 0 ? 2 : -2)
 		}
 	}
 

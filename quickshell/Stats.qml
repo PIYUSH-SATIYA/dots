@@ -18,6 +18,8 @@ Singleton {
 	property string wifiSsid: ""
 	property int wifiSignal: 0
 	property int brightness: 0
+	property int volume: 0
+	property bool muted: false
 	readonly property bool wifiConnected: root.wifiState === "connected"
 
 	Component.onCompleted: statsProcess.running = true
@@ -47,6 +49,8 @@ Singleton {
 					root.wifiSsid = data.wifi_ssid
 					root.wifiSignal = data.wifi_signal
 					root.brightness = data.brightness
+					root.volume = data.volume
+					root.muted = data.muted
 				} catch (error) {
 					console.warn("Failed to parse bar stats:", error)
 				}

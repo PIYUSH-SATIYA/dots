@@ -71,6 +71,19 @@ if command -v brightnessctl >/dev/null 2>&1; then
 	fi
 fi
 
+volume=0
+muted=0
+
+if command -v wpctl >/dev/null 2>&1; then
+	audio_raw=$(wpctl get-volume @DEFAULT_AUDIO_SINK@ 2>/dev/null || true)
+	if [ -n "$audio_raw" ]; then
+		volume=$(awk '{ printf "%d", $2 * 100 }' <<<"$audio_raw")
+		case "$audio_raw" in
+		*MUTED*) muted=1 ;;
+		esac
+	fi
+fi
+
 wifi_state=disconnected
 wifi_ssid=""
 wifi_signal=0
@@ -100,6 +113,8 @@ jq -cn \
 	--arg wifi_ssid "$wifi_ssid" \
 	--argjson wifi_signal "${wifi_signal:-0}" \
 	--argjson brightness "$brightness" \
+	--argjson volume "$volume" \
+	--argjson muted "$muted" \
 	'{
 		cpu: $cpu,
 		cores: $cores,
@@ -111,5 +126,7 @@ jq -cn \
 		wifi_state: $wifi_state,
 		wifi_ssid: $wifi_ssid,
 		wifi_signal: $wifi_signal,
-		brightness: $brightness
+		brightness: $brightness,
+		volume: $volume,
+		muted: $muted
 	}'

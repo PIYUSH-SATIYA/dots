@@ -25,7 +25,7 @@ BarChunk {
 		anchors.fill: parent
 		cursorShape: Qt.PointingHandCursor
 		onWheel: (wheel) => {
-			Quickshell.execDetached(["brightnessctl", "set", wheel.angleDelta.y > 0 ? "2%+" : "2%-"])
+			Osd.adjustBrightness(wheel.angleDelta.y > 0 ? "up" : "down", 2)
 		}
 	}
 

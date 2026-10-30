@@ -16,31 +16,31 @@
 
 hl.bind(
 	"XF86AudioRaiseVolume",
-	hl.dsp.exec_cmd("swayosd-client --output-volume +5"),
+	hl.dsp.exec_cmd("bash ~/.config/hypr/scripts/osd-control.sh volume-up 5"),
 	{ locked = true, description = "Increase system volume" }
 )
 
 hl.bind(
 	"ALT + XF86AudioRaiseVolume",
-	hl.dsp.exec_cmd("swayosd-client --output-volume +1"),
+	hl.dsp.exec_cmd("bash ~/.config/hypr/scripts/osd-control.sh volume-up 1"),
 	{ locked = true, description = "Increase system volume (fine)" }
 )
 
 hl.bind(
 	"ALT + XF86AudioLowerVolume",
-	hl.dsp.exec_cmd("swayosd-client --output-volume -1"),
+	hl.dsp.exec_cmd("bash ~/.config/hypr/scripts/osd-control.sh volume-down 1"),
 	{ locked = true, description = "Decrease system volume (fine)" }
 )
 
 hl.bind(
 	"XF86AudioLowerVolume",
-	hl.dsp.exec_cmd("swayosd-client --output-volume -5"),
+	hl.dsp.exec_cmd("bash ~/.config/hypr/scripts/osd-control.sh volume-down 5"),
 	{ locked = true, description = "Decrease system volume" }
 )
 
 hl.bind(
 	"XF86AudioMute",
-	hl.dsp.exec_cmd("swayosd-client --output-volume mute-toggle"),
+	hl.dsp.exec_cmd("bash ~/.config/hypr/scripts/osd-control.sh volume-mute"),
 	{ locked = true, description = "Toggle audio mute" }
 )
 
@@ -53,50 +53,28 @@ hl.bind(
 )
 
 -- Brightness
---
-local function brightness(step)
-	return string.format(
-		[[
-		sh -c '
-			brightnessctl -e set "%s"
-
-			current=$(brightnessctl g)
-			max=$(brightnessctl m)
-
-			progress=$(awk "BEGIN { print $current/$max }")
-			percent=$(( current * 100 / max ))
-
-			swayosd-client \
-				--custom-icon display-brightness-symbolic \
-				--custom-progress "$progress" \
-				--custom-progress-text "$(printf "%%3d%%%%" "$percent")"
-		'
-	]],
-		step
-	)
-end
 
 hl.bind(
 	"XF86MonBrightnessUp",
-	hl.dsp.exec_cmd(brightness("+5%")),
+	hl.dsp.exec_cmd("bash ~/.config/hypr/scripts/osd-control.sh brightness-up 5"),
 	{ locked = true, description = "Increase screen brightness" }
 )
 
 hl.bind(
 	"XF86MonBrightnessDown",
-	hl.dsp.exec_cmd(brightness("5%-")),
+	hl.dsp.exec_cmd("bash ~/.config/hypr/scripts/osd-control.sh brightness-down 5"),
 	{ locked = true, description = "Decrease screen brightness" }
 )
 
 hl.bind(
 	"ALT + XF86MonBrightnessUp",
-	hl.dsp.exec_cmd(brightness("+1%")),
+	hl.dsp.exec_cmd("bash ~/.config/hypr/scripts/osd-control.sh brightness-up 1"),
 	{ locked = true, description = "Increase screen brightness (fine)" }
 )
 
 hl.bind(
 	"ALT + XF86MonBrightnessDown",
-	hl.dsp.exec_cmd(brightness("1%-")),
+	hl.dsp.exec_cmd("bash ~/.config/hypr/scripts/osd-control.sh brightness-down 1"),
 	{ locked = true, description = "Decrease screen brightness (fine)" }
 )
 
