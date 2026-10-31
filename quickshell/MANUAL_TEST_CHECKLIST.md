@@ -3,7 +3,7 @@
 Run this checklist from top to bottom after the first-iteration migration is complete.
 Reset the session to a known state before starting.
 
-First iteration implements the native bar, notifications/toasts, OSD, and control-center quick actions, volume/brightness sliders, and MPRIS controls. Known deferred scope is listed at the end.
+First iteration implements the native bar, notifications/toasts, OSD, control-center quick actions, volume/brightness sliders, MPRIS controls, and the native launcher. Known deferred scope is listed at the end.
 
 ## Preconditions
 
@@ -134,8 +134,8 @@ First iteration implements the native bar, notifications/toasts, OSD, and contro
 
 - [ ] Bell button toggles the notification center.
 - [ ] Bell color reflects DND state.
-- [ ] `QS` button opens Walker.
-- [ ] `SUPER+SPACE` opens Walker.
+- [ ] `QS` button opens the native launcher.
+- [ ] `SUPER+SPACE` opens the native launcher.
 - [ ] Bar remains clickable after shell reload.
 
 ## Notification Center and Toasts
@@ -212,6 +212,44 @@ First iteration implements the native bar, notifications/toasts, OSD, and contro
 - [ ] OSD does not appear from SwayOSD in Quickshell mode.
 - [ ] Legacy mode still shows the original SwayOSD.
 
+## Native Launcher
+
+### Window and input
+
+- [ ] `SUPER+SPACE` toggles the launcher.
+- [ ] Pressing `SUPER+SPACE` while open closes it.
+- [ ] The launcher uses the `quickshell-launcher` namespace.
+- [ ] The launcher is centered and receives keyboard focus.
+- [ ] Typing filters the current result list.
+- [ ] Up/Down and PageUp/PageDown move the selection.
+- [ ] Enter activates the selected result.
+- [ ] Escape and clicking outside the panel close the launcher.
+- [ ] The overlay does not leave keyboard focus stuck.
+- [ ] The launcher opens on the active monitor.
+
+### Modes and actions
+
+- [ ] Empty query lists applications.
+- [ ] Selecting an application launches it.
+- [ ] `/` searches files and Enter opens the selected file.
+- [ ] `:` lists clipboard history and Enter copies the selected entry.
+- [ ] `` ` `` lists static and dynamic themes and Enter applies the selected theme.
+- [ ] `!` lists wallpapers and Enter applies the selected wallpaper.
+- [ ] `?` lists keybindings and Enter copies the selected keybind.
+- [ ] `.` lists symbols and Enter copies the selected glyph.
+- [ ] `=` evaluates an expression and Enter copies the result.
+- [ ] `@` searches the web or opens a URL.
+- [ ] `>` runs the entered shell command.
+- [ ] `$` lists Hyprland windows and Enter focuses the selected window.
+- [ ] `SUPER+V` opens clipboard mode directly.
+- [ ] `SUPER+E` opens symbols mode directly.
+- [ ] `SUPER+K` opens keybind mode directly.
+- [ ] `SUPER+SHIFT+W` opens wallpaper mode directly.
+- [ ] `SUPER+ALT+W` opens theme mode directly.
+- [ ] Help mode lists every launcher mode.
+- [ ] Launcher data refresh does not block typing.
+- [ ] Empty and failed queries show a useful message.
+
 ## Desktop Integrations
 
 - [ ] `SUPER+RETURN` opens Kitty in the current working directory.
@@ -225,7 +263,7 @@ First iteration implements the native bar, notifications/toasts, OSD, and contro
 - [ ] `SUPER+SHIFT+R` reloads Hyprland without breaking the shell.
 - [ ] `SUPER+SHIFT+SPACE` restarts the active shell.
 - [ ] `SUPER+CTRL+SPACE` toggles shell mode.
-- [ ] Wallpaper and theme menus still use Walker.
+- [ ] Wallpaper and theme menus use the native launcher.
 - [ ] `CTRL+ALT+I` toggles idle locking.
 - [ ] `hypridle` state notifications appear in the active notification backend.
 - [ ] Tray menus and notification actions do not leave focus stuck.
