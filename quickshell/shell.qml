@@ -4,4 +4,5 @@ ShellRoot {
 	Bar {}
 	OsdWindow {}
 	NotificationCenter {}
+	Launcher {}
 }
