@@ -91,6 +91,17 @@ hl.layer_rule({
 	xray = true,
 })
 
+-- Quickshell launcher
+
+hl.layer_rule({
+	match = {
+		namespace = "^quickshell-launcher$",
+	},
+	blur = true,
+	ignore_alpha = 0.2,
+	xray = true,
+})
+
 -- Waybar main panel
 
 hl.layer_rule({

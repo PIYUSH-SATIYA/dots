@@ -55,11 +55,15 @@ hl.bind(
 	{ description = "Toggle Waybar/Quickshell bar" }
 )
 
---## walker menus
+--## shell launcher menus
 
 -- Main launcher
 
-hl.bind("SUPER + SPACE", hl.dsp.exec_cmd("walker -t pywal"), { description = "Open Walker launcher" })
+hl.bind(
+	"SUPER + SPACE",
+	hl.dsp.exec_cmd("bash ~/.config/hypr/scripts/launcher-control.sh toggle"),
+	{ description = "Open application launcher" }
+)
 
 -- wallpaper change with awww
 
@@ -73,13 +77,13 @@ hl.bind(
 
 hl.bind(
 	"SUPER + SHIFT + W",
-	hl.dsp.exec_cmd("walker -t pywal --provider menus:wallpaper"),
-	{ description = "Open wallpaper-grid selection menu" }
+	hl.dsp.exec_cmd("bash ~/.config/hypr/scripts/launcher-control.sh wallpapers"),
+	{ description = "Open wallpaper selection menu" }
 )
 
 hl.bind(
 	"SUPER + ALT + W",
-	hl.dsp.exec_cmd("walker -t pywal --provider menus:themes"),
+	hl.dsp.exec_cmd("bash ~/.config/hypr/scripts/launcher-control.sh themes"),
 	{ description = "Open theme selection menu" }
 )
 
@@ -87,7 +91,7 @@ hl.bind(
 
 hl.bind(
 	"SUPER + V",
-	hl.dsp.exec_cmd("walker -t pywal --provider clipboard"),
+	hl.dsp.exec_cmd("bash ~/.config/hypr/scripts/launcher-control.sh clipboard"),
 	{ description = "Open clipboard history" }
 )
 
@@ -95,7 +99,7 @@ hl.bind(
 
 hl.bind(
 	"SUPER + E",
-	hl.dsp.exec_cmd("walker -t pywal --provider symbols"),
+	hl.dsp.exec_cmd("bash ~/.config/hypr/scripts/launcher-control.sh symbols"),
 	{ description = "Open emoji and symbols picker" }
 )
 
@@ -103,7 +107,7 @@ hl.bind(
 
 hl.bind(
 	"SUPER + K",
-	hl.dsp.exec_cmd("walker -t pywal --provider menus:keybinds"),
+	hl.dsp.exec_cmd("bash ~/.config/hypr/scripts/launcher-control.sh keybinds"),
 	{ description = "Open keybindings help menu" }
 )
 
