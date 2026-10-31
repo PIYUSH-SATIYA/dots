@@ -65,9 +65,35 @@ stop_swayosd() {
 	stop swayosd-server
 }
 
-swaync_service_exists() {
+unit_exists() {
 	command -v systemctl >/dev/null 2>&1 &&
-		systemctl --user cat swaync.service >/dev/null 2>&1
+		systemctl --user cat "$1" >/dev/null 2>&1
+}
+
+swaync_service_exists() {
+	unit_exists swaync.service
+}
+
+start_elephant() {
+	if unit_exists elephant.service; then
+		systemctl --user start elephant.service >/dev/null 2>&1 || true
+	fi
+	is_running elephant || launch elephant
+}
+
+stop_elephant() {
+	if unit_exists elephant.service; then
+		systemctl --user stop elephant.service >/dev/null 2>&1 || true
+	fi
+	stop elephant
+}
+
+start_walker() {
+	is_running walker || launch env GSK_RENDERER=cairo walker --gapplication-service
+}
+
+stop_walker() {
+	stop walker
 }
 
 stop_swaync() {
@@ -95,6 +121,8 @@ start_quickshell() {
 	if ! command -v quickshell >/dev/null 2>&1; then
 		set_mode legacy
 		notify "Quickshell is not installed" "Falling back to Waybar"
+		start_elephant
+		start_walker
 		start_swaync
 		start_swayosd
 		start_waybar
@@ -115,6 +143,8 @@ start_quickshell() {
 
 	set_mode legacy
 	notify "Quickshell failed to start" "Falling back to Waybar"
+	start_elephant
+	start_walker
 	start_swaync
 	start_swayosd
 	start_waybar
@@ -126,11 +156,15 @@ apply_mode() {
 		stop waybar
 		stop_swaync
 		stop_swayosd
+		stop_walker
+		stop_elephant
 		mask_swaync
 		start_quickshell
 		;;
 	legacy)
 		stop quickshell
+		start_elephant
+		start_walker
 		start_swaync
 		start_swayosd
 		start_waybar

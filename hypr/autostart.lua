@@ -36,8 +36,6 @@ hl.on("hyprland.start", function()
 	hl.exec_cmd("hypridle")
 	hl.exec_cmd("bash ~/.config/hypr/scripts/start-shell.sh")
 	hl.exec_cmd("/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1")
-	hl.exec_cmd("elephant")
-	hl.exec_cmd("env GSK_RENDERER=cairo walker --gapplication-service")
 	hl.exec_cmd("hyprctl setcursor Bibata-Modern-Ice 22")
 	hl.exec_cmd("dbus-update-activation-environment --systemd --all")
 

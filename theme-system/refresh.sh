@@ -34,7 +34,9 @@ if [ "$shell_mode" != "quickshell" ]; then
   ) &
 fi
 
-swaync-client -rs >/dev/null 2>&1 &
+if [ "$shell_mode" != "quickshell" ]; then
+  swaync-client -rs >/dev/null 2>&1 &
+fi
 pkill -USR1 -x kitty >/dev/null 2>&1 &
 pkill -USR2 -x btop >/dev/null 2>&1 &
 
