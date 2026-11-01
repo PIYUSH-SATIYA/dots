@@ -187,6 +187,7 @@ Scope {
 		},
 	]
 	readonly property var results: root.computeResults()
+	readonly property var selectedItem: root.results[root.selected] || null
 
 	property var catalog: ({})
 	property var remoteItems: []
@@ -196,6 +197,7 @@ Scope {
 	property int querySerial: 0
 	property bool queryBusy: false
 	property bool queryPending: false
+	property bool clipboardRefreshing: false
 
 	function normalize(value) {
 		return String(value || "").toLowerCase()
@@ -467,6 +469,14 @@ Scope {
 		catalogProcess.running = true
 	}
 
+	function refreshClipboard() {
+		if (root.clipboardRefreshing)
+			return
+
+		root.clipboardRefreshing = true
+		clipboardProcess.running = true
+	}
+
 	function scheduleRemote() {
 		if (!LauncherHub.open)
 			return
@@ -573,6 +583,44 @@ Scope {
 			if (root.remoteMode && root.effectiveQuery.trim())
 				root.requestRemote()
 		}
+	}
+
+	Timer {
+		id: clipboardRefreshTimer
+
+		interval: 1000
+		repeat: true
+		running: LauncherHub.open && root.effectiveMode === "clipboard"
+		onTriggered: root.refreshClipboard()
+	}
+
+	Process {
+		id: clipboardProcess
+
+		command: ["python3", root.dataScript, "clipboard"]
+
+		stdout: StdioCollector {
+			onStreamFinished: {
+				const text = this.text.trim()
+
+				if (!text)
+					return
+
+				try {
+					const data = JSON.parse(text)
+
+					if (Array.isArray(data)) {
+						const next = Object.assign({}, root.catalog)
+						next.clipboard = data
+						root.catalog = next
+					}
+				} catch (error) {
+					root.message = "Clipboard refresh failed"
+				}
+			}
+		}
+
+		onExited: root.clipboardRefreshing = false
 	}
 
 	Process {
@@ -842,133 +890,201 @@ Scope {
 					}
 				}
 
-				Item {
+				Row {
 					width: parent.width
 					height: Math.max(0, parent.height - 137)
+					spacing: 10
 
-					ListView {
-						id: launcherList
+					Item {
+						id: listArea
 
-						anchors.fill: parent
-						model: root.results
-						spacing: 2
-						clip: true
-						boundsBehavior: Flickable.StopAtBounds
+						width: root.effectiveMode === "clipboard"
+							? Math.max(0, parent.width - Math.min(220, parent.width * 0.34) - parent.spacing)
+							: parent.width
+						height: parent.height
 
-						onCountChanged: {
-							if (root.selected >= count)
-								root.selected = Math.max(0, count - 1)
+
+						ListView {
+							id: launcherList
+
+							anchors.fill: parent
+							model: root.results
+							spacing: 2
+							clip: true
+							boundsBehavior: Flickable.StopAtBounds
+
+							onCountChanged: {
+								if (root.selected >= count)
+									root.selected = Math.max(0, count - 1)
+							}
+
+							delegate: Rectangle {
+								id: itemRow
+
+								required property var modelData
+								required property int index
+
+								width: launcherList.width
+								height: 50
+								radius: 8
+								color: index === root.selected
+									? Qt.alpha(Colors.accent, 0.16)
+									: (rowMouse.containsMouse ? Qt.alpha(Colors.foreground, 0.07) : "transparent")
+
+								Row {
+									anchors {
+										fill: parent
+										leftMargin: 10
+										rightMargin: 10
+									}
+									spacing: 10
+
+									Item {
+										width: 28
+										height: 28
+										anchors.verticalCenter: parent.verticalCenter
+
+										IconImage {
+											id: itemIcon
+
+											anchors.fill: parent
+											source: Quickshell.iconPath(itemRow.modelData.icon || "", true)
+											visible: source !== ""
+										}
+
+										Text {
+											anchors.centerIn: parent
+											visible: itemIcon.source === ""
+											text: itemRow.modelData.glyph || "󰈔"
+											color: Colors.foreground
+											font.family: "CaskaydiaCove Nerd Font Propo"
+											font.pixelSize: 20
+											font.weight: Font.DemiBold
+										}
+									}
+
+									Column {
+										width: parent.width - 28 - 70 - 20
+										anchors.verticalCenter: parent.verticalCenter
+										spacing: 2
+
+										Text {
+											width: parent.width
+											text: itemRow.modelData.name || ""
+											color: Colors.foreground
+											elide: Text.ElideRight
+											textFormat: Text.PlainText
+											font.family: "CaskaydiaCove Nerd Font Propo"
+											font.pixelSize: 13
+											font.weight: Font.DemiBold
+										}
+
+										Text {
+											width: parent.width
+											text: itemRow.modelData.subtitle || ""
+											color: Colors.muted
+											elide: Text.ElideRight
+											textFormat: Text.PlainText
+											font.family: "CaskaydiaCove Nerd Font Propo"
+											font.pixelSize: 11
+											font.weight: Font.DemiBold
+										}
+									}
+
+									Text {
+										width: 70
+										anchors.verticalCenter: parent.verticalCenter
+										text: root.kindLabel(itemRow.modelData.kind)
+										color: Colors.muted
+										horizontalAlignment: Text.AlignRight
+										elide: Text.ElideLeft
+										font.family: "CaskaydiaCove Nerd Font Propo"
+										font.pixelSize: 10
+										font.weight: Font.DemiBold
+									}
+								}
+
+								MouseArea {
+									id: rowMouse
+
+									anchors.fill: parent
+									hoverEnabled: true
+									cursorShape: Qt.PointingHandCursor
+									onClicked: root.activate(itemRow.modelData)
+								}
+							}
 						}
 
-						delegate: Rectangle {
-							id: itemRow
+						Text {
+							anchors.centerIn: parent
+							width: parent.width - 40
+							visible: root.results.length === 0
+							text: root.emptyText()
+							color: Colors.muted
+							horizontalAlignment: Text.AlignHCenter
+							wrapMode: Text.Wrap
+							textFormat: Text.PlainText
+							font.family: "CaskaydiaCove Nerd Font Propo"
+							font.pixelSize: 13
+							font.weight: Font.DemiBold
+						}
 
-							required property var modelData
-							required property int index
+					}
 
-							width: launcherList.width
-							height: 50
-							radius: 8
-							color: index === root.selected
-								? Qt.alpha(Colors.accent, 0.16)
-								: (rowMouse.containsMouse ? Qt.alpha(Colors.foreground, 0.07) : "transparent")
+					Rectangle {
+						visible: root.effectiveMode === "clipboard"
+						width: parent.width - listArea.width - parent.spacing
+						height: parent.height
+						radius: 10
+						color: Qt.alpha(Colors.foreground, 0.045)
+						border.width: 1
+						border.color: Colors.separator
 
-							Row {
-								anchors {
-									fill: parent
-									leftMargin: 10
-									rightMargin: 10
-								}
-								spacing: 10
+						Column {
+							anchors {
+								fill: parent
+								margins: 12
+							}
+							spacing: 8
 
-								Item {
-									width: 28
-									height: 28
-									anchors.verticalCenter: parent.verticalCenter
+							Text {
+								text: "Preview"
+								color: Colors.accent
+								font.family: "CaskaydiaCove Nerd Font Propo"
+								font.pixelSize: 11
+								font.weight: Font.DemiBold
+							}
 
-									IconImage {
-										id: itemIcon
+							Rectangle {
+								width: parent.width
+								height: 1
+								color: Colors.separator
+							}
 
-										anchors.fill: parent
-										source: Quickshell.iconPath(itemRow.modelData.icon || "", true)
-										visible: source !== ""
-									}
-
-									Text {
-										anchors.centerIn: parent
-										visible: itemIcon.source === ""
-										text: itemRow.modelData.glyph || "󰈔"
-										color: Colors.foreground
-										font.family: "CaskaydiaCove Nerd Font Propo"
-										font.pixelSize: 20
-										font.weight: Font.DemiBold
-									}
-								}
-
-								Column {
-									width: parent.width - 28 - 70 - 20
-									anchors.verticalCenter: parent.verticalCenter
-									spacing: 2
-
-									Text {
-										width: parent.width
-										text: itemRow.modelData.name || ""
-										color: Colors.foreground
-										elide: Text.ElideRight
-										textFormat: Text.PlainText
-										font.family: "CaskaydiaCove Nerd Font Propo"
-										font.pixelSize: 13
-										font.weight: Font.DemiBold
-									}
-
-									Text {
-										width: parent.width
-										text: itemRow.modelData.subtitle || ""
-										color: Colors.muted
-										elide: Text.ElideRight
-										textFormat: Text.PlainText
-										font.family: "CaskaydiaCove Nerd Font Propo"
-										font.pixelSize: 11
-										font.weight: Font.DemiBold
-									}
-								}
+							Flickable {
+								width: parent.width
+								height: parent.height - 38
+								contentWidth: width
+								contentHeight: previewText.implicitHeight
+								clip: true
+								boundsBehavior: Flickable.StopAtBounds
 
 								Text {
-									width: 70
-									anchors.verticalCenter: parent.verticalCenter
-									text: root.kindLabel(itemRow.modelData.kind)
-									color: Colors.muted
-									horizontalAlignment: Text.AlignRight
-									elide: Text.ElideLeft
+									id: previewText
+
+									width: parent.width
+									text: root.selectedItem
+										? (root.selectedItem.binary ? "[binary clipboard entry]" : (root.selectedItem.preview || root.selectedItem.name || ""))
+										: ""
+									color: Colors.foreground
+									wrapMode: Text.Wrap
+									textFormat: Text.PlainText
 									font.family: "CaskaydiaCove Nerd Font Propo"
-									font.pixelSize: 10
+									font.pixelSize: 12
 									font.weight: Font.DemiBold
 								}
 							}
-
-							MouseArea {
-								id: rowMouse
-
-								anchors.fill: parent
-								hoverEnabled: true
-								cursorShape: Qt.PointingHandCursor
-								onClicked: root.activate(itemRow.modelData)
-							}
 						}
-					}
-
-					Text {
-						anchors.centerIn: parent
-						width: parent.width - 40
-						visible: root.results.length === 0
-						text: root.emptyText()
-						color: Colors.muted
-						horizontalAlignment: Text.AlignHCenter
-						wrapMode: Text.Wrap
-						textFormat: Text.PlainText
-						font.family: "CaskaydiaCove Nerd Font Propo"
-						font.pixelSize: 13
-						font.weight: Font.DemiBold
 					}
 				}
 

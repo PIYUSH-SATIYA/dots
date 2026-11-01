@@ -29,6 +29,9 @@ BarChunk {
 		anchors.fill: parent
 		cursorShape: Qt.PointingHandCursor
 		acceptedButtons: Qt.LeftButton | Qt.RightButton
+		hoverEnabled: true
+		onEntered: audioSlider.show()
+		onExited: audioSlider.scheduleClose()
 		onClicked: (mouse) => {
 			if (mouse.button === Qt.LeftButton) {
 				Osd.toggleMute()
@@ -38,6 +41,25 @@ BarChunk {
 		}
 		onWheel: (wheel) => {
 			Osd.adjustVolume(wheel.angleDelta.y > 0 ? 2 : -2)
+		}
+	}
+
+	BarSliderPopup {
+		id: audioSlider
+
+		anchorItem: root
+		iconText: root.muted ? "󰝟" : root.volumeIcon(root.volume)
+		value: root.volume
+		from: 0
+		to: 100
+		muted: root.muted
+		onValueMoved: (value) => {
+			Osd.setVolume(value)
+			Stats.volume = Math.round(value)
+		}
+		onValueCommitted: (value) => {
+			Osd.setVolume(value)
+			Stats.volume = Math.round(value)
 		}
 	}
 

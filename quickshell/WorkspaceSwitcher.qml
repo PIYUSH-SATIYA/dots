@@ -49,8 +49,10 @@ Row {
 			Rectangle {
 				anchors.fill: parent
 				color: workspace.modelData.focused
-					? Qt.alpha(Colors.accent, 0.15)
-					: (workspaceMouse.containsMouse ? Qt.alpha(Colors.foreground, 0.08) : "transparent")
+					? Qt.alpha(Colors.accent, 0.18)
+					: (workspaceMouse.containsMouse
+						? Qt.alpha(Colors.foreground, 0.1)
+						: (workspace.modelData.empty ? "transparent" : Qt.alpha(Colors.foreground, 0.07)))
 			}
 
 			Text {
@@ -60,8 +62,8 @@ Row {
 				text: workspace.modelData.id
 				color: workspace.modelData.focused
 					? Colors.accent
-					: (workspace.modelData.active ? Colors.color7 : Colors.muted)
-				opacity: workspace.modelData.empty ? 0.45 : 1
+					: (workspace.modelData.empty ? Colors.muted : Colors.color7)
+				opacity: workspace.modelData.empty ? 0.38 : 1
 				font.family: "CaskaydiaCove Nerd Font Propo"
 				font.pixelSize: 13
 				font.weight: Font.DemiBold

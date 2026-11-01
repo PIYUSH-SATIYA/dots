@@ -17,6 +17,8 @@ mapfile -t cpu2 < <(grep '^cpu[0-9]' /proc/stat)
 
 blocks=(▁ ▂ ▃ ▄ ▅ ▆ ▇ █)
 cores=""
+core_usage=""
+core_gap=$'\u200a'
 cpu_used=0
 cpu_total=0
 
@@ -43,10 +45,14 @@ for i in "${!cpu1[@]}"; do
 	[ "$idx" -gt 7 ] && idx=7
 	[ "$idx" -lt 0 ] && idx=0
 
-	cores+="${blocks[$idx]}"
+	cores+="${blocks[$idx]}${core_gap}"
+	core_usage+="${usage},"
 	cpu_used=$((cpu_used + used))
 	cpu_total=$((cpu_total + delta))
 done
+
+cores="${cores%"$core_gap"}"
+core_usage="[${core_usage%,}]"
 
 if [ "$cpu_total" -gt 0 ]; then
 	cpu=$((cpu_used * 100 / cpu_total))
@@ -104,6 +110,7 @@ fi
 jq -cn \
 	--argjson cpu "$cpu" \
 	--arg cores "$cores" \
+	--argjson core_usage "$core_usage" \
 	--argjson mem_used "$mem_used" \
 	--argjson mem_total "$mem_total" \
 	--argjson mem_pct "$mem_pct" \
@@ -118,6 +125,7 @@ jq -cn \
 	'{
 		cpu: $cpu,
 		cores: $cores,
+		core_usage: $core_usage,
 		mem_used: $mem_used,
 		mem_total: $mem_total,
 		mem_pct: $mem_pct,

@@ -96,6 +96,15 @@ stop_walker() {
 	stop walker
 }
 
+start_clipboard() {
+	if ! pgrep -f 'wl-paste --type text --watch cliphist store' >/dev/null 2>&1; then
+		launch wl-paste --type text --watch cliphist store
+	fi
+	if ! pgrep -f 'wl-paste --type image --watch cliphist store' >/dev/null 2>&1; then
+		launch wl-paste --type image --watch cliphist store
+	fi
+}
+
 stop_swaync() {
 	if swaync_service_exists; then
 		systemctl --user stop swaync.service >/dev/null 2>&1 || true
@@ -151,6 +160,8 @@ start_quickshell() {
 }
 
 apply_mode() {
+	start_clipboard
+
 	case "$1" in
 	quickshell)
 		stop waybar

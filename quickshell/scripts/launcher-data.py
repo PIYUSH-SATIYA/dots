@@ -130,11 +130,14 @@ def clipboard():
         identifier, preview = line.split("\t", 1)
         preview = preview.replace("\n", " ").strip()
         name = preview[:160] or "(empty clipboard entry)"
+        binary = preview.startswith("[[ binary data")
 
         items.append({
             "kind": "clipboard",
             "name": name,
             "subtitle": "Clipboard",
+            "preview": preview[:4000],
+            "binary": binary,
             "icon": "edit-paste",
             "action": "clipboard",
             "arg": identifier,

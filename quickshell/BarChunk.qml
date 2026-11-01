@@ -6,7 +6,7 @@ Item {
 	property alias text: label.text
 	property color color: Colors.foreground
 	property color dividerColor: Colors.separator
-	property int fontSize: 13
+	property int fontSize: 14
 	property int horizontalPadding: 10
 	property bool divider: true
 

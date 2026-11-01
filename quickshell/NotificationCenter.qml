@@ -272,7 +272,7 @@ Scope {
 						height: 20
 						anchors.verticalCenter: parent.verticalCenter
 						from: 0
-						to: 150
+						to: 100
 						value: Stats.volume
 						onMoved: volumeCommitTimer.restart()
 						onReleased: (value) => {

@@ -9,6 +9,7 @@ Singleton {
 
 	property int cpu: 0
 	property string cores: ""
+	property var coreUsage: []
 	property real memUsed: 0
 	property real memTotal: 0
 	property int memPct: 0
@@ -40,6 +41,7 @@ Singleton {
 					const data = JSON.parse(text)
 					root.cpu = data.cpu
 					root.cores = data.cores
+					root.coreUsage = Array.isArray(data.core_usage) ? data.core_usage : []
 					root.memUsed = data.mem_used
 					root.memTotal = data.mem_total
 					root.memPct = data.mem_pct

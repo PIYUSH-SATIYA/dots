@@ -12,10 +12,11 @@ Singleton {
 	property bool dnd: false
 	property var toasts: []
 
-	readonly property var tracked: root.server ? root.server.trackedNotifications.values : []
-	readonly property int count: root.tracked.length
+	readonly property var tracked: root.server && root.server.trackedNotifications ? (root.server.trackedNotifications.values || []) : []
+	readonly property int count: root.tracked ? root.tracked.length : 0
 
 	function toggleCenter() {
+		root.toasts = []
 		root.centerOpen = !root.centerOpen
 	}
 

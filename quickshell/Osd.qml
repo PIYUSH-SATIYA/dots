@@ -52,7 +52,9 @@ Singleton {
 	}
 
 	function showVolumeState(level, muted) {
-		const percent = Math.max(0, Math.min(150, Math.round(level)))
+		const percent = Math.max(0, Math.min(100, Math.round(level)))
+		Stats.volume = percent
+		Stats.muted = muted
 		root.show(root.volumeIcon(percent, muted), percent / 100, muted ? "Muted" : percent + "%")
 	}
 
@@ -92,7 +94,7 @@ Singleton {
 	}
 
 	function setVolume(level) {
-		const percent = Math.max(0, Math.min(150, Math.round(level)))
+		const percent = Math.max(0, Math.min(100, Math.round(level)))
 		root.enqueueVolume({
 			action: "set",
 			step: percent,
@@ -101,6 +103,7 @@ Singleton {
 
 	function showBrightness(level) {
 		const percent = Math.max(0, Math.min(100, Math.round(level)))
+		Stats.brightness = percent
 		root.show(root.brightnessIcon(percent), percent / 100, percent + "%")
 	}
 
