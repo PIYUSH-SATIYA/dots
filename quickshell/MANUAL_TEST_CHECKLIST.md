@@ -177,6 +177,7 @@ all theme refresh works in quickshell mode.
   - Addressed: occupied workspaces use a subtle background and brighter text; empty workspaces are dimmed.
 - [x] Clicking a workspace focuses it.
 - [x] Scrolling over workspaces switches relative workspaces.
+- [ ] Workspace wheel handling starts at the screen's left edge with no dead inset.
 - [x] Workspace state updates after opening/closing windows.
 - [x] Workspace state updates after moving a window to another workspace.
 
@@ -199,7 +200,8 @@ all theme refresh works in quickshell mode.
 - [x] Right-click opens `peaclock`.
 - [x] Clock updates at minute boundaries.
 - [x] Clock uses the expected timezone.
-- [x] Hovering the clock shows a month calendar with today highlighted.
+- [x] Hovering the clock shows the full-year 4x3 calendar with all months and today highlighted.
+  - Verified visually: popup opens below the bar, is centered under the clock, and highlights the current day.
 
 ### System metrics
 
@@ -232,7 +234,7 @@ all theme refresh works in quickshell mode.
 ### Audio
 
 - [x] Volume icon reflects the actual volume.
-  - Quickshell now shows a hover volume slider; legacy mode still lacks the drawer, while scrolling updates the OSD.
+  - Verified: hovering opens the tiny inline drawer in the bar; legacy mode keeps scroll/OSD behavior.
 - [x] Muted state shows the muted icon.
 - [x] Left-click toggles mute.
 - [x] Right-click opens `pavucontrol`.
@@ -248,7 +250,7 @@ all theme refresh works in quickshell mode.
 
 - [x] Brightness icon reflects the actual percentage.
 - [x] Scroll changes brightness by the expected step.
-  - same no slider and all as with volume
+  - Verified: hovering opens the same tiny inline drawer in the bar; legacy mode keeps scroll/OSD behavior.
 - [x] Brightness OSD appears for scroll and media keys.
 - [x] Brightness respects the 10% minimum.
 - [x] Brightness does not exceed 100%.
@@ -282,7 +284,7 @@ all theme refresh works in quickshell mode.
 - [x] `QS` button opens the native launcher.
 - [x] `SUPER+SPACE` opens the native launcher.
 - [x] Bar remains clickable after shell reload.
-- [x Bar remains clickable after the launcher closes.
+- [x] Bar remains clickable after the launcher closes.
 
 ## Notification Center and Toasts
 
@@ -379,6 +381,8 @@ all theme refresh works in quickshell mode.
 - [ ] Pressing `SUPER+SPACE` while open closes it.
 - [ ] The launcher uses the `quickshell-launcher` namespace.
 - [ ] The launcher is centered and receives keyboard focus.
+- [x] The launcher has no mode header, header icon, footer, or footer hints.
+  - Verified visually: only the search field and content remain.
 - [ ] The launcher opens on the active monitor.
 - [ ] The launcher works after switching from legacy to Quickshell.
 - [ ] The launcher works after `shell-mode.sh restart`.
@@ -444,7 +448,13 @@ all theme refresh works in quickshell mode.
 - [ ] `$` lists Hyprland windows and Enter focuses the selected window.
 - [ ] Window focus works across workspaces.
 - [x] `SUPER+V` opens clipboard mode directly.
-  - Verified: starts from `cliphist`, refreshes every second while open, and shows a side-by-side preview. Entries are not hardcoded.
+  - Verified: starts from `cliphist`, refreshes every second while open, and shows a large side-by-side full-text preview. Entries are not hardcoded.
+- [x] Clipboard mode shows a larger preview pane and decodes the selected entry in full.
+  - Verified: multiline entries are readable and the pane scrolls when content overflows.
+- [x] Symbols mode shows a 4-column glyph grid instead of a single-column name list.
+  - Verified: 64px cells, 28px glyphs, 4/arrow navigation, and click activation.
+- [x] Launcher panel dimensions adapt to the active mode.
+  - Verified: apps 660x500, clipboard 1040x680, symbols 500x560, and keybinds 760x600.
 
 - [ ] `SUPER+E` opens symbols mode directly.
 - [ ] `SUPER+K` opens keybind mode directly.

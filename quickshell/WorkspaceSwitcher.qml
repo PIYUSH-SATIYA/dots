@@ -30,11 +30,6 @@ Row {
 			Hyprland.dispatch("workspace " + name)
 	}
 
-	Item {
-		width: 10
-		height: 1
-	}
-
 	Repeater {
 		model: root.workspaces
 

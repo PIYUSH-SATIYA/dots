@@ -34,20 +34,6 @@ Scope {
 		windows: "Windows",
 		help: "Help",
 	})
-	readonly property var modeIcons: ({
-		apps: "󰀻",
-		files: "󰉋",
-		clipboard: "󰅇",
-		themes: "󰏘",
-		wallpapers: "󰸉",
-		keybinds: "󰌌",
-		symbols: "󰞅",
-		calc: "󰃬",
-		web: "󰖟",
-		runner: "󰆍",
-		windows: "󰖲",
-		help: "󰋖",
-	})
 	readonly property string effectiveMode: {
 		if (LauncherHub.mode === "apps")
 			return root.prefixModes[LauncherHub.query.charAt(0)] || "apps"
@@ -63,7 +49,6 @@ Scope {
 	readonly property bool remoteMode: root.effectiveMode === "files" || root.effectiveMode === "calc"
 	readonly property bool specialMode: root.effectiveMode === "web" || root.effectiveMode === "runner" || root.effectiveMode === "help"
 	readonly property string modeLabel: root.modeLabels[root.effectiveMode] || "Applications"
-	readonly property string modeIcon: root.modeIcons[root.effectiveMode] || root.modeIcons.apps
 	readonly property string placeholderText: {
 		if (root.effectiveMode === "files")
 			return "Search files..."
@@ -198,6 +183,9 @@ Scope {
 	property bool queryBusy: false
 	property bool queryPending: false
 	property bool clipboardRefreshing: false
+	property string clipboardPreview: ""
+	property int previewSerial: 0
+	property bool previewPending: false
 
 	function normalize(value) {
 		return String(value || "").toLowerCase()
@@ -340,30 +328,30 @@ Scope {
 		return "No results"
 	}
 
-	function kindLabel(kind) {
-		const labels = {
-			app: "app",
-			clipboard: "copy",
-			theme: "theme",
-			wallpaper: "wall",
-			file: "file",
-			keybind: "copy",
-			symbol: "copy",
-			calc: "copy",
-			web: "open",
-			runner: "run",
-			window: "focus",
-			help: "mode",
-		}
+	function panelWidth(mode) {
+		if (mode === "clipboard")
+			return 1040
 
-		return labels[kind] || ""
+		if (mode === "files" || mode === "keybinds" || mode === "wallpapers")
+			return 760
+
+		if (mode === "symbols")
+			return 500
+
+		return 660
 	}
 
-	function resultCount() {
-		if (root.results.length === 1)
-			return "1 result"
+	function panelHeight(mode) {
+		if (mode === "clipboard")
+			return 680
 
-		return root.results.length + " results"
+		if (mode === "keybinds")
+			return 600
+
+		if (mode === "files" || mode === "wallpapers" || mode === "symbols")
+			return 560
+
+		return 500
 	}
 
 	function focusSearch() {
@@ -477,6 +465,45 @@ Scope {
 		clipboardProcess.running = true
 	}
 
+	function previewIdentifier(item) {
+		return String(item && item.arg || "").replace(/[^0-9]/g, "")
+	}
+
+	function refreshClipboardPreview() {
+		const item = root.selectedItem
+
+		if (root.effectiveMode !== "clipboard" || !item || item.binary) {
+			root.previewSerial += 1
+			root.previewPending = false
+			root.clipboardPreview = ""
+			return
+		}
+
+		const identifier = root.previewIdentifier(item)
+
+		if (!identifier) {
+			root.clipboardPreview = ""
+			return
+		}
+
+		root.previewSerial += 1
+		root.clipboardPreview = ""
+
+		if (clipboardPreviewProcess.running) {
+			root.previewPending = true
+			return
+		}
+
+		root.startClipboardPreview(identifier, root.previewSerial)
+	}
+
+	function startClipboardPreview(identifier, serial) {
+		root.previewPending = false
+		clipboardPreviewProcess.requestId = identifier
+		clipboardPreviewProcess.requestSerial = serial
+		clipboardPreviewProcess.running = true
+	}
+
 	function scheduleRemote() {
 		if (!LauncherHub.open)
 			return
@@ -542,6 +569,7 @@ Scope {
 			search.text = LauncherHub.query
 			root.refreshCatalog()
 			root.scheduleRemote()
+			root.refreshClipboardPreview()
 			Qt.callLater(root.focusSearch)
 		}
 
@@ -553,6 +581,7 @@ Scope {
 			root.remoteItems = []
 			search.text = LauncherHub.query
 			root.scheduleRemote()
+			root.refreshClipboardPreview()
 			Qt.callLater(root.focusSearch)
 		}
 
@@ -568,6 +597,7 @@ Scope {
 		root.selected = 0
 		root.remoteItems = []
 		root.scheduleRemote()
+		root.refreshClipboardPreview()
 	}
 
 	onEffectiveQueryChanged: {
@@ -621,6 +651,29 @@ Scope {
 		}
 
 		onExited: root.clipboardRefreshing = false
+	}
+
+	Process {
+		id: clipboardPreviewProcess
+
+		property string requestId: ""
+		property int requestSerial: 0
+
+		command: ["cliphist", "decode", clipboardPreviewProcess.requestId]
+
+		stdout: StdioCollector {
+			onStreamFinished: {
+				if (clipboardPreviewProcess.requestSerial !== root.previewSerial)
+					return
+
+				root.clipboardPreview = this.text
+			}
+		}
+
+		onExited: {
+			if (root.previewPending)
+				root.refreshClipboardPreview()
+		}
 	}
 
 	Process {
@@ -747,8 +800,8 @@ Scope {
 			id: panel
 
 			anchors.centerIn: parent
-			width: Math.min(640, parent.width - 80)
-			height: Math.min(480, parent.height - 120)
+			width: Math.min(root.panelWidth(root.effectiveMode), parent.width - 80)
+			height: Math.min(root.panelHeight(root.effectiveMode), parent.height - 100)
 			radius: 16
 			color: Qt.alpha(Colors.color0, 0.97)
 			border.width: 1
@@ -764,49 +817,6 @@ Scope {
 					margins: 14
 				}
 				spacing: 10
-
-				Row {
-					width: parent.width
-					height: 30
-					spacing: 8
-
-					Text {
-						anchors.verticalCenter: parent.verticalCenter
-						text: root.modeIcon
-						color: Colors.accent
-						font.family: "CaskaydiaCove Nerd Font Propo"
-						font.pixelSize: 18
-						font.weight: Font.DemiBold
-					}
-
-					Text {
-						anchors.verticalCenter: parent.verticalCenter
-						text: root.modeLabel
-						color: Colors.foreground
-						font.family: "CaskaydiaCove Nerd Font Propo"
-						font.pixelSize: 15
-						font.weight: Font.DemiBold
-					}
-
-					Item {
-						width: parent.width - 180
-					}
-
-					Text {
-						anchors.verticalCenter: parent.verticalCenter
-						text: root.resultCount()
-						color: Colors.muted
-						font.family: "CaskaydiaCove Nerd Font Propo"
-						font.pixelSize: 11
-						font.weight: Font.DemiBold
-					}
-				}
-
-				Rectangle {
-					width: parent.width
-					height: 1
-					color: Colors.separator
-				}
 
 				Rectangle {
 					width: parent.width
@@ -855,14 +865,22 @@ Scope {
 							root.selected = 0
 						}
 						Keys.onPressed: (event) => {
+							const gridStep = root.effectiveMode === "symbols" ? 4 : 1
+
 							if (event.key === Qt.Key_Escape) {
 								root.close()
 								event.accepted = true
-							} else if (event.key === Qt.Key_Up) {
+							} else if (root.effectiveMode === "symbols" && event.key === Qt.Key_Left) {
 								root.moveSelection(-1)
 								event.accepted = true
-							} else if (event.key === Qt.Key_Down) {
+							} else if (root.effectiveMode === "symbols" && event.key === Qt.Key_Right) {
 								root.moveSelection(1)
+								event.accepted = true
+							} else if (event.key === Qt.Key_Up) {
+								root.moveSelection(-gridStep)
+								event.accepted = true
+							} else if (event.key === Qt.Key_Down) {
+								root.moveSelection(gridStep)
 								event.accepted = true
 							} else if (event.key === Qt.Key_PageUp) {
 								root.moveSelection(-6)
@@ -891,22 +909,27 @@ Scope {
 				}
 
 				Row {
+					id: contentRow
+
+					readonly property real previewWidth: root.effectiveMode === "clipboard" ? Math.round(width * 0.58) : 0
+
 					width: parent.width
-					height: Math.max(0, parent.height - 137)
+					height: Math.max(0, parent.height - 52)
 					spacing: 10
 
 					Item {
 						id: listArea
 
 						width: root.effectiveMode === "clipboard"
-							? Math.max(0, parent.width - Math.min(220, parent.width * 0.34) - parent.spacing)
-							: parent.width
+							? Math.max(0, contentRow.width - contentRow.previewWidth - contentRow.spacing)
+							: contentRow.width
 						height: parent.height
 
 
 						ListView {
 							id: launcherList
 
+							visible: root.effectiveMode !== "symbols"
 							anchors.fill: parent
 							model: root.results
 							spacing: 2
@@ -964,7 +987,7 @@ Scope {
 									}
 
 									Column {
-										width: parent.width - 28 - 70 - 20
+										width: parent.width - 28 - 20
 										anchors.verticalCenter: parent.verticalCenter
 										spacing: 2
 
@@ -990,18 +1013,6 @@ Scope {
 											font.weight: Font.DemiBold
 										}
 									}
-
-									Text {
-										width: 70
-										anchors.verticalCenter: parent.verticalCenter
-										text: root.kindLabel(itemRow.modelData.kind)
-										color: Colors.muted
-										horizontalAlignment: Text.AlignRight
-										elide: Text.ElideLeft
-										font.family: "CaskaydiaCove Nerd Font Propo"
-										font.pixelSize: 10
-										font.weight: Font.DemiBold
-									}
 								}
 
 								MouseArea {
@@ -1011,6 +1022,52 @@ Scope {
 									hoverEnabled: true
 									cursorShape: Qt.PointingHandCursor
 									onClicked: root.activate(itemRow.modelData)
+								}
+							}
+						}
+
+						GridView {
+							id: symbolGrid
+
+							visible: root.effectiveMode === "symbols"
+							anchors.fill: parent
+							model: root.results
+							cellWidth: width / 4
+							cellHeight: 64
+							clip: true
+							boundsBehavior: Flickable.StopAtBounds
+
+							onCountChanged: {
+								if (root.selected >= count)
+									root.selected = Math.max(0, count - 1)
+							}
+
+							delegate: Rectangle {
+								id: symbolCell
+
+								required property var modelData
+								required property int index
+
+								width: symbolGrid.cellWidth
+								height: symbolGrid.cellHeight
+								radius: 8
+								color: index === root.selected
+									? Qt.alpha(Colors.accent, 0.16)
+									: (symbolMouse.containsMouse ? Qt.alpha(Colors.foreground, 0.07) : "transparent")
+
+								Text {
+									anchors.centerIn: parent
+									text: symbolCell.modelData.glyph || ""
+									font.pixelSize: 28
+								}
+
+								MouseArea {
+									id: symbolMouse
+
+									anchors.fill: parent
+									hoverEnabled: true
+									cursorShape: Qt.PointingHandCursor
+									onClicked: root.activate(symbolCell.modelData)
 								}
 							}
 						}
@@ -1033,94 +1090,56 @@ Scope {
 
 					Rectangle {
 						visible: root.effectiveMode === "clipboard"
-						width: parent.width - listArea.width - parent.spacing
+						width: contentRow.previewWidth
 						height: parent.height
 						radius: 10
 						color: Qt.alpha(Colors.foreground, 0.045)
 						border.width: 1
 						border.color: Colors.separator
 
-						Column {
+						Flickable {
 							anchors {
 								fill: parent
 								margins: 12
 							}
-							spacing: 8
+							contentWidth: width
+							contentHeight: previewText.implicitHeight
+							clip: true
+							boundsBehavior: Flickable.StopAtBounds
 
 							Text {
-								text: "Preview"
-								color: Colors.accent
+								id: previewText
+
+								width: parent.width
+								text: root.selectedItem
+									? (root.selectedItem.binary
+										? "[binary clipboard entry]"
+										: (root.clipboardPreview || root.selectedItem.preview || root.selectedItem.name || ""))
+									: ""
+								color: Colors.foreground
+								wrapMode: Text.Wrap
+								textFormat: Text.PlainText
 								font.family: "CaskaydiaCove Nerd Font Propo"
-								font.pixelSize: 11
+								font.pixelSize: 12
 								font.weight: Font.DemiBold
-							}
-
-							Rectangle {
-								width: parent.width
-								height: 1
-								color: Colors.separator
-							}
-
-							Flickable {
-								width: parent.width
-								height: parent.height - 38
-								contentWidth: width
-								contentHeight: previewText.implicitHeight
-								clip: true
-								boundsBehavior: Flickable.StopAtBounds
-
-								Text {
-									id: previewText
-
-									width: parent.width
-									text: root.selectedItem
-										? (root.selectedItem.binary ? "[binary clipboard entry]" : (root.selectedItem.preview || root.selectedItem.name || ""))
-										: ""
-									color: Colors.foreground
-									wrapMode: Text.Wrap
-									textFormat: Text.PlainText
-									font.family: "CaskaydiaCove Nerd Font Propo"
-									font.pixelSize: 12
-									font.weight: Font.DemiBold
-								}
 							}
 						}
 					}
 				}
 
-				Row {
-					width: parent.width
-					height: 24
-					spacing: 12
-
-					Text {
-						anchors.verticalCenter: parent.verticalCenter
-						text: "↑↓ navigate   Enter open   Esc close"
-						color: Colors.muted
-						font.family: "CaskaydiaCove Nerd Font Propo"
-						font.pixelSize: 10
-						font.weight: Font.DemiBold
-					}
-
-					Item {
-						width: Math.max(0, parent.width - 300)
-					}
-
-					Text {
-						anchors.verticalCenter: parent.verticalCenter
-						text: root.resultCount()
-						color: Colors.muted
-						font.family: "CaskaydiaCove Nerd Font Propo"
-						font.pixelSize: 10
-						font.weight: Font.DemiBold
-					}
-				}
 			}
 		}
 	}
 
+	onSelectedItemChanged: root.refreshClipboardPreview()
+
 	onSelectedChanged: {
-		if (root.selected >= 0 && root.selected < root.results.length)
+		if (root.selected < 0 || root.selected >= root.results.length)
+			return
+
+		if (root.effectiveMode === "symbols")
+			symbolGrid.positionViewAtIndex(root.selected, GridView.Contain)
+		else
 			launcherList.positionViewAtIndex(root.selected, ListView.Contain)
 	}
 

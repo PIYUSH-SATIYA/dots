@@ -27,12 +27,11 @@ PopupWindow {
 
 	visible: root.opened
 	anchor.item: root.anchorItem
-	anchor.edges: Edges.Bottom | Edges.Right
-	anchor.gravity: Edges.Bottom | Edges.Right
-	anchor.margins.top: 4
-	anchor.adjustment: PopupAdjustment.Flip | PopupAdjustment.Slide
-	implicitWidth: 226
-	implicitHeight: 58
+	anchor.edges: Edges.Left
+	anchor.gravity: Edges.Right
+	anchor.adjustment: PopupAdjustment.Slide
+	implicitWidth: 148
+	implicitHeight: 24
 	color: "transparent"
 	grabFocus: false
 
@@ -52,8 +51,8 @@ PopupWindow {
 
 	Rectangle {
 		anchors.fill: parent
-		radius: 10
-		color: Qt.alpha(Colors.color0, 0.97)
+		radius: 6
+		color: Qt.alpha(Colors.color0, 0.98)
 		border.width: 1
 		border.color: Colors.separator
 
@@ -69,27 +68,27 @@ PopupWindow {
 		Row {
 			anchors {
 				fill: parent
-				leftMargin: 12
-				rightMargin: 12
+				leftMargin: 7
+				rightMargin: 7
 			}
-			spacing: 10
+			spacing: 6
 
 			Text {
-				width: 22
+				width: 14
 				anchors.verticalCenter: parent.verticalCenter
 				text: root.iconText
 				color: root.muted ? Colors.muted : Colors.foreground
 				horizontalAlignment: Text.AlignHCenter
 				font.family: "CaskaydiaCove Nerd Font Propo"
-				font.pixelSize: 16
+				font.pixelSize: 12
 				font.weight: Font.DemiBold
 			}
 
 			ControlSlider {
 				id: slider
 
-				width: parent.width - 22 - 44 - 20
-				height: 20
+				width: parent.width - 14 - 32 - 12
+				height: 14
 				anchors.verticalCenter: parent.verticalCenter
 				from: root.from
 				to: root.to
@@ -105,13 +104,13 @@ PopupWindow {
 			}
 
 			Text {
-				width: 44
+				width: 32
 				anchors.verticalCenter: parent.verticalCenter
 				text: Math.round(slider.displayValue) + "%"
 				color: Colors.foreground
 				horizontalAlignment: Text.AlignRight
 				font.family: "CaskaydiaCove Nerd Font Propo"
-				font.pixelSize: 11
+				font.pixelSize: 9
 				font.weight: Font.DemiBold
 			}
 		}
